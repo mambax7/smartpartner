@@ -9,9 +9,9 @@
 // including the common language file
 $fileName = XOOPS_ROOT_PATH . '/modules/smartpartner/language/' . $GLOBALS['xoopsConfig']['language'] . '/common.php';
 if (file_exists($fileName)) {
-    include_once $fileName;
+    require_once $fileName;
 } else {
-    include_once XOOPS_ROOT_PATH . '/modules/smartpartner/language/english/common.php';
+    require_once XOOPS_ROOT_PATH . '/modules/smartpartner/language/english/common.php';
 }
 define('_MB_SPARTNER_PARTNERS_PSPACE', 'Put spaces between partners?');
 define('_MB_SPARTNER_BRAND', 'Randomize partners in blocks?');

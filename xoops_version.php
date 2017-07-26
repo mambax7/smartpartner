@@ -12,51 +12,44 @@ if (!defined('SMARTPARTNER_DIRNAME')) {
     define('SMARTPARTNER_DIRNAME', 'smartpartner');
 }
 
-$modversion['name']        = _MI_SPARTNER_PARTNERS_NAME;
-$modversion['version']     = 2.01;
-$modversion['author']      = 'XOOPS Development Team';
-$modversion['description'] = _MI_SPARTNER_PARTNERS_DESC;
-$modversion['credits']     = "Based on Raul Recio (AKA UNFOR)'s XoopsPartners module";
-$modversion['help']        = 'page=help';
-$modversion['license']     = 'GNU GPL 2.0 or later';
-$modversion['license_url'] = 'www.gnu.org/licenses/gpl-2.0.html';
-$modversion['official']    = 0; //1 indicates supported by XOOPS Dev Team, 0 means 3rd party supported
-$modversion['image']       = 'assets/images/logo_module.png';
+$modversion['version']       = 2.01;
+$modversion['module_status'] = 'RC 2';
+$modversion['release_date']  = '2017/07/20';
+$modversion['name']          = _MI_SPARTNER_PARTNERS_NAME;
+$modversion['description']   = _MI_SPARTNER_PARTNERS_DESC;
+$modversion['author']        = 'XOOPS Development Team';
+$modversion['credits']       = "Based on Raul Recio (AKA UNFOR)'s XoopsPartners module";
+$modversion['help']          = 'page=help';
+$modversion['license']       = 'GNU GPL 2.0 or later';
+$modversion['license_url']   = 'www.gnu.org/licenses/gpl-2.0.html';
+$modversion['official']      = 0; //1 indicates supported by XOOPS Dev Team, 0 means 3rd party supported
+$modversion['image']         = 'assets/images/logoModule.png';
 //$modversion['dirname'] = SMARTPARTNER_DIRNAME;
 $modversion['dirname'] = basename(__DIR__);
 
 // Added by marcan for the About page in admin section
 $modversion['modFooter']              = 'smartpartner_modFooter';
 $modversion['developer_lead']         = 'marcan [Marc-Andre Lanciault]';
-$modversion['developer_contributor']  =
-    'Andy Cleff, Raul Recio, chapi, Marco, Mariuss, outch, M0nty, Christian, Philou, M4d3L, solo, GiJOE, Predator, phppp, AmiCalmant, hsalazar, Aidan Lister, fx2024, Zabou';
+$modversion['developer_contributor']  = 'Andy Cleff, Raul Recio, chapi, Marco, Mariuss, outch, M0nty, Christian, Philou, M4d3L, solo, GiJOE, Predator, phppp, AmiCalmant, hsalazar, Aidan Lister, fx2024, Zabou';
 $modversion['developer_website_url']  = 'http://www.smartfactory.ca';
 $modversion['developer_website_name'] = 'SmartFactory.ca';
 $modversion['developer_email']        = 'marcan@smartfactory';
 $modversion['status_version']         = 'RC 1';
 $modversion['status']                 = 'Release Candidate';
 $modversion['date']                   = '2007-09-19';
-
-$modversion['dirmoduleadmin'] = '/Frameworks/moduleclasses/moduleadmin';
-$modversion['icons16']        = '../../Frameworks/moduleclasses/icons/16';
-$modversion['icons32']        = '../../Frameworks/moduleclasses/icons/32';
-//about
-$modversion['module_status']       = 'RC 1';
-$modversion['release_date']        = '2016/03/29';
-$modversion['release_file']        = XOOPS_URL . '/modules/' . $modversion['dirname'] . '/docs/changelog.txt';
-$modversion['module_website_url']  = 'www.xoops.org';
-$modversion['module_website_name'] = 'XOOPS';
-$modversion['min_php']             = '5.5';
-$modversion['min_xoops']           = '2.5.8';
-$modversion['min_admin']           = '1.1';
-$modversion['min_db']              = array(
-    'mysql'  => '5.0.7',
-    'mysqli' => '5.0.7'
-);
+$modversion['modicons16']             = 'assets/images/icons/16';
+$modversion['modicons32']             = 'assets/images/icons/32';
+$modversion['release_file']           = XOOPS_URL . '/modules/' . $modversion['dirname'] . '/docs/changelog.txt';
+$modversion['module_website_url']     = 'www.xoops.org';
+$modversion['module_website_name']    = 'XOOPS';
+$modversion['min_php']                = '5.5';
+$modversion['min_xoops']              = '2.5.9';
+$modversion['min_admin']              = '1.2';
+$modversion['min_db']                 = array('mysql' => '5.5');
 
 $modversion['warning'] = _MI_SPARTNER_WARNING_RC;
 
-$modversion['people']['developers'][] = 'marcan (Marc-Andr� Lanciault)';
+$modversion['people']['developers'][] = 'marcan (Marc-Andre Lanciault)';
 $modversion['people']['developers'][] = 'felix (Felix Tousignant)';
 
 $modversion['people']['testers'][] = 'Andy Cleff';
@@ -273,7 +266,7 @@ $modversion['config'][$i]['title']       = '_MI_SPARTNER_IMG_MAX_WIDTH';
 $modversion['config'][$i]['description'] = '_MI_SPARTNER_IMG_MAX_WIDTH_DSC';
 $modversion['config'][$i]['formtype']    = 'textbox';
 $modversion['config'][$i]['valuetype']   = 'text';
-$modversion['config'][$i]['default']     = '150';
+$modversion['config'][$i]['default']     = '300';
 $modversion['config'][$i]['category']    = 'format_options';
 
 ++$i;
@@ -282,7 +275,7 @@ $modversion['config'][$i]['title']       = '_MI_SPARTNER_IMG_MAX_HEIGHT';
 $modversion['config'][$i]['description'] = '_MI_SPARTNER_IMG_MAX_HEIGHT_DSC';
 $modversion['config'][$i]['formtype']    = 'textbox';
 $modversion['config'][$i]['valuetype']   = 'text';
-$modversion['config'][$i]['default']     = '150';
+$modversion['config'][$i]['default']     = '300';
 $modversion['config'][$i]['category']    = 'format_options';
 
 ++$i;
@@ -292,8 +285,13 @@ $modversion['config'][$i]['description'] = '';
 $modversion['config'][$i]['formtype']    = 'select';
 $modversion['config'][$i]['valuetype']   = 'int';
 $modversion['config'][$i]['default']     = 86400;
-$modversion['config'][$i]['options']     =
-    array('_MI_SPARTNER_HOUR' => '3600', '_MI_SPARTNER_3HOURS' => '10800', '_MI_SPARTNER_5HOURS' => '18000', '_MI_SPARTNER_10HOURS' => '36000', '_MI_SPARTNER_DAY' => '86400');
+$modversion['config'][$i]['options']     = array(
+    '_MI_SPARTNER_HOUR'    => '3600',
+    '_MI_SPARTNER_3HOURS'  => '10800',
+    '_MI_SPARTNER_5HOURS'  => '18000',
+    '_MI_SPARTNER_10HOURS' => '36000',
+    '_MI_SPARTNER_DAY'     => '86400'
+);
 $modversion['config'][$i]['category']    = 'other';
 
 ++$i;

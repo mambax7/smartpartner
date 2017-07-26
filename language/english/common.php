@@ -29,8 +29,7 @@ define('_CO_SPARTNER_EMAIL', 'Email');
 define('_CO_SPARTNER_FILE_UPLOAD_ERROR', 'An error occured while uploading the logo.');
 define('_CO_SPARTNER_HITS', 'Hits');
 define('_CO_SPARTNER_IMAGE_URL', 'Logo URL');
-define('_CO_SPARTNER_IMAGE_URL_DSC',
-       "The partner's logo can also be an url over the web. However, we recommand you to upload the logo for better resizing functionnalities. Please note that if you select a logo in the second row of this form, the 'Logo URL' won't be taken in consideration.");
+define('_CO_SPARTNER_IMAGE_URL_DSC', "The partner's logo can also be an url over the web. However, we recommand you to upload the logo for better resizing functionnalities. Please note that if you select a logo in the second row of this form, the 'Logo URL' won't be taken in consideration.");
 define('_CO_SPARTNER_INACTIVE', 'Inactive');
 define('_CO_SPARTNER_INTRO', 'Summary');
 define('_CO_SPARTNER_INVENTORY', 'Partners Summary');

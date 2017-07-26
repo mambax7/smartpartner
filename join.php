@@ -8,7 +8,7 @@
  */
 
 include __DIR__ . '/header.php';
-$xoopsOption['template_main'] = 'smartpartner_join.tpl';
+$GLOBALS['xoopsOption']['template_main'] = 'smartpartner_join.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
 include __DIR__ . '/footer.php';
 
@@ -35,7 +35,7 @@ switch ($op) {
                 $max_imgheight     = $xoopsModuleConfig['img_max_height'];
                 $allowed_mimetypes = smartpartner_getAllowedImagesTypes();
 
-                include_once(XOOPS_ROOT_PATH . '/class/uploader.php');
+                require_once XOOPS_ROOT_PATH . '/class/uploader.php';
 
                 if ($_FILES[$filename]['tmp_name'] === '' || !is_readable($_FILES[$filename]['tmp_name'])) {
                     redirect_header('javascript:history.go(-1)', 2, _CO_SPARTNER_FILE_UPLOAD_ERROR);
@@ -83,7 +83,7 @@ switch ($op) {
         }
 
         if (isset($_POST['notifypub']) && $_POST['notifypub'] === 1) {
-            include_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
+            require_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
             $notificationHandler = xoops_getHandler('notification');
             $notificationHandler->subscribe('partner', $partnerObj->id(), 'approved', XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE);
         }
@@ -204,4 +204,4 @@ switch ($op) {
         $xoopsTpl->assign('xoops_pagetitle', $myts->htmlSpecialChars($xoopsModule->name()) . ' - ' . _MD_SPARTNER_JOIN);
         break;
 }
-include_once XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

@@ -1,9 +1,9 @@
 <?php
-// 
+//
 // ------------------------------------------------------------------------ //
 //               XOOPS - PHP Content Management System                      //
 //                   Copyright (c) 2000-2016 XOOPS.org                           //
-//                      <https://xoops.org/>                             //
+//                      <https://xoops.org>                             //
 // ------------------------------------------------------------------------ //
 // This program is free software; you can redistribute it and/or modify     //
 // it under the terms of the GNU General Public License as published by     //
@@ -28,8 +28,8 @@
 // -------------------------------------------------------------------------//
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
-include_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobject.php';
-include_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjecthandler.php';
+require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobject.php';
+require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjecthandler.php';
 
 /**
  * Class SmartpartnerOffer
@@ -124,7 +124,7 @@ class SmartpartnerOffer extends SmartObject
     {
         global $smartPartnerPartnerHandler;
         $partnerObj  = $smartPartnerPartnerHandler->get($this->getVar('partnerid', 'e'));
-        $smartModule =& smartpartner_getModuleInfo();
+        $smartModule = smartpartner_getModuleInfo();
         $module_id   = $smartModule->getVar('mid');
 
         $myts                = MyTextSanitizer::getInstance();
@@ -212,7 +212,7 @@ class SmartpartnerOfferHandler extends SmartPersistableObjectHandler
         $catsObj     = $smartPartnerCategoryHandler->getObjects(null, true);
         $partnersObj = $smartPartnerPartnerHandler->getObjects(null, true);
 
-        include_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
+        require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
         $smartPermissionsHandler = new SmartobjectPermissionHandler($smartPartnerPartnerHandler);
         $userGroups              = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
         $grantedItems            = $smartPermissionsHandler->getGrantedItems('full_view');

@@ -7,10 +7,10 @@
  * Licence: GNU
  */
 
-include_once __DIR__ . '/header.php';
-$xoopsOption['template_main'] = 'smartpartner_partner.tpl';
-include_once(XOOPS_ROOT_PATH . '/header.php');
-include_once __DIR__ . '/footer.php';
+require_once __DIR__ . '/header.php';
+$GLOBALS['xoopsOption']['template_main'] = 'smartpartner_partner.tpl';
+require_once XOOPS_ROOT_PATH . '/header.php';
+require_once __DIR__ . '/footer.php';
 
 global $xoopsUser, $xoopsConfig, $xoopsModuleConfig, $xoopsModule;
 
@@ -27,7 +27,7 @@ $partnerObj = new SmartpartnerPartner($id);
 if ($partnerObj->notLoaded()) {
     redirect_header('javascript:history.go(-1)', 2, _MD_SPARTNER_NOPARTNERSELECTED);
 }
-include_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
+require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
 $smartPermissionsHandler = new SmartobjectPermissionHandler($smartPartnerPartnerHandler);
 $grantedItems            = $smartPermissionsHandler->getGrantedItems('full_view');
 $grantedItems            = array_merge($grantedItems, $smartPermissionsHandler->getGrantedItems('partial_view'));
@@ -137,9 +137,9 @@ smartpartner_createMetaTags($partnerObj->title(), '', $partnerObj->summary());
 
 //code to include smartie
 /*if (file_exists(XOOPS_ROOT_PATH . '/modules/smarttie/smarttie_links.php')) {
-    include_once XOOPS_ROOT_PATH . '/modules/smarttie/smarttie_links.php';
+    require_once XOOPS_ROOT_PATH . '/modules/smarttie/smarttie_links.php';
     $xoopsTpl->assign('smarttie',1);
 }*/
 //end code for smarttie
 
-include_once XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

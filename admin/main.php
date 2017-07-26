@@ -7,7 +7,7 @@
  * Licence: GNU
  */
 
-include_once __DIR__ . '/admin_header.php';
+require_once __DIR__ . '/admin_header.php';
 $myts = MyTextSanitizer::getInstance();
 
 $op = isset($_GET['op']) ? $_GET['op'] : '';
@@ -92,8 +92,8 @@ function buildTable()
 }
 
 // Code for the page
-include_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
-include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
+require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
+require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 
 // Creating the Partner handler object
 $smartPartnerPartnerHandler = smartpartner_gethandler('partner');
@@ -101,9 +101,9 @@ $smartPartnerPartnerHandler = smartpartner_gethandler('partner');
 $startentry = isset($_GET['startentry']) ? (int)$_GET['startentry'] : 0;
 
 smartpartner_xoops_cp_header();
-$indexAdmin = new ModuleAdmin();
+$adminObject = \Xmf\Module\Admin::getInstance();
 //xoops_cp_header();
-echo $indexAdmin->addNavigation(basename(__FILE__));
+$adminObject->displayNavigation(basename(__FILE__));
 
 global $xoopsUser, $xoopsConfig, $xoopsModuleConfig, $xoopsModule;
 
@@ -127,9 +127,9 @@ $totalrejected = $smartPartnerPartnerHandler->getPartnerCount(_SPARTNER_STATUS_R
 //    pathConfiguration();
 //}
 
-$indexAdmin->addItemButton(_AM_SPARTNER_CATEGORY_CREATE, 'category.php?op=mod', 'add', '');
-$indexAdmin->addItemButton(_AM_SPARTNER_PARTNER_CREATE, 'partner.php?op=add', 'add', '');
-echo $indexAdmin->renderButton('left', '');
+$adminObject->addItemButton(_AM_SPARTNER_CATEGORY_CREATE, 'category.php?op=mod', 'add', '');
+$adminObject->addItemButton(_AM_SPARTNER_PARTNER_CREATE, 'partner.php?op=add', 'add', '');
+$adminObject->displayButton('left', '');
 
 // -- //
 //smartpartner_collapsableBar('index', 'indexicon', _AM_SPARTNER_INVENTORY);
@@ -169,59 +169,59 @@ $ordertxtdesc = '';
 
 switch ($sortsel) {
     case 'title':
-        $sorttxttitle = "selected='selected'";
+        $sorttxttitle = 'selected';
         break;
 
     case 'weight':
-        $sorttxtweight = "selected='selected'";
+        $sorttxtweight = 'selected';
         break;
 
     default:
-        $sorttxtid = "selected='selected'";
+        $sorttxtid = 'selected';
         break;
 }
 
 switch ($ordersel) {
     case 'ASC':
-        $ordertxtasc = "selected='selected'";
+        $ordertxtasc = 'selected';
         break;
 
     default:
-        $ordertxtdesc = "selected='selected'";
+        $ordertxtdesc = 'selected';
         break;
 }
 
 switch ($statussel) {
     case _SPARTNER_STATUS_ALL:
-        $selectedtxt0        = "selected='selected'";
+        $selectedtxt0        = 'selected';
         $caption             = _AM_SPARTNER_ALL;
         $cond                = '';
         $status_explaination = _AM_SPARTNER_ALL_EXP;
         break;
 
     case _SPARTNER_STATUS_SUBMITTED:
-        $selectedtxt1        = "selected='selected'";
+        $selectedtxt1        = 'selected';
         $caption             = _AM_SPARTNER_SUBMITTED;
         $cond                = ' WHERE status = ' . _SPARTNER_STATUS_SUBMITTED . ' ';
         $status_explaination = _AM_SPARTNER_SUBMITTED_EXP;
         break;
 
     case _SPARTNER_STATUS_ACTIVE:
-        $selectedtxt2        = "selected='selected'";
+        $selectedtxt2        = 'selected';
         $caption             = _AM_SPARTNER_ACTIVE;
         $cond                = ' WHERE status = ' . _SPARTNER_STATUS_ACTIVE . ' ';
         $status_explaination = _AM_SPARTNER_ACTIVE_EXP;
         break;
 
     case _SPARTNER_STATUS_REJECTED:
-        $selectedtxt3        = "selected='selected'";
+        $selectedtxt3        = 'selected';
         $caption             = _AM_SPARTNER_REJECTED;
         $cond                = ' WHERE status = ' . _SPARTNER_STATUS_REJECTED . ' ';
         $status_explaination = _AM_SPARTNER_REJECTED_EXP;
         break;
 
     case _SPARTNER_STATUS_INACTIVE:
-        $selectedtxt4        = "selected='selected'";
+        $selectedtxt4        = 'selected';
         $caption             = _AM_SPARTNER_INACTIVE;
         $cond                = ' WHERE status = ' . _SPARTNER_STATUS_INACTIVE . ' ';
         $status_explaination = _AM_SPARTNER_INACTIVE_EXP;
@@ -275,102 +275,30 @@ if ($numrows > 0) {
 
             case _SPARTNER_STATUS_SUBMITTED:
                 $statustxt = _AM_SPARTNER_SUBMITTED;
-                $approve   = "<a href='partner.php?op=mod&id="
-                             . $partnersObj[$i]->id()
-                             . "'><img src='"
-                             . $pathIcon16
-                             . '/on.png'
-                             . "'   title='"
-                             . _AM_SPARTNER_PARTNER_APPROVE
-                             . "' alt='"
-                             . _AM_SPARTNER_PARTNER_APPROVE
-                             . "' /></a>&nbsp;";
-                $delete    = "<a href='partner.php?op=del&id="
-                             . $partnersObj[$i]->id()
-                             . "'><img src='"
-                             . $pathIcon16
-                             . '/delete.png'
-                             . "'  title='"
-                             . _AM_SPARTNER_PARTNER_DELETE
-                             . "' alt='"
-                             . _AM_SPARTNER_PARTNER_DELETE
-                             . "' /></a>&nbsp;";
+                $approve   = "<a href='partner.php?op=mod&id=" . $partnersObj[$i]->id() . "'><img src='" . $pathIcon16 . '/on.png' . "'   title='" . _AM_SPARTNER_PARTNER_APPROVE . "' alt='" . _AM_SPARTNER_PARTNER_APPROVE . "'></a>&nbsp;";
+                $delete    = "<a href='partner.php?op=del&id=" . $partnersObj[$i]->id() . "'><img src='" . $pathIcon16 . '/delete.png' . "'  title='" . _AM_SPARTNER_PARTNER_DELETE . "' alt='" . _AM_SPARTNER_PARTNER_DELETE . "'></a>&nbsp;";
                 $modify    = '';
                 break;
 
             case _SPARTNER_STATUS_ACTIVE:
                 $statustxt = _AM_SPARTNER_ACTIVE;
                 $approve   = '';
-                $modify    = "<a href='partner.php?op=mod&id="
-                             . $partnersObj[$i]->id()
-                             . "'><img src='"
-                             . $pathIcon16
-                             . '/edit.png'
-                             . "' title='"
-                             . _AM_SPARTNER_PARTNER_EDIT
-                             . "' alt='"
-                             . _AM_SPARTNER_PARTNER_EDIT
-                             . "' /></a>&nbsp;";
-                $delete    = "<a href='partner.php?op=del&id="
-                             . $partnersObj[$i]->id()
-                             . "'><img src='"
-                             . $pathIcon16
-                             . '/delete.png'
-                             . "'  title='"
-                             . _AM_SPARTNER_PARTNER_DELETE
-                             . "' alt='"
-                             . _AM_SPARTNER_PARTNER_DELETE
-                             . "' /></a>&nbsp;";
+                $modify    = "<a href='partner.php?op=mod&id=" . $partnersObj[$i]->id() . "'><img src='" . $pathIcon16 . '/edit.png' . "' title='" . _AM_SPARTNER_PARTNER_EDIT . "' alt='" . _AM_SPARTNER_PARTNER_EDIT . "'></a>&nbsp;";
+                $delete    = "<a href='partner.php?op=del&id=" . $partnersObj[$i]->id() . "'><img src='" . $pathIcon16 . '/delete.png' . "'  title='" . _AM_SPARTNER_PARTNER_DELETE . "' alt='" . _AM_SPARTNER_PARTNER_DELETE . "'></a>&nbsp;";
                 break;
 
             case _SPARTNER_STATUS_INACTIVE:
                 $statustxt = _AM_SPARTNER_INACTIVE;
                 $approve   = '';
-                $modify    = "<a href='partner.php?op=mod&id="
-                             . $partnersObj[$i]->id()
-                             . "'><img src='"
-                             . $pathIcon16
-                             . '/edit.png'
-                             . "' title='"
-                             . _AM_SPARTNER_PARTNER_EDIT
-                             . "' alt='"
-                             . _AM_SPARTNER_PARTNER_EDIT
-                             . "' /></a>&nbsp;";
-                $delete    = "<a href='partner.php?op=del&id="
-                             . $partnersObj[$i]->id()
-                             . "'><img src='"
-                             . $pathIcon16
-                             . '/delete.png'
-                             . "'  title='"
-                             . _AM_SPARTNER_PARTNER_DELETE
-                             . "' alt='"
-                             . _AM_SPARTNER_PARTNER_DELETE
-                             . "' /></a>&nbsp;";
+                $modify    = "<a href='partner.php?op=mod&id=" . $partnersObj[$i]->id() . "'><img src='" . $pathIcon16 . '/edit.png' . "' title='" . _AM_SPARTNER_PARTNER_EDIT . "' alt='" . _AM_SPARTNER_PARTNER_EDIT . "'></a>&nbsp;";
+                $delete    = "<a href='partner.php?op=del&id=" . $partnersObj[$i]->id() . "'><img src='" . $pathIcon16 . '/delete.png' . "'  title='" . _AM_SPARTNER_PARTNER_DELETE . "' alt='" . _AM_SPARTNER_PARTNER_DELETE . "'></a>&nbsp;";
                 break;
 
             case _SPARTNER_STATUS_REJECTED:
                 $statustxt = _AM_SPARTNER_REJECTED;
                 $approve   = '';
-                $modify    = "<a href='partner.php?op=mod&id="
-                             . $partnersObj[$i]->id()
-                             . "'><img src='"
-                             . $pathIcon16
-                             . '/edit.png'
-                             . "' title='"
-                             . _AM_SPARTNER_PARTNER_EDIT
-                             . "' alt='"
-                             . _AM_SPARTNER_PARTNER_EDIT
-                             . "' /></a>&nbsp;";
-                $delete    = "<a href='partner.php?op=del&id="
-                             . $partnersObj[$i]->id()
-                             . "'><img src='"
-                             . $pathIcon16
-                             . '/delete.png'
-                             . "'  title='"
-                             . _AM_SPARTNER_PARTNER_DELETE
-                             . "' alt='"
-                             . _AM_SPARTNER_PARTNER_DELETE
-                             . "' /></a>&nbsp;";
+                $modify    = "<a href='partner.php?op=mod&id=" . $partnersObj[$i]->id() . "'><img src='" . $pathIcon16 . '/edit.png' . "' title='" . _AM_SPARTNER_PARTNER_EDIT . "' alt='" . _AM_SPARTNER_PARTNER_EDIT . "'></a>&nbsp;";
+                $delete    = "<a href='partner.php?op=del&id=" . $partnersObj[$i]->id() . "'><img src='" . $pathIcon16 . '/delete.png' . "'  title='" . _AM_SPARTNER_PARTNER_DELETE . "' alt='" . _AM_SPARTNER_PARTNER_DELETE . "'></a>&nbsp;";
                 break;
 
             case 'default':
@@ -382,15 +310,7 @@ if ($numrows > 0) {
         }
 
         echo '<tr>';
-        echo "<td class='head' align='left'><a href='"
-             . SMARTPARTNER_URL
-             . 'partner.php?id='
-             . $partnersObj[$i]->id()
-             . "'><img src='"
-             . SMARTPARTNER_URL
-             . "assets/images/links/partner.gif' alt=''/>&nbsp;"
-             . $partnersObj[$i]->title()
-             . '</a></td>';
+        echo "<td class='head' align='left'><a href='" . SMARTPARTNER_URL . 'partner.php?id=' . $partnersObj[$i]->id() . "'><img src='" . SMARTPARTNER_URL . "assets/images/links/partner.gif' alt=''>&nbsp;" . $partnersObj[$i]->title() . '</a></td>';
         echo "<td class='even' align='left'>" . $partnersObj[$i]->summary(100) . '</td>';
         echo "<td class='even' align='center'>" . $partnersObj[$i]->hits() . '</td>';
         echo "<td class='even' align='center'>" . $statustxt . '</td>';
@@ -425,4 +345,4 @@ echo '</div>';
 
 //smart_modFooter();
 //xoops_cp_footer();
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

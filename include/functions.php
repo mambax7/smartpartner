@@ -10,13 +10,10 @@
 
 function smartpartner_xoops_cp_header()
 {
-    xoops_cp_header();
-
-    ?>
+    xoops_cp_header(); ?>
     <script type='text/javascript' src='funcs.js'></script>
     <script type='text/javascript' src='cookies.js'></script>
     <?php
-
 }
 
 /**
@@ -117,7 +114,16 @@ function smartpartner_highlighter($matches)
  */
 function smartpartner_getAllowedImagesTypes()
 {
-    return array('jpg/jpeg', 'image/bmp', 'image/gif', 'image/jpeg', 'image/jpg', 'image/x-png', 'image/png', 'image/pjpeg');
+    return array(
+        'jpg/jpeg',
+        'image/bmp',
+        'image/gif',
+        'image/jpeg',
+        'image/jpg',
+        'image/x-png',
+        'image/png',
+        'image/pjpeg'
+    );
 }
 
 /**
@@ -140,7 +146,7 @@ function smartpartner_copyr($source, $dest)
     if (!is_dir($dest)) {
         //        mkdir($dest);
         if (!@mkdir($dest) && !is_dir($dest)) {
-            throw Exception("Couldn't create this directory: " . $dest);
+            throw new Exception("Couldn't create this directory: " . $dest);
         }
     }
 
@@ -319,7 +325,7 @@ function smartpartner_collapsableBar($tablename = '', $iconname = '', $tabletitl
 {
     global $xoopsModule;
     echo "<h3 style=\"color: #2F5376; font-weight: bold; font-size: 14px; margin: 6px 0 0 0; \"><a href='javascript:;' onclick=\"toggle('" . $tablename . "'); toggleIcon('" . $iconname . "')\";>";
-    echo "<img id='$iconname' src=" . XOOPS_URL . '/modules/' . $xoopsModule->dirname() . "/assets/images/icon/close12.gif alt='' /></a>&nbsp;" . $tabletitle . '</h3>';
+    echo "<img id='$iconname' src=" . XOOPS_URL . '/modules/' . $xoopsModule->dirname() . "/assets/images/icon/close12.gif alt=''></a>&nbsp;" . $tabletitle . '</h3>';
     echo "<div id='$tablename'>";
     if ($tabledsc != '') {
         echo "<span style=\"color: #567; margin: 3px 0 12px 0; font-size: small; display: block; \">" . $tabledsc . '</span>';
@@ -430,15 +436,15 @@ function smartpartner_modFooter()
     $hModule    = xoops_getHandler('module');
     $hModConfig = xoops_getHandler('config');
 
-    $smartModule = &$hModule->getByDirname('smartpartner');
+    $smartModule =& $hModule->getByDirname('smartpartner');
     $module_id   = $smartModule->getVar('mid');
 
     $module_name = $smartModule->getVar('dirname');
-    $smartConfig = &$hModConfig->getConfigsByCat(0, $smartModule->getVar('mid'));
+    $smartConfig =& $hModConfig->getConfigsByCat(0, $smartModule->getVar('mid'));
 
     $module_id = $smartModule->getVar('mid');
 
-    $versioninfo  = &$hModule->get($smartModule->getVar('mid'));
+    $versioninfo  =& $hModule->get($smartModule->getVar('mid'));
     $modfootertxt = 'Module ' . $versioninfo->getInfo('name') . ' - Version ' . $versioninfo->getInfo('version') . '';
     if (!defined('_AM_SPARTNER_XOOPS_PRO')) {
         define('_AM_SPARTNER_XOOPS_PRO', 'Do you need help with this module ?<br>Do you need new features not yet availale?');
@@ -452,7 +458,7 @@ function smartpartner_modFooter()
          . $modfootertxt
          . "' alt='"
          . $modfootertxt
-         . "'/></a></div>";
+         . "'></a></div>";
     echo '<div style="border: 2px solid #C2CDD6;">';
     echo '<div style="font-weight:bold; padding-top: 5px; text-align: center;">' . _AM_SPARTNER_XOOPS_PRO . '<br><a href="http://inboxinternational.com/modules/smartcontent/page.php?pageid=10"><img src="http://inboxinternational.com/images/INBOXsign150_noslogan.gif" alt="Need XOOPS Professional Services?" title="Need XOOPS Professional Services?"></a>
 <a href="http://inboxinternational.com/modules/smartcontent/page.php?pageid=10"><img src="http://inboxinternational.com/images/xoops_services_pro_english.gif" alt="Need XOOPS Professional Services?" title="Need XOOPS Professional Services?"></a>
@@ -594,7 +600,7 @@ function smartpartner_formatErrors($errors = array())
  */
 function smartpartner_upload_file($another = false, $withRedirect = true, $itemObj)
 {
-    include_once(SMARTPARTNER_ROOT_PATH . 'class/uploader.php');
+    require_once SMARTPARTNER_ROOT_PATH . 'class/uploader.php';
 
     global $smartPartnerIsAdmin, $xoopsModuleConfig, $smartPartnerPartnerHandler, $smartPartnerFileHandler, $xoopsUser;
 

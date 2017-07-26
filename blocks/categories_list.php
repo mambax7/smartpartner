@@ -17,8 +17,7 @@ function get_content($cat_id, $catsObj, $displaysubs)
     $i       = 0;
     foreach ($catsObj as $catObj) {
         if ($catObj->getVar('parentid') == $cat_id) {
-            $content[$catObj->getVar('categoryid')]['link']        =
-                "<a href='" . XOOPS_URL . '/modules/smartpartner/index.php?view_category_id=' . $catObj->getVar('categoryid') . "'>" . $catObj->getVar('name') . '</a>';
+            $content[$catObj->getVar('categoryid')]['link']        = "<a href='" . XOOPS_URL . '/modules/smartpartner/index.php?view_category_id=' . $catObj->getVar('categoryid') . "'>" . $catObj->getVar('name') . '</a>';
             $content[$catObj->getVar('categoryid')]['categories']  = get_content($catObj->getVar('categoryid'), $catsObj, $displaysubs);
             $content[$catObj->getVar('categoryid')]['displaysubs'] = $displaysubs;
         }
@@ -34,7 +33,7 @@ function get_content($cat_id, $catsObj, $displaysubs)
  */
 function b_categories_list_show($options)
 {
-    include_once(XOOPS_ROOT_PATH . '/modules/smartpartner/include/common.php');
+    require_once XOOPS_ROOT_PATH . '/modules/smartpartner/include/common.php';
 
     $smartPartnerCategoryHandler = smartpartner_gethandler('category');
     $criteria                    = new CriteriaCompo();
@@ -72,23 +71,23 @@ function b_categories_list_edit($options)
     $form = "<table border='0'>";
 
     /*$form .= "<tr><td>"._MB_SPARTNER_BLIMIT."</td><td>";
-     $form .= "<input type='text' name='options[0]' size='16' value='".$options[0]."' /></td></tr>";*/
+     $form .= "<input type='text' name='options[0]' size='16' value='".$options[0]."'></td></tr>";*/
     //sort
     $form .= '<tr><td>' . _MB_SPARTNER_SORT . '</td><td>';
     $form .= "<select size='1' name='options[0]'>";
-    $sel = '';
+    $sel  = '';
     if ($options[0] === 'title') {
-        $sel = " selected='selected'";
+        $sel = ' selected';
     }
     $form .= "<option value='name' " . $sel . '>' . _MB_SPARTNER_TITLE . '</option>';
-    $sel = '';
+    $sel  = '';
     if ($options[0] === 'weight') {
-        $sel = " selected='selected'";
+        $sel = ' selected';
     }
     $form .= "<option value='weight' " . $sel . '>' . _MB_SPARTNER_WEIGHT . '</option>';
-    $sel = '';
+    $sel  = '';
     if ($options[0] === 'categoryid') {
-        $sel = " selected='selected'";
+        $sel = ' selected';
     }
     $form .= "<option value='categoryid' " . $sel . '>' . _MB_SPARTNER_ID . '</option>';
     $form .= '</select></td></tr>';
@@ -96,14 +95,14 @@ function b_categories_list_edit($options)
     //order
     $form .= '<tr><td>' . _MB_SPARTNER_ORDER . '</td><td>';
     $form .= "<select size='1' name='options[2]'>";
-    $sel = '';
+    $sel  = '';
     if ($options[1] === 'ASC') {
-        $sel = " selected='selected'";
+        $sel = ' selected';
     }
     $form .= "<option value='ASC' " . $sel . '>' . _MB_SPARTNER_ASC . '</option>';
-    $sel = '';
+    $sel  = '';
     if ($options[1] === 'DESC') {
-        $sel = " selected='selected'";
+        $sel = ' selected';
     }
     $form .= "<option value='DESC' " . $sel . '>' . _MB_SPARTNER_DESC . '</option>';
 
@@ -112,14 +111,14 @@ function b_categories_list_edit($options)
     //displaysubs
     $form .= '<tr><td>' . _MB_SPARTNER_SHOW_CURR_SUBS . '</td><td>';
     $form .= "<select size='1' name='options[3]'>";
-    $sel = '';
+    $sel  = '';
     if ($options[2] == 1) {
-        $sel = " selected='selected'";
+        $sel = ' selected';
     }
     $form .= "<option value='1' " . $sel . '>' . _MB_SPARTNER_YES . '</option>';
-    $sel = '';
+    $sel  = '';
     if ($options[2] == 0) {
-        $sel = " selected='selected'";
+        $sel = ' selected';
     }
     $form .= "<option value='0' " . $sel . '>' . _MB_SPARTNER_NO . '</option>';
 

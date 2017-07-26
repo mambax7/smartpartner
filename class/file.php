@@ -9,7 +9,7 @@
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
 
-include_once XOOPS_ROOT_PATH . '/modules/smartpartner/include/common.php';
+require_once XOOPS_ROOT_PATH . '/modules/smartpartner/include/common.php';
 
 // File status
 define('_SPARTNER_STATUS_FILE_NOTSET', -1);
@@ -57,7 +57,7 @@ class SmartpartnerFile extends XoopsObject
      */
     public function checkUpload($post_field, &$allowed_mimetypes, &$errors)
     {
-        include_once(SMARTPARTNER_ROOT_PATH . 'class/uploader.php');
+        require_once SMARTPARTNER_ROOT_PATH . 'class/uploader.php';
         $config = smartpartner_getModuleConfig();
 
         $maxfilesize   = $config['maximum_filesize'];
@@ -94,7 +94,7 @@ class SmartpartnerFile extends XoopsObject
     {
         global $myts;
         $text = str_replace('&nbsp;', ' ', $text);
-        $text = str_replace('<br />', ' ', $text);
+        $text = str_replace('<br>', ' ', $text);
         $text = str_replace('. ', ' ', $text);
         $text = str_replace(', ', ' ', $text);
         $text = str_replace(')', '', $text);
@@ -141,7 +141,7 @@ class SmartpartnerFile extends XoopsObject
     public function storeUpload($post_field, $allowed_mimetypes = null, &$errors)
     {
         global $xoopsUser, $xoopsDB, $xoopsModule;
-        include_once(SMARTPARTNER_ROOT_PATH . 'class/uploader.php');
+        require_once SMARTPARTNER_ROOT_PATH . 'class/uploader.php';
 
         $config = smartpartner_getModuleConfig();
 
@@ -166,7 +166,7 @@ class SmartpartnerFile extends XoopsObject
         if (!is_dir(smartpartner_getUploadDir())) {
             //            mkdir(smartpartner_getUploadDir(), 0757);
             if (!@mkdir(smartpartner_getUploadDir(), 0757) && !is_dir(smartpartner_getUploadDir())) {
-                throw Exception("Couldn't create this directory: " . smartpartner_getUploadDir());
+                throw new Exception("Couldn't create this directory: " . smartpartner_getUploadDir());
             }
         }
 
@@ -333,7 +333,7 @@ class SmartpartnerFile extends XoopsObject
         $hModule            = xoops_getHandler('module');
         $hModConfig         = xoops_getHandler('config');
         $smartPartnerModule =& $hModule->getByDirname('smartpartner');
-        $smartPartnerConfig = &$hModConfig->getConfigsByCat(0, $smartPartnerModule->getVar('mid'));
+        $smartPartnerConfig =& $hModConfig->getConfigsByCat(0, $smartPartnerModule->getVar('mid'));
 
         return smartpartner_getUploadDir(false) . $this->filename();
     }
@@ -346,7 +346,7 @@ class SmartpartnerFile extends XoopsObject
         $hModule            = xoops_getHandler('module');
         $hModConfig         = xoops_getHandler('config');
         $smartPartnerModule =& $hModule->getByDirname('smartpartner');
-        $smartPartnerConfig = &$hModConfig->getConfigsByCat(0, $smartPartnerModule->getVar('mid'));
+        $smartPartnerConfig =& $hModConfig->getConfigsByCat(0, $smartPartnerModule->getVar('mid'));
 
         return smartpartner_getUploadDir() . $this->filename();
     }
@@ -379,7 +379,7 @@ class SmartpartnerFile extends XoopsObject
     public function displayFlash()
     {
         if (!defined('MYTEXTSANITIZER_EXTENDED_MEDIA')) {
-            include_once(SMARTPARTNER_ROOT_PATH . 'include/media.textsanitizer.php');
+            require_once SMARTPARTNER_ROOT_PATH . 'include/media.textsanitizer.php';
         }
         $media_ts = MyTextSanitizerExtension::getInstance();
 

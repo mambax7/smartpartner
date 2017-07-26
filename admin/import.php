@@ -7,7 +7,7 @@
  * Licence: GNU
  */
 
-include_once __DIR__ . '/admin_header.php';
+require_once __DIR__ . '/admin_header.php';
 
 $op = 'none';
 
@@ -29,13 +29,13 @@ switch ($op) {
             $errs[] = sprintf(_AM_SPARTNER_IMPORT_FILE_NOT_FOUND, $importfile_path);
             $error  = true;
         } else {
-            include_once($importfile_path);
+            require_once $importfile_path;
         }
         foreach ($msgs as $m) {
             echo $m . '<br>';
         }
         echo '<br>';
-        if ($error == true) {
+        if ($error === true) {
             $endMsg = _AM_SPARTNER_IMPORT_ERROR;
         } else {
             $endMsg = _AM_SPARTNER_IMPORT_SUCCESS;
@@ -53,22 +53,23 @@ switch ($op) {
         $importfile = 'none';
 
         smartpartner_xoops_cp_header();
-        $indexAdmin = new ModuleAdmin();
-        echo $indexAdmin->addNavigation(basename(__FILE__));
+        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject->displayNavigation(basename(__FILE__));
 
         smartpartner_collapsableBar('bottomtable', 'bottomtableicon', _AM_SPARTNER_IMPORT_TITLE, _AM_SPARTNER_IMPORT_INFO);
 
         global $xoopsUser, $xoopsUser, $xoopsConfig, $xoopsDB, $modify, $xoopsModuleConfig, $xoopsModule, $XOOPS_URL, $myts;
 
-        include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+        require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
+        /** @var XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         if ($moduleHandler->getByDirname('xoopspartners')) {
             $importfile_select_array['xoopspartners'] = _AM_SPARTNER_IMPORT_XOOPSPARTNERS_110;
         }
 
         if (isset($importfile_select_array) && count($importfile_select_array) > 0) {
-            $sform = new XoopsThemeForm(_AM_SPARTNER_IMPORT_SELECTION, 'op', xoops_getenv('PHP_SELF'));
+            $sform = new XoopsThemeForm(_AM_SPARTNER_IMPORT_SELECTION, 'op', xoops_getenv('PHP_SELF'), 'post', true);
             $sform->setExtra('enctype="multipart/form-data"');
 
             // Partners to import
@@ -107,4 +108,4 @@ switch ($op) {
 
 //smart_modFooter();
 //xoops_cp_footer();
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

@@ -7,7 +7,7 @@
  * Licence: GNU
  */
 
-include_once __DIR__ . '/admin_header.php';
+require_once __DIR__ . '/admin_header.php';
 
 global $smartPartnerFileHandler;
 
@@ -28,7 +28,7 @@ function editfile($showmenu = false, $fileid = 0, $id = 0)
 {
     global $smartPartnerFileHandler, $xoopsModule;
 
-    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     // if there is a parameter, and the id exists, retrieve data: we're editing a file
     if ($fileid != 0) {
 
@@ -54,7 +54,7 @@ function editfile($showmenu = false, $fileid = 0, $id = 0)
     }
 
     // FILES UPLOAD FORM
-    $files_form = new XoopsThemeForm(_AM_SPARTNER_UPLOAD_FILE, 'files_form', xoops_getenv('PHP_SELF'));
+    $files_form = new XoopsThemeForm(_AM_SPARTNER_UPLOAD_FILE, 'files_form', xoops_getenv('PHP_SELF'), 'post', true);
     $files_form->setExtra("enctype='multipart/form-data'");
 
     // NAME
@@ -142,7 +142,7 @@ switch ($op) {
         }
 
         smartpartner_xoops_cp_header();
-        include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+        require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
         editfile(true, $fileid, $id);
         break;
@@ -201,8 +201,12 @@ switch ($op) {
             $fileid = isset($_GET['fileid']) ? (int)$_GET['fileid'] : 0;
 
             smartpartner_xoops_cp_header();
-            xoops_confirm(array('op' => 'del', 'fileid' => $fileObj->fileid(), 'confirm' => 1, 'name' => $fileObj->name()), 'file.php',
-                          _AM_SPARTNER_DELETETHISFILE . ' <br>' . $fileObj->name() . ' <br> <br>', _AM_SPARTNER_DELETE);
+            xoops_confirm(array(
+                              'op'      => 'del',
+                              'fileid'  => $fileObj->fileid(),
+                              'confirm' => 1,
+                              'name'    => $fileObj->name()
+                          ), 'file.php', _AM_SPARTNER_DELETETHISFILE . ' <br>' . $fileObj->name() . ' <br> <br>', _AM_SPARTNER_DELETE);
             xoops_cp_footer();
         }
 
@@ -214,8 +218,8 @@ switch ($op) {
         smartpartner_xoops_cp_header();
 
         exit;
-        include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-        include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
+        require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+        require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 
         global $xoopsUser, $xoopsUser, $xoopsConfig, $xoopsDB, $xoopsModuleConfig, $xoopsModule;
 
@@ -240,41 +244,15 @@ switch ($op) {
         echo '</tr>';
         if ($totalitems > 0) {
             for ($i = 0; $i < $totalItemsOnPage; ++$i) {
-                $categoryObj =& $itemsObj[$i]->category();
+                $categoryObj = $itemsObj[$i]->category();
 
-                $modify = "<a href='partner.php?op=mod&id="
-                          . $itemsObj[$i]->id()
-                          . "'><img src='"
-                          . $pathIcon16
-                          . '/edit.png'
-                          . "' title='"
-                          . _AM_SPARTNER_EDITITEM
-                          . "' alt='"
-                          . _AM_SPARTNER_EDITITEM
-                          . "' /></a>";
-                $delete = "<a href='partner.php?op=del&id="
-                          . $itemsObj[$i]->id()
-                          . "'><img src='"
-                          . $pathIcon16
-                          . '/delete.png'
-                          . "' title='"
-                          . _AM_SPARTNER_EDITITEM
-                          . "' alt='"
-                          . _AM_SPARTNER_DELETEITEM
-                          . "'/></a>";
+                $modify = "<a href='partner.php?op=mod&id=" . $itemsObj[$i]->id() . "'><img src='" . $pathIcon16 . '/edit.png' . "' title='" . _AM_SPARTNER_EDITITEM . "' alt='" . _AM_SPARTNER_EDITITEM . "'></a>";
+                $delete = "<a href='partner.php?op=del&id=" . $itemsObj[$i]->id() . "'><img src='" . $pathIcon16 . '/delete.png' . "' title='" . _AM_SPARTNER_EDITITEM . "' alt='" . _AM_SPARTNER_DELETEITEM . "'></a>";
 
                 echo '<tr>';
                 echo "<td class='head' align='center'>" . $itemsObj[$i]->id() . '</td>';
                 echo "<td class='even' align='left'>" . $categoryObj->name() . '</td>';
-                echo "<td class='even' align='left'><a href='"
-                     . XOOPS_URL
-                     . '/modules/'
-                     . $xoopsModule->dirname()
-                     . '/partner.php?id='
-                     . $itemsObj[$i]->id()
-                     . "'>"
-                     . $itemsObj[$i]->title()
-                     . '</a></td>';
+                echo "<td class='even' align='left'><a href='" . XOOPS_URL . '/modules/' . $xoopsModule->dirname() . '/partner.php?id=' . $itemsObj[$i]->id() . "'>" . $itemsObj[$i]->title() . '</a></td>';
                 echo "<td class='even' align='center'>" . $itemsObj[$i]->datesub() . '</td>';
                 echo "<td class='even' align='center'> $modify $delete </td>";
                 echo '</tr>';
@@ -301,4 +279,4 @@ switch ($op) {
 }
 //smart_modFooter();
 //xoops_cp_footer();
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

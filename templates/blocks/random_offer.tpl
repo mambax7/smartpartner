@@ -34,7 +34,8 @@
             <div align='center'>
                 <br> <{foreach item=offer from=$block.offers}>
                     <a href="<{$xoops_url}>/modules/smartpartner/partner.php?id=<{$offer.partnerid}>"> <{if $offer.image != ""}>
-                            <img src="<{$xoops_url}>/uploads/smartpartner/offer/<{$offer.image}>" border="0" alt="<{$offer.title}>" <{$block.fadeImage}> />
+                            <img src="<{$xoops_url}>/uploads/smartpartner/offer/<{$offer.image}>" border="0"
+                                 alt="<{$offer.title}>" <{$block.fadeImage}>>
                             <br>
                         <{/if}> <{$offer.title}>
                     </a>

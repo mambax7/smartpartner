@@ -1,13 +1,25 @@
 <?php
-//
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2016 XOOPS.org                        //
-//                       <https://xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**
+ * @copyright      {@link https://xoops.org/ XOOPS Project}
+ * @license        {@link http://www.gnu.org/licenses/gpl-2.0.html GNU GPL 2 or later}
+ * @package
+ * @since
+ * @author         XOOPS Development Team
+ */
+
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
-include_once XOOPS_ROOT_PATH . '/modules/smartpartner/include/common.php';
-require_once(SMARTPARTNER_ROOT_PATH . 'class/baseObjectHandler.php');
+require_once XOOPS_ROOT_PATH . '/modules/smartpartner/include/common.php';
+require_once SMARTPARTNER_ROOT_PATH . 'class/baseObjectHandler.php';
 
 /**
  * smartpartnerMimetype class
@@ -52,7 +64,7 @@ class smartpartnerMimetype extends XoopsObject
 /**
  * Class smartpartnerMimetypeHandler
  */
-class smartpartnerMimetypeHandler extends SmartpartnerBaseObjectHandler
+class SmartpartnerMimetypeHandler extends SmartpartnerBaseObjectHandler
 {
     /**
      * Name of child class
@@ -176,7 +188,7 @@ class smartpartnerMimetypeHandler extends SmartpartnerBaseObjectHandler
               }
           }*/
         global $xoopsModuleConfig;
-        $mymetypesArray = include_once(SMARTPARTNER_ROOT_PATH . '/include/mimetypes.inc.php');
+        $mymetypesArray = require_once SMARTPARTNER_ROOT_PATH . '/include/mimetypes.inc.php';
         foreach (explode('|', $xoopsModuleConfig['allowed_ext']) as $ext) {
             $allowed_mimetypes[] = array('type' => $mymetypesArray[$ext], 'ext' => $ext);
         }
@@ -249,8 +261,7 @@ class smartpartnerMimetypeHandler extends SmartpartnerBaseObjectHandler
         }
 
         $sql = sprintf('INSERT INTO %s (mime_id, mime_ext, mime_types, mime_name, mime_admin, mime_user) VALUES
-               (%u, %s, %s, %s, %u, %u)', $this->_db->prefix($this->_dbtable), $mime_id, $this->_db->quoteString($mime_ext), $this->_db->quoteString($mime_types), $this->_db->quoteString($mime_name),
-                       $mime_admin, $mime_user);
+               (%u, %s, %s, %s, %u, %u)', $this->_db->prefix($this->_dbtable), $mime_id, $this->_db->quoteString($mime_ext), $this->_db->quoteString($mime_types), $this->_db->quoteString($mime_name), $mime_admin, $mime_user);
 
         return $sql;
     }
@@ -267,8 +278,7 @@ class smartpartnerMimetypeHandler extends SmartpartnerBaseObjectHandler
         }
 
         $sql = sprintf('UPDATE %s SET mime_ext = %s, mime_types = %s, mime_name = %s, mime_admin = %u, mime_user = %u WHERE
-               mime_id = %u', $this->_db->prefix($this->_dbtable), $this->_db->quoteString($mime_ext), $this->_db->quoteString($mime_types), $this->_db->quoteString($mime_name), $mime_admin,
-                       $mime_user, $mime_id);
+               mime_id = %u', $this->_db->prefix($this->_dbtable), $this->_db->quoteString($mime_ext), $this->_db->quoteString($mime_types), $this->_db->quoteString($mime_name), $mime_admin, $mime_user, $mime_id);
 
         return $sql;
     }
@@ -284,4 +294,3 @@ class smartpartnerMimetypeHandler extends SmartpartnerBaseObjectHandler
         return $sql;
     }
 } // end class
-

@@ -39,27 +39,9 @@ echo '</tr>';
 if ($totalitems > 0) {
     global $pathIcon16;
     for ($i = 0; $i < $totalitemsOnPage; ++$i) {
-        $categoryObj =& $allcats[$itemsObj[$i]->categoryid()];
-        $modify      = "<a href='item.php?op=mod&amp;itemid="
-                       . $itemsObj[$i]->itemid()
-                       . "'><img src='"
-                       . $pathIcon16
-                       . '/edit.png'
-                       . "'  title='"
-                       . _AM_SPARTNER_EDITITEM
-                       . "' alt='"
-                       . _AM_SPARTNER_EDITITEM
-                       . "' /></a>";
-        $delete      = "<a href='item.php?op=del&amp;itemid="
-                       . $itemsObj[$i]->itemid()
-                       . "'><img src='"
-                       . $pathIcon16
-                       . '/delete.png'
-                       . "'  title='"
-                       . _AM_SPARTNER_DELETEITEM
-                       . "' alt='"
-                       . _AM_SPARTNER_DELETEITEM
-                       . "'/></a>";
+        $categoryObj = $allcats[$itemsObj[$i]->categoryid()];
+        $modify      = "<a href='item.php?op=mod&amp;itemid=" . $itemsObj[$i]->itemid() . "'><img src='" . $pathIcon16 . '/edit.png' . "'  title='" . _AM_SPARTNER_EDITITEM . "' alt='" . _AM_SPARTNER_EDITITEM . "'></a>";
+        $delete      = "<a href='item.php?op=del&amp;itemid=" . $itemsObj[$i]->itemid() . "'><img src='" . $pathIcon16 . '/delete.png' . "'  title='" . _AM_SPARTNER_DELETEITEM . "' alt='" . _AM_SPARTNER_DELETEITEM . "'></a>";
 
         echo '<tr>';
         echo "<td class='head' align='center'>" . $itemsObj[$i]->itemid() . '</td>';

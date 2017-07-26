@@ -58,7 +58,7 @@ if (!file_exists($common_file)) {
     $common_file = XOOPS_ROOT_PATH . '/modules/smartsection/language/english/smartdbupdater.php';
 }
 
-include($common_file);
+include $common_file;
 
 /**
  * Class SmartDbTable
@@ -265,9 +265,7 @@ class SmartDbTable
      * @param string $name name of the field
      * @param        $newValue
      * @param        $oldValue
-     * @internal param string $old old propertie
-     * @internal param string $new new propertie
-     */ //felix
+     */
     public function addUpdatedWhere($name, $newValue, $oldValue)
     {
         $field['name']         = $name;

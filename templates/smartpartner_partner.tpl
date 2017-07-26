@@ -5,14 +5,17 @@
 <div>
     <div class="smartpartner_partnertitle">
         <{if $partner.update_status == 'new'}>
-            <img src='<{$smartPartner_url}>assets/images/icon/new_icon.gif'/>
+            <img src='<{$smartPartner_url}>assets/images/icon/new_icon.gif'>
         <{elseif $partner.update_status == 'updated'}>
-            <img src='<{$smartPartner_url}>assets/images/icon/updated_icon.gif'/>
+            <img src='<{$smartPartner_url}>assets/images/icon/updated_icon.gif'>
         <{/if}> <{$partner.urllink}>
-        <img style='float: right; padding: 10px;' src='<{$partner.image}>' alt='<{$partner.clean_title}>' title='<{$partner.clean_title}>' align='right'
-             border='5px'/></a><{$partner.title}> <{if $isAdmin}>
-            <a href="<{$smartPartner_url}>admin/partner.php?op=mod&id=<{$partner.id}>"><img src="<{xoModuleIcons16 edit.png}>" title="<{$lang_edit}>" alt="<{$lang_edit}>"/></a>
-            <a href="<{$smartPartner_url}>admin/partner.php?op=del&id=<{$partner.id}>"><img src="<{xoModuleIcons16 delete.png}>" title="<{$lang_delete}>" alt="<{$lang_delete}>"/></a>
+        <img style='float: right; padding: 10px;' src='<{$partner.image}>' alt='<{$partner.clean_title}>'
+             title='<{$partner.clean_title}>' align='right'
+             border='5px'></a><{$partner.title}> <{if $isAdmin}>
+            <a href="<{$smartPartner_url}>admin/partner.php?op=mod&id=<{$partner.id}>"><img
+                        src="<{xoModuleIcons16 edit.png}>" title="<{$lang_edit}>" alt="<{$lang_edit}>"></a>
+            <a href="<{$smartPartner_url}>admin/partner.php?op=del&id=<{$partner.id}>"><img
+                        src="<{xoModuleIcons16 delete.png}>" title="<{$lang_delete}>" alt="<{$lang_delete}>"></a>
         <{/if}>
     </div>
     <{if $partner.showsummary}>
@@ -126,9 +129,10 @@
         <!-- BEGIN DYNAMIC BLOCK --> <{foreach item=file from=$partner.files}>
             <tr>
                 <td valign="middle" class="odd" align="left">
-                    <a href="<{$xoops_url}>/modules/smartpartner/visit.php?fileid=<{$file.fileid}>" target="_blank"><img src="<{$smartsection_url}>assets/images/icon/file.gif"
-                                                                                                                         title="<{$lang_download_file}>"
-                                                                                                                         alt="<{$lang_download_file}>"/>&nbsp;<b><{$file.name}></b></a>
+                    <a href="<{$xoops_url}>/modules/smartpartner/visit.php?fileid=<{$file.fileid}>" target="_blank"><img
+                                src="<{$smartsection_url}>assets/images/icon/file.gif"
+                                title="<{$lang_download_file}>"
+                                alt="<{$lang_download_file}>">&nbsp;<b><{$file.name}></b></a>
 
                     <div><{$file.description}></div>
                 <td valign="middle" class="odd" align="center"><{$file.datesub}></td>

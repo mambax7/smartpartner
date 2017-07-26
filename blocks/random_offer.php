@@ -11,13 +11,13 @@
 
 function b_random_offer_show($options)
 {
-    include_once(XOOPS_ROOT_PATH . '/modules/smartpartner/include/common.php');
+    require_once XOOPS_ROOT_PATH . '/modules/smartpartner/include/common.php';
 
     // Creating the partner handler object
     $smartPartnerOfferHandler   = smartpartner_gethandler('offer');
     $smartPartnerPartnerHandler = smartpartner_gethandler('partner');
 
-    include_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
+    require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
     $smartPermissionsHandler = new SmartobjectPermissionHandler($smartPartnerPartnerHandler);
     //var_dump($smartPermissionsHandler->handler);exit;
     $grantedItems = $smartPermissionsHandler->getGrantedItems('full_view');
@@ -67,53 +67,53 @@ function b_random_offer_edit($options)
     /*$form .= "<tr><td>"._MB_SPARTNER_PARTNERS_PSPACE."</td><td>";
      $chk   = "";
      if ($options[0] == 0) {
-         $chk = " checked='checked'";
+         $chk = " checked";
      }
-     $form .= "<input type='radio' name='options[0]' value='0'".$chk." />"._NO."";
+     $form .= "<input type='radio' name='options[0]' value='0'".$chk.">"._NO."";
      $chk   = "";
      if ($options[0] == 1) {
-         $chk = " checked='checked'";
+         $chk = " checked";
      }
-     $form .= "<input type='radio' name='options[0]' value='1'".$chk." />"._YES."</td></tr>";*/
+     $form .= "<input type='radio' name='options[0]' value='1'".$chk.">"._YES."</td></tr>";*/
     $form .= '<tr><td>' . _MB_SPARTNER_FADE . '</td><td>';
-    $chk = '';
+    $chk  = '';
     if ($options[0] == 0) {
-        $chk = " checked='checked'";
+        $chk = ' checked';
     }
-    $form .= "<input type='radio' name='options[1]' value='0'" . $chk . ' />' . _NO . '';
-    $chk = '';
+    $form .= "<input type='radio' name='options[1]' value='0'" . $chk . '>' . _NO . '';
+    $chk  = '';
     if ($options[0] == 1) {
-        $chk = " checked='checked'";
+        $chk = ' checked';
     }
-    $form .= "<input type='radio' name='options[1]' value='1'" . $chk . ' />' . _YES . '</td></tr>';
+    $form .= "<input type='radio' name='options[1]' value='1'" . $chk . '>' . _YES . '</td></tr>';
     /*$form .= "<tr><td>"._MB_SPARTNER_BRAND."</td><td>";
      $chk   = "";
      if ($options[2] == 0) {
-         $chk = " checked='checked'";
+         $chk = " checked";
      }
-     $form .= "<input type='radio' name='options[2]' value='0'".$chk." />"._NO."";
+     $form .= "<input type='radio' name='options[2]' value='0'".$chk.">"._NO."";
      $chk   = "";
      if ($options[2] == 1) {
-         $chk = " checked='checked'";
+         $chk = " checked";
      }
-     $form .= "<input type='radio' name='options[2]' value='1'".$chk." />"._YES."</td></tr>";
+     $form .= "<input type='radio' name='options[2]' value='1'".$chk.">"._YES."</td></tr>";
      $form .= "<tr><td>"._MB_SPARTNER_BLIMIT."</td><td>";
-     $form .= "<input type='text' name='options[3]' size='16' value='".$options[3]."' /></td></tr>";*/
+     $form .= "<input type='text' name='options[3]' size='16' value='".$options[3]."'></td></tr>";*/
     $form .= '<tr><td>' . _MB_SPARTNER_BSHOW . '</td><td>';
     $form .= "<select size='1' name='options[1]'>";
-    $sel = '';
+    $sel  = '';
     if ($options[1] == 1) {
-        $sel = " selected='selected'";
+        $sel = ' selected';
     }
     $form .= "<option value='1' " . $sel . '>' . _MB_SPARTNER_IMAGES . '</option>';
-    $sel = '';
+    $sel  = '';
     if ($options[1] == 2) {
-        $sel = " selected='selected'";
+        $sel = ' selected';
     }
     $form .= "<option value='2' " . $sel . '>' . _MB_SPARTNER_TEXT . '</option>';
-    $sel = '';
+    $sel  = '';
     if ($options[1] == 3) {
-        $sel = " selected='selected'";
+        $sel = ' selected';
     }
     $form .= "<option value='3' " . $sel . '>' . _MB_SPARTNER_BOTH . '</option>';
     $form .= '</select></td></tr>';
@@ -121,48 +121,48 @@ function b_random_offer_edit($options)
      $form .= "<select size='1' name='options[5]'>";
      $sel = "";
      if ($options[5] == "id") {
-         $sel = " selected='selected'";
+         $sel = " selected";
      }
      $form .= "<option value='id' ".$sel.">"._MB_SPARTNER_ID."</option>";
      $sel = "";
      if ($options[5] == "hits") {
-         $sel = " selected='selected'";
+         $sel = " selected";
      }
      $form .= "<option value='hits' ".$sel.">"._MB_SPARTNER_HITS."</option>";
      $sel = "";
      if ($options[5] == "title") {
-         $sel = " selected='selected'";
+         $sel = " selected";
      }
      $form .= "<option value='title' ".$sel.">"._MB_SPARTNER_TITLE."</option>";
      if ($options[5] == "weight") {
-         $sel = " selected='selected'";
+         $sel = " selected";
      }
      $form .= "<option value='weight' ".$sel.">"._MB_SPARTNER_WEIGHT."</option>";
      $form .= "</select> ";
      $form .= "<select size='1' name='options[6]'>";
      $sel = "";
      if ($options[6] == "ASC") {
-         $sel = " selected='selected'";
+         $sel = " selected";
      }
      $form .= "<option value='ASC' ".$sel.">"._MB_SPARTNER_ASC."</option>";
      $sel = "";
      if ($options[6] == "DESC") {
-         $sel = " selected='selected'";
+         $sel = " selected";
      }
      $form .= "<option value='DESC' ".$sel.">"._MB_SPARTNER_DESC."</option>";
      $form .= "</select></td></tr>";
      */
     $form .= '<tr><td>' . _MB_SPARTNER_SEE_ALL . '</td><td>';
-    $chk = '';
+    $chk  = '';
     if ($options[2] == 0) {
-        $chk = " checked='checked'";
+        $chk = ' checked';
     }
-    $form .= "<input type='radio' name='options[2]' value='0'" . $chk . ' />' . _NO . '';
-    $chk = '';
+    $form .= "<input type='radio' name='options[2]' value='0'" . $chk . '>' . _NO . '';
+    $chk  = '';
     if (isset($options[7]) && $options[7] == 1) {
-        $chk = " checked='checked'";
+        $chk = ' checked';
     }
-    $form .= "<input type='radio' name='options[2]' value='1'" . $chk . ' />' . _YES . '</td></tr>';
+    $form .= "<input type='radio' name='options[2]' value='1'" . $chk . '>' . _YES . '</td></tr>';
 
     $form .= '</table>';
 

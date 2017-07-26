@@ -1,24 +1,26 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="fr" lang="fr">
 <head>
-    <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1"/>
-    <meta http-equiv="content-language" content="fr"/>
-    <meta name="robots" content="index,follow"/>
-    <meta name="keywords" content="InBox, Solutions"/>
+    <meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+    <meta http-equiv="content-language" content="fr">
+    <meta name="robots" content="index,follow">
+    <meta name="keywords" content="InBox, Solutions">
     <meta name="description"
-          content="InBox Solutions propose une gamme complète de solutions pour sites web dentreprises. De la simple conception de site au développement dapplications web performantes, InBox Solutions est votre seul arrêt pour tout vos besoins web !"/>
-    <meta name="rating" content="general"/>
-    <meta name="author" content="XOOPS"/>
-    <meta name="copyright" content="Copyright &copy; 2001-2003"/>
-    <meta name="generator" content="XOOPS"/>
+          content="InBox Solutions propose une gamme complète de solutions pour sites web dentreprises. De la simple conception de site au développement dapplications web performantes, InBox Solutions est votre seul arrêt pour tout vos besoins web !">
+    <meta name="rating" content="general">
+    <meta name="author" content="XOOPS">
+    <meta name="copyright" content="Copyright &copy; 2001-2003">
+    <meta name="generator" content="XOOPS">
     <title>InBox Solutions - SmartPartner - Colloque technique et scientifique sur la réseautique avancée</title>
-    <link href="http://marcan/smart/favicon.ico" rel="SHORTCUT ICON"/>
-    <link rel="stylesheet" type="text/css" media="screen" href="http://marcan/smart/xoops.css"/>
-    <link rel="stylesheet" type="text/css" media="screen" href="http://marcan/smart/themes/default/styleNN.css"/>
+    <link href="http://marcan/smart/favicon.ico" rel="SHORTCUT ICON">
+    <link rel="stylesheet" type="text/css" media="screen" href="http://marcan/smart/xoops.css">
+    <link rel="stylesheet" type="text/css" media="screen" href="http://marcan/smart/themes/default/styleNN.css">
 
     <!-- RMV: added module header -->
-    <meta name="multilanguages" content="XOOPS Multilanguages is developed by The SmartFactory (http://www.smartfactory.ca), a division of InBox Solutions (http://www.inboxsolutions.net)"/>
-    <link rel='stylesheet' type='text/css' href='http://marcan/smart/modules/smartpartner//smartpartner.css'/>
+    <meta name="multilanguages"
+          content="XOOPS Multilanguages is developed by The SmartFactory (http://www.smartfactory.ca), a division of InBox Solutions (http://www.inboxsolutions.net)">
+    <link rel='stylesheet' type='text/css' href='http://marcan/smart/modules/smartpartner//smartpartner.css'>
     <script type="text/javascript">
         <!--
         //--></script>
@@ -39,11 +41,14 @@
     <tr>
         <td width="60%" valign="top">
             <div class="smartpartner_partnertitle">
-                <{$partner.urllink}><img style='float: right; padding: 10px;' src='<{$partner.image}>' alt='<{$partner.clean_title}>' title='<{$partner.clean_title}>' align='right'
-                                         border='5px'/></a><{$partner.title}> <{if $isAdmin}>
-                    <a href="<{$xoops_url}>/modules/smartpartner/admin/partner.php?op=mod&id=<{$partner.id}>"><img src="<{xoModuleIcons16 edit.png}>" title="<{$lang_edit}>" alt="<{$lang_edit}>"/></a>
-                    <a href="<{$xoops_url}>/modules/smartpartner/admin/partner.php?op=del&id=<{$partner.id}>"><img src="<{xoModuleIcons16 delete.png}>" title="<{$lang_delete}>"
-                                                                                                                   alt="<{$lang_delete}>"/></a>
+                <{$partner.urllink}><img style='float: right; padding: 10px;' src='<{$partner.image}>'
+                                         alt='<{$partner.clean_title}>' title='<{$partner.clean_title}>' align='right'
+                                         border='5px'></a><{$partner.title}> <{if $isAdmin}>
+                    <a href="<{$xoops_url}>/modules/smartpartner/admin/partner.php?op=mod&id=<{$partner.id}>"><img
+                                src="<{xoModuleIcons16 edit.png}>" title="<{$lang_edit}>" alt="<{$lang_edit}>"></a>
+                    <a href="<{$xoops_url}>/modules/smartpartner/admin/partner.php?op=del&id=<{$partner.id}>"><img
+                                src="<{xoModuleIcons16 delete.png}>" title="<{$lang_delete}>"
+                                alt="<{$lang_delete}>"></a>
                 <{/if}>
             </div>
             <div class="smartpartner_partnersummary">
@@ -141,12 +146,15 @@
                         <tr>
                             <td><h2><{$wiwimod.title}></h2></td>
                             <td style="text-align:right;">
-                                <{foreach from=$parentlist item=pg}>[<{$pg}>]&nbsp;>&nbsp;<{/foreach}> [<{$wiwimod.keyword}>]
+                                <{foreach from=$parentlist item=pg}>[<{$pg}>]&nbsp;>&nbsp;<{/foreach}>
+                                [<{$wiwimod.keyword}>]
                             </td>
                         </tr>
                     </table>
 
                     <{$wiwimod.body}>
-                    <div style="text-align: right; padding: 3px; margin: 0; color: #8090B1;"><span style="border-top: 1px solid #8090B1; padding: 3px; font-style:italic; font-size:small;">
-<{$_MD_WIWI_MODIFIED_TXT}> <{$wiwimod.lastmodified}> <{$_MD_WIWI_BY}> <span class="itemPoster"><{$wiwimod.author}></span>
+                    <div style="text-align: right; padding: 3px; margin: 0; color: #8090B1;"><span
+                                style="border-top: 1px solid #8090B1; padding: 3px; font-style:italic; font-size:small;">
+<{$_MD_WIWI_MODIFIED_TXT}> <{$wiwimod.lastmodified}> <{$_MD_WIWI_BY}> <span
+                                    class="itemPoster"><{$wiwimod.author}></span>
 </span></div>

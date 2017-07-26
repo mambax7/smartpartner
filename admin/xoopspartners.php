@@ -12,7 +12,7 @@
  *
  */
 
-include_once __DIR__ . '/admin_header.php';
+require_once __DIR__ . '/admin_header.php';
 
 $importFromModuleName = 'XoopsPartners';
 $scriptname           = 'xoopspartners.php';
@@ -25,12 +25,11 @@ if (isset($_POST['op']) && ($_POST['op'] === 'go')) {
 
 if ($op === 'start') {
     smartpartner_xoops_cp_header();
-    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
-    $result = $xoopsDB->query('select count(*) from ' . $xoopsDB->prefix('partners'));
+    $result = $xoopsDB->query('SELECT count(*) FROM ' . $xoopsDB->prefix('partners'));
     list($totalpartners) = $xoopsDB->fetchRow($result);
-    smartpartner_collapsableBar('bottomtable', 'bottomtableicon', sprintf(_AM_SPARTNER_IMPORT_FROM, $importFromModuleName),
-                                sprintf(_AM_SPARTNER_IMPORT_MODULE_FOUND, $importFromModuleName, $totalpartners));
+    smartpartner_collapsableBar('bottomtable', 'bottomtableicon', sprintf(_AM_SPARTNER_IMPORT_FROM, $importFromModuleName), sprintf(_AM_SPARTNER_IMPORT_MODULE_FOUND, $importFromModuleName, $totalpartners));
 
     $form = new XoopsThemeForm(_AM_SPARTNER_IMPORT_SETTINGS, 'import_form', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/' . $scriptname);
 
@@ -45,7 +44,7 @@ if ($op === 'start') {
 }
 
 if ($op === 'go') {
-    include_once __DIR__ . '/admin_header.php';
+    require_once __DIR__ . '/admin_header.php';
 
     smartpartner_xoops_cp_header();
     smartpartner_collapsableBar('bottomtable', 'bottomtableicon', sprintf(_AM_SPARTNER_IMPORT_FROM, $importFromModuleName), _AM_SPARTNER_IMPORT_RESULT);
@@ -53,7 +52,7 @@ if ($op === 'go') {
 
     $smartPartnerPartnerHandler = smartpartner_gethandler('partner');
 
-    $resultPartners = $xoopsDB->query('select * from ' . $xoopsDB->prefix('partners') . ' ');
+    $resultPartners = $xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('partners') . ' ');
     while ($arrPartners = $xoopsDB->fetchArray($resultPartners)) {
         extract($arrPartners, EXTR_PREFIX_ALL, 'xpartner');
 
@@ -93,5 +92,5 @@ if ($op === 'go') {
 echo '</div>';
 //smart_modFooter();
 //xoops_cp_footer();
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';
 exit();

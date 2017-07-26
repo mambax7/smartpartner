@@ -20,7 +20,7 @@ function smartpartner_search($queryarray, $andor, $limit, $offset, $userid)
     if (!defined('SMARTPARTNER_DIRNAME')) {
         define('SMARTPARTNER_DIRNAME', 'smartpartner');
     }
-    include_once XOOPS_ROOT_PATH . '/modules/' . SMARTPARTNER_DIRNAME . '/include/common.php';
+    require_once XOOPS_ROOT_PATH . '/modules/' . SMARTPARTNER_DIRNAME . '/include/common.php';
 
     $ret = array();
 

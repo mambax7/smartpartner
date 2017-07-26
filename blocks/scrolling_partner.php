@@ -12,7 +12,7 @@
 
 function b_scrolling_partner_show($options)
 {
-    include_once(XOOPS_ROOT_PATH . '/modules/smartpartner/include/common.php');
+    require_once XOOPS_ROOT_PATH . '/modules/smartpartner/include/common.php';
 
     // Creating the partner handler object
     $smartPartnerPartnerHandler = smartpartner_gethandler('partner');
@@ -69,17 +69,17 @@ function b_scrolling_partner_edit($options)
 {
     $form = "<table border='0'>";
     $form .= '<tr><td>' . _MB_SPARTNER_BLIMIT . '</td><td>';
-    $form .= "<input type='text' name='options[0]' size='16' value='" . $options[0] . "' /></td></tr>";
+    $form .= "<input type='text' name='options[0]' size='16' value='" . $options[0] . "'></td></tr>";
     $form .= '<tr><td>' . _MB_SPARTNER_BWIDTH . '</td><td>';
-    $form .= "<input type='text' name='options[1]' size='16' value='" . $options[1] . "' /></td></tr>";
+    $form .= "<input type='text' name='options[1]' size='16' value='" . $options[1] . "'></td></tr>";
     $form .= '<tr><td>' . _MB_SPARTNER_BHEIGHT . '</td><td>';
-    $form .= "<input type='text' name='options[2]' size='16' value='" . $options[2] . "' /></td></tr>";
+    $form .= "<input type='text' name='options[2]' size='16' value='" . $options[2] . "'></td></tr>";
     $form .= '<tr><td>' . _MB_SPARTNER_BSPEED . '</td><td>';
-    $form .= "<input type='text' name='options[3]' size='16' value='" . $options[3] . "' /></td></tr>";
+    $form .= "<input type='text' name='options[3]' size='16' value='" . $options[3] . "'></td></tr>";
     $form .= '<tr><td>' . _MB_SPARTNER_BSPACE . '</td><td>';
-    $form .= "<input type='text' name='options[4]' size='16' value='" . $options[4] . "' /></td></tr>";
+    $form .= "<input type='text' name='options[4]' size='16' value='" . $options[4] . "'></td></tr>";
     $form .= '<tr><td>' . _MB_SPARTNER_BBG . '</td><td>';
-    $form .= "<input type='text' name='options[5]' size='16' value='" . (isset($options[5]) ? $options[5] : '') . "' /></td></tr>";
+    $form .= "<input type='text' name='options[5]' size='16' value='" . (isset($options[5]) ? $options[5] : '') . "'></td></tr>";
 
     $form .= '</table>';
 

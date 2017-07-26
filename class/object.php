@@ -1,33 +1,21 @@
 <?php
-// 
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2016 XOOPS.org                        //
-//                       <https://xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, https://xoops.org/, http://jp.xoops.org/ //
-// Project: XOOPS Project                                                    //
-// ------------------------------------------------------------------------- //
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**
+ * @copyright    XOOPS Project https://xoops.org/
+ * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @package
+ * @since
+ * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
+ */
 
 /**
  * Persistable Object Handler class.
@@ -54,13 +42,13 @@ class smartpartner_PersistableObjectHandler extends XoopsObjectHandler
 
     /**
      * Constructor - called from child classes
-     * @param object|XoopsDatabase $db        {@link XoopsDatabase}
+     * @param null|XoopsDatabase $db          {@link XoopsDatabase}
      *                                        object
-     * @param string               $tablename Name of database table
-     * @param string               $classname Name of Class, this handler is managing
-     * @param string               $keyname   Name of the property, holding the key
+     * @param string             $tablename   Name of database table
+     * @param string             $classname   Name of Class, this handler is managing
+     * @param string             $keyname     Name of the property, holding the key
      *
-     * @param bool                 $idenfierName
+     * @param bool               $idenfierName
      */
     public function __construct(XoopsDatabase $db, $tablename, $classname, $keyname, $idenfierName = false)
     {
@@ -68,7 +56,7 @@ class smartpartner_PersistableObjectHandler extends XoopsObjectHandler
         $this->table     = $db->prefix($tablename);
         $this->keyName   = $keyname;
         $this->className = $classname;
-        if ($idenfierName != false) {
+        if ($idenfierName !== false) {
             $this->identifierName = $idenfierName;
         }
     }
@@ -110,7 +98,7 @@ class smartpartner_PersistableObjectHandler extends XoopsObjectHandler
         $criteria->setLimit(1);
         $obj_array = $this->getObjects($criteria, false, $as_object);
         if (count($obj_array) != 1) {
-            $obj =& $this->create();
+            $obj = $this->create();
 
             return $obj;
         }
@@ -161,7 +149,7 @@ class smartpartner_PersistableObjectHandler extends XoopsObjectHandler
     {
         $ret = array();
         while ($myrow = $this->db->fetchArray($result)) {
-            $obj =& $this->create(false);
+            $obj = $this->create(false);
             $obj->assignVars($myrow);
             if (!$id_as_key) {
                 if ($as_object) {
@@ -266,7 +254,7 @@ class smartpartner_PersistableObjectHandler extends XoopsObjectHandler
         if (!$result) {
             return 0;
         }
-        if ($groupby == false) {
+        if ($groupby === false) {
             list($count) = $this->db->fetchRow($result);
 
             return $count;
@@ -322,7 +310,7 @@ class smartpartner_PersistableObjectHandler extends XoopsObjectHandler
 
     public function insert(XoopsObject $obj, $force = false, $checkObject = true)
     {
-        if ($checkObject != false) {
+        if ($checkObject !== false) {
             if (!is_object($obj)) {
                 return false;
             }
@@ -363,13 +351,15 @@ class smartpartner_PersistableObjectHandler extends XoopsObjectHandler
         } else {
             $sql = 'UPDATE ' . $this->table . ' SET';
             foreach ($cleanvars as $key => $value) {
-                if ((!is_array($this->keyName) && $key == $this->keyName) || (is_array($this->keyName) && in_array($key, $this->keyName))) {
+                if ((!is_array($this->keyName) && $key == $this->keyName)
+                    || (is_array($this->keyName)
+                        && in_array($key, $this->keyName))) {
                     continue;
                 }
                 if (isset($notfirst)) {
                     $sql .= ',';
                 }
-                $sql .= ' ' . $key . ' = ' . $value;
+                $sql      .= ' ' . $key . ' = ' . $value;
                 $notfirst = true;
             }
             if (is_array($this->keyName)) {

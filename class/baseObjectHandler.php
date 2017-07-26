@@ -114,7 +114,7 @@ class SmartpartnerBaseObjectHandler extends XoopsObjectHandler
      * @param  bool        $force
      * @return bool
      */
-    public function insert($obj, $force = false)
+    public function insert(XoopsObject $obj, $force = false)
     {
         // Make sure object is of correct type
         if (strcasecmp($this->classname, get_class($obj)) != 0) {

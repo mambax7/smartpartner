@@ -69,7 +69,7 @@ function cloneFileFolder($path)
         // create new dir
         //        mkdir($newPath);
         if (!@mkdir($newPath) && !is_dir($newPath)) {
-            throw Exception("Couldn't create this directory: " . $newPath);
+            throw new Exception("Couldn't create this directory: " . $newPath);
         }
 
         // check all files in dir, and process it

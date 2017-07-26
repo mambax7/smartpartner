@@ -152,7 +152,8 @@
                 <br>
 
                 <{$partner.urllink}> <{if $partner.image != ""}>
-                    <img src="<{$partner.image}>" <{$partner.img_attr}> border="0" alt="<{$partner.title}>" <{$block.fadeImage}> />
+                    <img src="<{$partner.image}>" <{$partner.img_attr}> border="0"
+                         alt="<{$partner.title}>" <{$block.fadeImage}>>
                     <br>
                 <{/if}> <{$partner.title}></a><{if $block.insertBr != ""}>
             <br><br> <{/if}>

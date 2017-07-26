@@ -20,15 +20,15 @@ if (!defined('SMARTPARTNER_ROOT_PATH')) {
     define('SMARTPARTNER_ROOT_PATH', XOOPS_ROOT_PATH . '/modules/' . SMARTPARTNER_DIRNAME . '/');
 }
 
-include_once(SMARTPARTNER_ROOT_PATH . 'include/functions.php');
-include_once(SMARTPARTNER_ROOT_PATH . 'include/seo_functions.php');
-include_once(SMARTPARTNER_ROOT_PATH . 'include/metagen.php');
-include_once(SMARTPARTNER_ROOT_PATH . 'class/keyhighlighter.class.php');
-include_once(SMARTPARTNER_ROOT_PATH . 'class/session.php');
+require_once SMARTPARTNER_ROOT_PATH . 'include/functions.php';
+require_once SMARTPARTNER_ROOT_PATH . 'include/seo_functions.php';
+require_once SMARTPARTNER_ROOT_PATH . 'include/metagen.php';
+require_once SMARTPARTNER_ROOT_PATH . 'class/keyhighlighter.class.php';
+require_once SMARTPARTNER_ROOT_PATH . 'class/session.php';
 
 /** Include SmartObject framework **/
-include_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartloader.php';
-include_once(SMARTOBJECT_ROOT_PATH . 'class/smartobjectcategory.php');
+require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartloader.php';
+require_once SMARTOBJECT_ROOT_PATH . 'class/smartobjectcategory.php';
 
 // Creating the SmartModule object
 $smartModule = smartpartner_getModuleInfo();
@@ -63,4 +63,4 @@ $statusArray = array(
     _SPARTNER_STATUS_OFFLINE => _CO_SPARTNER_STATUS_OFFLINE,
     _SPARTNER_STATUS_ONLINE  => _CO_SPARTNER_STATUS_ONLINE
 );
-include_once(SMARTPARTNER_ROOT_PATH . 'class/smarttree.php');
+require_once SMARTPARTNER_ROOT_PATH . 'class/smarttree.php';

@@ -1,9 +1,9 @@
 <?php
-// 
+//
 // ------------------------------------------------------------------------ //
 //               XOOPS - PHP Content Management System                      //
 //                   Copyright (c) 2000-2016 XOOPS.org                           //
-//                      <https://xoops.org/>                             //
+//                      <https://xoops.org>                             //
 // ------------------------------------------------------------------------ //
 // This program is free software; you can redistribute it and/or modify     //
 // it under the terms of the GNU General Public License as published by     //
@@ -27,7 +27,7 @@
 // Project: XOOPS Project                                               //
 // -------------------------------------------------------------------------//
 if (!class_exists('smartpartner_PersistableObjectHandler')) {
-    include_once XOOPS_ROOT_PATH . '/modules/smartpartner/class/object.php';
+    require_once XOOPS_ROOT_PATH . '/modules/smartpartner/class/object.php';
 }
 
 /**
@@ -109,7 +109,8 @@ class SmartpartnerCategory extends XoopsObject
      */
     public function getImageUrl($falseIfNoImage = false)
     {
-        if (($this->getVar('image') !== '') && ($this->getVar('image') !== 'blank.png') && ($this->getVar('image') !== '-1')) {
+        if (($this->getVar('image') !== '') && ($this->getVar('image') !== 'blank.png')
+            && ($this->getVar('image') !== '-1')) {
             return smartpartner_getImageDir('category', false) . $this->image();
         } elseif ($falseIfNoImage) {
             return false;
@@ -167,7 +168,7 @@ class SmartpartnerCategory extends XoopsObject
      */
     public function getCategoryUrl()
     {
-        return smartpartner_seo_genUrl('category', $this->categoryid(), $this->name());
+        return smartpartner_generateSeoUrl('category', $this->categoryid(), $this->name());
     }
 
     /**
@@ -247,7 +248,7 @@ class SmartpartnerCategoryHandler extends smartpartner_PersistableObjectHandler
 {
     /**
      * SmartpartnerCategoryHandler constructor.
-     * @param object|XoopsDatabase $db
+     * @param null|XoopsDatabase $db
      */
     public function __construct(XoopsDatabase $db)
     {
@@ -317,8 +318,14 @@ class SmartpartnerCategoryHandler extends smartpartner_PersistableObjectHandler
      * @param  bool   $id_as_key
      * @return array
      */
-    public function getCategories($limit = 0, $start = 0, $parentid = 0, $sort = 'weight', $order = 'ASC', $id_as_key = true)
-    {
+    public function getCategories(
+        $limit = 0,
+        $start = 0,
+        $parentid = 0,
+        $sort = 'weight',
+        $order = 'ASC',
+        $id_as_key = true
+    ) {
         $criteria = new CriteriaCompo();
 
         $criteria->setSort($sort);

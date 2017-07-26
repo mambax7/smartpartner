@@ -22,7 +22,7 @@
         <br>
     <{/foreach}><{if $category.subcats}>
         <div style="padding-left:15px;">
-        <{include file='db:smartpartner_offer.html' offers=$category.subcats nointro=1}>
+        <{include file='db:smartpartner_offer.tpl' offers=$category.subcats nointro=1}>
         </div><{/if}>
 
 <{/foreach}>

@@ -49,7 +49,7 @@ function editoffer($showmenu = false, $offerid = 0, $fct = '')
     smart_close_collapsable($collaps_name);
 }
 
-include_once __DIR__ . '/admin_header.php';
+require_once __DIR__ . '/admin_header.php';
 
 $op = '';
 if (isset($_GET['op'])) {
@@ -69,7 +69,7 @@ switch ($op) {
         break;
 
     case 'addoffer':
-        include_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectcontroller.php';
+        require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectcontroller.php';
 
         $controller = new SmartObjectController($smartPartnerOfferHandler);
         $offerObj   = $controller->storeSmartObject();
@@ -90,23 +90,23 @@ switch ($op) {
         break;
 
     case 'del':
-        include_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectcontroller.php';
+        require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectcontroller.php';
         $controller = new SmartObjectController($smartPartnerOfferHandler);
         $controller->handleObjectDeletion();
         break;
 
     case 'default':
     default:
-        include_once(XOOPS_ROOT_PATH . '/modules/smartobject/include/functions.php');
+        require_once XOOPS_ROOT_PATH . '/modules/smartobject/include/functions.php';
         smart_xoops_cp_header();
 
         //add navigation icon
-        $indexAdmin = new ModuleAdmin();
-        echo $indexAdmin->addNavigation(basename(__FILE__));
+        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject->displayNavigation(basename(__FILE__));
 
         //add button for creating a new offer
-        $indexAdmin->addItemButton(_AM_SPARTNER_OFFER_CREATE, 'offer.php?op=mod', 'add', '');
-        echo $indexAdmin->renderButton('left', '');
+        $adminObject->addItemButton(_AM_SPARTNER_OFFER_CREATE, 'offer.php?op=mod', 'add', '');
+        $adminObject->displayButton('left', '');
 
         //smart_adminMenu(3, _AM_SPARTNER_OFFERS);
 
@@ -117,7 +117,7 @@ switch ($op) {
 
         smart_collapsableBar('createdoffers', _AM_SPARTNER_OFFERS, _AM_SPARTNER_OFFERS_DSC);
 
-        include_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjecttable.php';
+        require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjecttable.php';
         $objectTable = new SmartObjectTable($smartPartnerOfferHandler);
         $objectTable->addFilter('partnerid', 'getPartnerList');
         $objectTable->addFilter('status', 'getStatusList');
@@ -135,4 +135,4 @@ switch ($op) {
 
 //smart_modFooter();
 //xoops_cp_footer();
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

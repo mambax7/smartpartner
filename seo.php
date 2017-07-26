@@ -1,6 +1,6 @@
 <?php
 /*
- * 
+ *
  * Module: SmartPartner
  * Author: Sudhaker Raj <http://xoops.biz>
  * Licence: GNU
@@ -12,7 +12,7 @@ if (empty($seoOp)) {
      Sample URL for path-info
      http://localhost/modules/smartpartner/seo.php/item.2/can-i-turn-the-ads-off.html
      */
-    $data = explode('/', $HTTP_SERVER_VARS['PATH_INFO']);
+    $data = explode('/', $_SERVER['PATH_INFO']);
 
     $seoParts = explode('.', $data[1]);
     $seoOp    = $seoParts[0];
@@ -47,7 +47,7 @@ if (!empty($seoOp) && !empty($seoMap[$seoOp])) {
             $_GET['itemid']         = $seoArg;
     }
 
-    include("${seoOp}.php");
+    include "${seoOp}.php";
 }
 
 exit;

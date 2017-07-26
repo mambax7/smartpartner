@@ -35,7 +35,10 @@ function get_partners_array($categoryid)
     global $every_partners_array, $count, $xoopsModuleConfig, $view_category_id;
     $partners = array();
     foreach ($every_partners_array as $partnerObj) {
-        if (in_array($categoryid, explode('|', $partnerObj->categoryid())) && ($view_category_id || (!$view_category_id && count($partners) < $xoopsModuleConfig['percat_user']))) {
+        if (in_array($categoryid, explode('|', $partnerObj->categoryid()))
+            && ($view_category_id
+                || (!$view_category_id
+                    && count($partners) < $xoopsModuleConfig['percat_user']))) {
             $partner    = $partnerObj->toArray('index');
             $partners[] = $partner;
         }
@@ -89,7 +92,7 @@ function get_cat_content($every_categories_array, $categoryObj, $level)
     /*for ($i=0;$i<$level;++$i) {
          $decalage .= '--';
      }*/
-    $decalage .= ' ';
+    $decalage                .= ' ';
     $category['title']       = $decalage . '' . $categoryObj->name();
     $category['categoryid']  = $categoryObj->categoryid();
     $category['description'] = $categoryObj->description();
@@ -102,7 +105,7 @@ function get_cat_content($every_categories_array, $categoryObj, $level)
 }
 
 include __DIR__ . '/header.php';
-$xoopsOption['template_main'] = 'smartpartner_index.tpl';
+$GLOBALS['xoopsOption']['template_main'] = 'smartpartner_index.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
 include __DIR__ . '/footer.php';
 
@@ -185,4 +188,4 @@ $xoopsTpl->assign('partview_msg', $xoopsModuleConfig['partview_msg']);
 if (!$xoopsModuleConfig['hide_module_name']) {
     $xoopsTpl->assign('lang_partnerstitle', $myts->displayTarea($xoopsModule->getVar('name')));
 }
-include_once XOOPS_ROOT_PATH . '/footer.php';
+require_once XOOPS_ROOT_PATH . '/footer.php';

@@ -1,33 +1,21 @@
 <?php
-// 
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2016 XOOPS.org                        //
-//                       <https://xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, https://xoops.org/, http://jp.xoops.org/ //
-// Project: XOOPS Project                                                    //
-// ------------------------------------------------------------------------- //
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**
+ * @copyright    XOOPS Project https://xoops.org/
+ * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @package
+ * @since
+ * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
+ */
 
 /**
  * Class SmartTree
@@ -58,6 +46,7 @@ class smarttree
     }
 
     // returns an array of first child objects for a given id($sel_id)
+
     /**
      * @param         $sel_id
      * @param  string $order
@@ -83,6 +72,7 @@ class smarttree
     }
 
     // returns an array of all FIRST child ids of a given id($sel_id)
+
     /**
      * @param $sel_id
      * @return array
@@ -103,6 +93,7 @@ class smarttree
     }
 
     //returns an array of ALL child ids for a given id($sel_id)
+
     /**
      * @param         $sel_id
      * @param  string $order
@@ -129,6 +120,7 @@ class smarttree
     }
 
     //returns an array of ALL parent ids for a given id($sel_id)
+
     /**
      * @param         $sel_id
      * @param  string $order
@@ -190,8 +182,15 @@ class smarttree
      * @param string $onchange
      * @param bool   $multiple
      */
-    public function makeMySelBox($title, $order = '', $preset_id = 0, $none = 0, $sel_name = '', $onchange = '', $multiple = false)
-    {
+    public function makeMySelBox(
+        $title,
+        $order = '',
+        $preset_id = 0,
+        $none = 0,
+        $sel_name = '',
+        $onchange = '',
+        $multiple = false
+    ) {
         global $myts;
         if ($sel_name == '') {
             $sel_name = $this->id;
@@ -226,14 +225,14 @@ class smarttree
         while (list($catid, $name) = $this->db->fetchRow($result)) {
             $sel = '';
             if ($catid == $preset_id) {
-                $sel = " selected='selected'";
+                $sel = ' selected';
             }
             /*
                 * Hack by felix<INBOX> for ampersand
                 * allow multiple select
                 */
             if (is_array($preset_id) && in_array($catid, $preset_id)) {
-                $sel = " selected='selected'";
+                $sel = ' selected';
             }
             /*
                 * End of Hack by felix<INBOX> for ampersand
@@ -249,14 +248,14 @@ class smarttree
                 $option['prefix'] = str_replace('.', '--', $option['prefix']);
                 $catpath          = $option['prefix'] . '&nbsp;' . $myts->htmlSpecialChars($option[$title]);
                 if ($option[$this->id] == $preset_id) {
-                    $sel = " selected='selected'";
+                    $sel = ' selected';
                 }
                 /*
                      * Hack by felix<INBOX> for ampersand
                      * allow multiple select
                      */
                 if (is_array($preset_id) && in_array($option[$this->id], $preset_id)) {
-                    $sel = " selected='selected'";
+                    $sel = ' selected';
                 }
                 /*
                      * End of Hack by felix<INBOX> for ampersand
@@ -271,6 +270,7 @@ class smarttree
     }
 
     //generates nicely formatted linked path from the root id to a given id
+
     /**
      * @param         $sel_id
      * @param         $title

@@ -10,9 +10,9 @@
 function showfiles($partnerObj)
 {
     // UPLOAD FILES
-    //include_once XOOPS_ROOT_PATH . '/modules/smartpartner/include/functions.php';
+    //require_once XOOPS_ROOT_PATH . '/modules/smartpartner/include/functions.php';
     global $xoopsModule, $smartPartnerFileHandler;
-    $pathIcon16 = '../' . $xoopsModule->getInfo('icons16');
+    $pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
     smartpartner_collapsableBar('filetable', 'filetableicon', _AM_SPARTNER_FILES_LINKED);
     $filesObj = $smartPartnerFileHandler->getAllFiles($partnerObj->id());
     if (count($filesObj) > 0) {
@@ -27,28 +27,10 @@ function showfiles($partnerObj)
         echo '</tr>';
 
         for ($i = 0, $iMax = count($filesObj); $i < $iMax; ++$i) {
-            $modify = "<a href='file.php?op=mod&fileid="
-                      . $filesObj[$i]->fileid()
-                      . "'><img src='"
-                      . $pathIcon16
-                      . '/edit.png'
-                      . "'  title='"
-                      . _AM_SPARTNER_EDITFILE
-                      . "' alt='"
-                      . _AM_SPARTNER_EDITFILE
-                      . "' /></a>";
-            $delete = "<a href='file.php?op=del&fileid="
-                      . $filesObj[$i]->fileid()
-                      . "'><img src='"
-                      . $pathIcon16
-                      . '/delete.png'
-                      . "'  title='"
-                      . _AM_SPARTNER_DELETEFILE
-                      . "' alt='"
-                      . _AM_SPARTNER_DELETEFILE
-                      . "'/></a>";
+            $modify = "<a href='file.php?op=mod&fileid=" . $filesObj[$i]->fileid() . "'><img src='" . $pathIcon16 . '/edit.png' . "'  title='" . _AM_SPARTNER_EDITFILE . "' alt='" . _AM_SPARTNER_EDITFILE . "'></a>";
+            $delete = "<a href='file.php?op=del&fileid=" . $filesObj[$i]->fileid() . "'><img src='" . $pathIcon16 . '/delete.png' . "'  title='" . _AM_SPARTNER_DELETEFILE . "' alt='" . _AM_SPARTNER_DELETEFILE . "'></a>";
             if ($filesObj[$i]->status() == 0) {
-                $not_visible = "<img src='" . XOOPS_URL . '/modules/' . $xoopsModule->dirname() . "/assets/images/no.gif'/>";
+                $not_visible = "<img src='" . XOOPS_URL . '/modules/' . $xoopsModule->dirname() . "/assets/images/no.gif'>";
             } else {
                 $not_visible = '';
             }
@@ -84,7 +66,7 @@ function editpartner($showmenu = false, $id = 0)
     if (!isset($smartPartnerPartnerHandler)) {
         $smartPartnerPartnerHandler = smartpartner_gethandler('partner');
     }
-    include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+    require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     // If there is a parameter, and the id exists, retrieve data: we're editing a partner
     if ($id != 0) {
         // Creating the partner object
@@ -150,7 +132,7 @@ function editpartner($showmenu = false, $id = 0)
     }
 
     // PARTNER FORM
-    $sform = new XoopsThemeForm(_AM_SPARTNER_PARTNERS, 'op', xoops_getenv('PHP_SELF'));
+    $sform = new XoopsThemeForm(_AM_SPARTNER_PARTNERS, 'op', xoops_getenv('PHP_SELF'), 'post', true);
     $sform->setExtra('enctype="multipart/form-data"');
 
     // TITLE
@@ -175,7 +157,7 @@ function editpartner($showmenu = false, $id = 0)
     $logo_select->setExtra("onchange='showImgSelected(\"image3\", \"image\", \"" . 'uploads/' . SMARTPARTNER_DIRNAME . '/images' . "\", \"\", \"" . XOOPS_URL . "\")'");
     $logo_tray = new XoopsFormElementTray(_AM_SPARTNER_LOGO, '&nbsp;');
     $logo_tray->addElement($logo_select);
-    $logo_tray->addElement(new XoopsFormLabel('', "<br><br><img src='" . smartpartner_getImageDir('', false) . $partnerObj->image() . "' name='image3' id='image3' alt='' />"));
+    $logo_tray->addElement(new XoopsFormLabel('', "<br><br><img src='" . smartpartner_getImageDir('', false) . $partnerObj->image() . "' name='image3' id='image3' alt=''>"));
     $logo_tray->setDescription(_AM_SPARTNER_LOGO_DSC);
     $sform->addElement($logo_tray);
 
@@ -261,7 +243,7 @@ function editpartner($showmenu = false, $id = 0)
 
     //perms
     global $smartPermissionsHandler;
-    include_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
+    require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
     $smartPermissionsHandler = new SmartobjectPermissionHandler($smartPartnerPartnerHandler);
 
     if ($partnerObj->id() != 0) {
@@ -329,8 +311,8 @@ function editpartner($showmenu = false, $id = 0)
     }
 }
 
-include_once __DIR__ . '/admin_header.php';
-include(XOOPS_ROOT_PATH . '/class/xoopstree.php');
+require_once __DIR__ . '/admin_header.php';
+include XOOPS_ROOT_PATH . '/class/xoopstree.php';
 
 $op = '';
 if (isset($_GET['op'])) {
@@ -350,7 +332,7 @@ if (!isset($smartPartnerPartnerHandler)) {
 switch ($op) {
     case 'add':
         xoops_cp_header();
-        include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+        require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
         editpartner(true, 0);
         break;
@@ -360,7 +342,7 @@ switch ($op) {
         $id = isset($_GET['id']) ? $_GET['id'] : 0;
 
         xoops_cp_header();
-        include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+        require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
         editpartner(true, $id);
         break;
@@ -399,7 +381,7 @@ switch ($op) {
                 $max_imgheight     = $xoopsModuleConfig['img_max_height'];
                 $allowed_mimetypes = null; //smartpartner_getAllowedMimeTypes();
 
-                include_once(XOOPS_ROOT_PATH . '/class/uploader.php');
+                require_once XOOPS_ROOT_PATH . '/class/uploader.php';
 
                 if ($_FILES[$filename]['tmp_name'] == '' || !is_readable($_FILES[$filename]['tmp_name'])) {
                     redirect_header('javascript:history.go(-1)', 2, _CO_SPARTNER_FILE_UPLOAD_ERROR);
@@ -483,8 +465,7 @@ switch ($op) {
             // no confirm: show deletion condition
             $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
             xoops_cp_header();
-            xoops_confirm(array('op' => 'del', 'id' => $partnerObj->id(), 'confirm' => 1, 'name' => $partnerObj->title()), 'partner.php',
-                          _AM_SPARTNER_DELETETHISP . " <br>'" . $partnerObj->title() . "' <br> <br>", _AM_SPARTNER_DELETE);
+            xoops_confirm(array('op' => 'del', 'id' => $partnerObj->id(), 'confirm' => 1, 'name' => $partnerObj->title()), 'partner.php', _AM_SPARTNER_DELETETHISP . " <br>'" . $partnerObj->title() . "' <br> <br>", _AM_SPARTNER_DELETE);
             xoops_cp_footer();
         }
 
@@ -494,19 +475,19 @@ switch ($op) {
     case 'default':
     default:
         smartpartner_xoops_cp_header();
-        $indexAdmin = new ModuleAdmin();
-        echo $indexAdmin->addNavigation(basename(__FILE__));
+        $adminObject = \Xmf\Module\Admin::getInstance();
+        $adminObject->displayNavigation(basename(__FILE__));
 
-        $indexAdmin->addItemButton(_AM_SPARTNER_PARTNER_CREATE, 'partner.php?op=add', 'add', '');
-        echo $indexAdmin->renderButton('left', '');
+        $adminObject->addItemButton(_AM_SPARTNER_PARTNER_CREATE, 'partner.php?op=add', 'add', '');
+        $adminObject->displayButton('left', '');
 
         //        echo "<br>\n";
         //        echo "<form><div style=\"margin-bottom: 12px;\">";
         //        echo "<input type='button' name='button' onclick=\"location='partner.php?op=mod'\" value='" . _AM_SPARTNER_PARTNER_CREATE . "'>&nbsp;&nbsp;";
         //        echo "</div></form>";
 
-        include_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
-        include_once XOOPS_ROOT_PATH . '/class/pagenav.php';
+        require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
+        require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 
         global $xoopsUser, $xoopsUser, $xoopsConfig, $xoopsDB, $xoopsModuleConfig, $xoopsModule;
 
@@ -528,37 +509,11 @@ switch ($op) {
         echo '</tr>';
         if ($totalpartners > 0) {
             for ($i = 0; $i < $totalPartnersOnPage; ++$i) {
-                $modify = "<a href='partner.php?op=mod&id="
-                          . $partnersObj[$i]->id()
-                          . "'><img src='"
-                          . $pathIcon16
-                          . '/edit.png'
-                          . "'  title='"
-                          . _AM_SPARTNER_EDITPARTNER
-                          . "' alt='"
-                          . _AM_SPARTNER_EDITPARTNER
-                          . "' /></a>&nbsp;";
-                $delete = "<a href='partner.php?op=del&id="
-                          . $partnersObj[$i]->id()
-                          . "'><img src='"
-                          . $pathIcon16
-                          . '/delete.png'
-                          . "'  title='"
-                          . _AM_SPARTNER_DELETEPARTNER
-                          . "' alt='"
-                          . _AM_SPARTNER_DELETEPARTNER
-                          . "'/></a>&nbsp;";
+                $modify = "<a href='partner.php?op=mod&id=" . $partnersObj[$i]->id() . "'><img src='" . $pathIcon16 . '/edit.png' . "'  title='" . _AM_SPARTNER_EDITPARTNER . "' alt='" . _AM_SPARTNER_EDITPARTNER . "'></a>&nbsp;";
+                $delete = "<a href='partner.php?op=del&id=" . $partnersObj[$i]->id() . "'><img src='" . $pathIcon16 . '/delete.png' . "'  title='" . _AM_SPARTNER_DELETEPARTNER . "' alt='" . _AM_SPARTNER_DELETEPARTNER . "'></a>&nbsp;";
 
                 echo '<tr>';
-                echo "<td class='head' align='left'><a href='"
-                     . SMARTPARTNER_URL
-                     . 'partner.php?id='
-                     . $partnersObj[$i]->id()
-                     . "'><img src='"
-                     . SMARTPARTNER_URL
-                     . "assets/images/links/partner.gif' alt=''/>&nbsp;"
-                     . $partnersObj[$i]->title()
-                     . '</a></td>';
+                echo "<td class='head' align='left'><a href='" . SMARTPARTNER_URL . 'partner.php?id=' . $partnersObj[$i]->id() . "'><img src='" . SMARTPARTNER_URL . "assets/images/links/partner.gif' alt=''>&nbsp;" . $partnersObj[$i]->title() . '</a></td>';
                 echo "<td class='even' align='left'>" . $partnersObj[$i]->summary(100) . '</td>';
                 echo "<td class='even' align='center'>" . $partnersObj[$i]->hits() . '</td>';
                 echo "<td class='even' align='center'>" . $partnersObj[$i]->getStatusName() . '</td>';
@@ -583,4 +538,4 @@ switch ($op) {
 }
 //smart_modFooter();
 //xoops_cp_footer();
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

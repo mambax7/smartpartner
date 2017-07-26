@@ -17,12 +17,12 @@
  * @author       XOOPS Development Team
  */
 
-require_once dirname(dirname(dirname(__DIR__))) . '/include/cp_header.php';
-include_once __DIR__ . '/admin_header.php';
+require_once __DIR__ . '/../../../include/cp_header.php';
+require_once __DIR__ . '/admin_header.php';
 
 xoops_cp_header();
 
-$indexAdmin = new ModuleAdmin();
+$adminObject = \Xmf\Module\Admin::getInstance();
 
 $folder = array(
     XOOPS_ROOT_PATH . '/uploads/smartpartner/images/',
@@ -49,36 +49,36 @@ $totalinactive = $smartPartnerPartnerHandler->getPartnerCount(_SPARTNER_STATUS_I
 $totalrejected = $smartPartnerPartnerHandler->getPartnerCount(_SPARTNER_STATUS_REJECTED);
 
 //create info block
-$indexAdmin->addInfoBox(_AM_SPARTNER_INVENTORY);
+$adminObject->addInfoBox(_AM_SPARTNER_INVENTORY);
 
 if ($totalsubmitted > 0) {
-    $indexAdmin->addInfoBoxLine(_AM_SPARTNER_INVENTORY, '<infolabel>' . '<a href="category.php">' . _AM_SPARTNER_TOTAL_SUBMITTED . '</a><b>' . '</infolabel>', $totalsubmitted, 'Green');
+    $adminObject->addInfoBoxLine(_AM_SPARTNER_INVENTORY, '<infolabel>' . '<a href="category.php">' . _AM_SPARTNER_TOTAL_SUBMITTED . '</a><b>' . '</infolabel>', $totalsubmitted, 'Green');
 } else {
-    $indexAdmin->addInfoBoxLine(_AM_SPARTNER_INVENTORY, '<infolabel>' . _AM_SPARTNER_TOTAL_SUBMITTED . '</infolabel>', $totalsubmitted, 'Green');
+    $adminObject->addInfoBoxLine(_AM_SPARTNER_INVENTORY, '<infolabel>' . _AM_SPARTNER_TOTAL_SUBMITTED . '</infolabel>', $totalsubmitted, 'Green');
 }
 if ($totalactive > 0) {
-    $indexAdmin->addInfoBoxLine(_AM_SPARTNER_INVENTORY, '<infolabel>' . '<a href="partner.php">' . _AM_SPARTNER_TOTAL_ACTIVE . '</a><b>' . '</infolabel>', $totalactive, 'Green');
+    $adminObject->addInfoBoxLine(_AM_SPARTNER_INVENTORY, '<infolabel>' . '<a href="partner.php">' . _AM_SPARTNER_TOTAL_ACTIVE . '</a><b>' . '</infolabel>', $totalactive, 'Green');
 } else {
-    $indexAdmin->addInfoBoxLine(_AM_SPARTNER_INVENTORY, '<infolabel>' . _AM_SPARTNER_TOTAL_ACTIVE . '</infolabel>', $totalactive, 'Green');
+    $adminObject->addInfoBoxLine(_AM_SPARTNER_INVENTORY, '<infolabel>' . _AM_SPARTNER_TOTAL_ACTIVE . '</infolabel>', $totalactive, 'Green');
 }
 if ($totalrejected > 0) {
-    $indexAdmin->addInfoBoxLine(_AM_SPARTNER_INVENTORY, '<infolabel>' . '<a href="main.php">' . _AM_SPARTNER_TOTAL_REJECTED . '</a><b>' . '</infolabel>', $totalrejected, 'Green');
+    $adminObject->addInfoBoxLine(_AM_SPARTNER_INVENTORY, '<infolabel>' . '<a href="main.php">' . _AM_SPARTNER_TOTAL_REJECTED . '</a><b>' . '</infolabel>', $totalrejected, 'Green');
 } else {
-    $indexAdmin->addInfoBoxLine(_AM_SPARTNER_INVENTORY, '<infolabel>' . _AM_SPARTNER_TOTAL_REJECTED . '</infolabel>', $totalrejected, 'Green');
+    $adminObject->addInfoBoxLine(_AM_SPARTNER_INVENTORY, '<infolabel>' . _AM_SPARTNER_TOTAL_REJECTED . '</infolabel>', $totalrejected, 'Green');
 }
 if ($totalinactive > 0) {
-    $indexAdmin->addInfoBoxLine(_AM_SPARTNER_INVENTORY, '<infolabel>' . '<a href="main.php">' . _AM_SPARTNER_TOTAL_INACTIVE . '</a><b>' . '</infolabel>', $totalinactive, 'Green');
+    $adminObject->addInfoBoxLine(_AM_SPARTNER_INVENTORY, '<infolabel>' . '<a href="main.php">' . _AM_SPARTNER_TOTAL_INACTIVE . '</a><b>' . '</infolabel>', $totalinactive, 'Green');
 } else {
-    $indexAdmin->addInfoBoxLine(_AM_SPARTNER_INVENTORY, '<infolabel>' . _AM_SPARTNER_TOTAL_INACTIVE . '</infolabel>', $totalinactive, 'Green');
+    $adminObject->addInfoBoxLine(_AM_SPARTNER_INVENTORY, '<infolabel>' . _AM_SPARTNER_TOTAL_INACTIVE . '</infolabel>', $totalinactive, 'Green');
 }
 //---------------------
 
 foreach (array_keys($folder) as $i) {
-    $indexAdmin->addConfigBoxLine($folder[$i], 'folder');
-    $indexAdmin->addConfigBoxLine(array($folder[$i], '777'), 'chmod');
+    $adminObject->addConfigBoxLine($folder[$i], 'folder');
+    $adminObject->addConfigBoxLine(array($folder[$i], '777'), 'chmod');
 }
 
-echo $indexAdmin->addNavigation(basename(__FILE__));
-echo $indexAdmin->renderIndex();
+$adminObject->displayNavigation(basename(__FILE__));
+$adminObject->displayIndex();
 
-include_once __DIR__ . '/admin_footer.php';
+require_once __DIR__ . '/admin_footer.php';

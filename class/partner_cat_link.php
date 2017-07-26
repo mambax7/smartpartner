@@ -1,9 +1,9 @@
 <?php
-// 
+//
 // ------------------------------------------------------------------------ //
 //               XOOPS - PHP Content Management System                      //
 //                   Copyright (c) 2000-2016 XOOPS.org                           //
-//                      <https://xoops.org/>                             //
+//                      <https://xoops.org>                             //
 // ------------------------------------------------------------------------ //
 // This program is free software; you can redistribute it and/or modify     //
 // it under the terms of the GNU General Public License as published by     //
@@ -28,8 +28,8 @@
 // -------------------------------------------------------------------------//
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
-include_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobject.php';
-include_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjecthandler.php';
+require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobject.php';
+require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjecthandler.php';
 
 /**
  * Class SmartpartnerPartnerCatLink
@@ -54,7 +54,7 @@ class SmartpartnerPartner_cat_linkHandler extends SmartPersistableObjectHandler
 {
     /**
      * SmartpartnerPartnerCatLinkHandler constructor.
-     * @param object|XoopsDatabase $db
+     * @param null|XoopsDatabase $db
      */
     public function __construct(XoopsDatabase $db)
     {

@@ -1,33 +1,21 @@
 <?php
-// 
-//  ------------------------------------------------------------------------ //
-//                XOOPS - PHP Content Management System                      //
-//                  Copyright (c) 2000-2016 XOOPS.org                        //
-//                       <https://xoops.org/>                             //
-//  ------------------------------------------------------------------------ //
-//  This program is free software; you can redistribute it and/or modify     //
-//  it under the terms of the GNU General Public License as published by     //
-//  the Free Software Foundation; either version 2 of the License, or        //
-//  (at your option) any later version.                                      //
-//                                                                           //
-//  You may not change or alter any portion of this comment or credits       //
-//  of supporting developers from this source code or any supporting         //
-//  source code which is considered copyrighted (c) material of the          //
-//  original comment or credit authors.                                      //
-//                                                                           //
-//  This program is distributed in the hope that it will be useful,          //
-//  but WITHOUT ANY WARRANTY; without even the implied warranty of           //
-//  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the            //
-//  GNU General Public License for more details.                             //
-//                                                                           //
-//  You should have received a copy of the GNU General Public License        //
-//  along with this program; if not, write to the Free Software              //
-//  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
-//  ------------------------------------------------------------------------ //
-// Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, https://xoops.org/, http://jp.xoops.org/ //
-// Project: XOOPS Project                                                    //
-// ------------------------------------------------------------------------- //
+/*
+ * You may not change or alter any portion of this comment or credits
+ * of supporting developers from this source code or any supporting source code
+ * which is considered copyrighted (c) material of the original comment or credit authors.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+ */
+
+/**
+ * @copyright    XOOPS Project https://xoops.org/
+ * @license      GNU GPL 2 or later (http://www.gnu.org/licenses/gpl-2.0.html)
+ * @package
+ * @since
+ * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
+ */
 
 $admin_mydirname = basename(dirname(__DIR__));
 
@@ -39,12 +27,12 @@ if (empty($fct)) {
 //if (isset($fct) && $fct == "users") {
 //  $xoopsOption['pagetype'] = "user";
 //}
-include dirname(dirname(dirname(__DIR__))) . '/mainfile.php';
+include __DIR__ . '/../../../mainfile.php';
 // include "../../mainfile.php"; GIJ
 include XOOPS_ROOT_PATH . '/include/cp_functions.php';
 
-include_once XOOPS_ROOT_PATH . '/kernel/module.php';
-include_once dirname(__DIR__) . '/include/gtickets.php'; // GIJ
+require_once XOOPS_ROOT_PATH . '/kernel/module.php';
+require_once __DIR__ . '/../include/gtickets.php'; // GIJ
 
 $admintest = 0;
 
@@ -59,7 +47,7 @@ if (is_object($xoopsUser)) {
 }
 
 // include system category definitions
-include_once XOOPS_ROOT_PATH . '/modules/system/constants.php';
+require_once XOOPS_ROOT_PATH . '/modules/system/constants.php';
 $error = false;
 if ($admintest != 0) {
     if (isset($fct) && $fct != '') {
@@ -81,11 +69,12 @@ if ($admintest != 0) {
             unset($modversion);
             if ($category > 0) {
                 $groups =& $xoopsUser->getGroups();
-                if (in_array(XOOPS_GROUP_ADMIN, $groups) || false != $syspermHandler->checkRight('system_admin', $category, $groups, $xoopsModule->getVar('mid'))) {
+                if (in_array(XOOPS_GROUP_ADMIN, $groups)
+                    || false !== $syspermHandler->checkRight('system_admin', $category, $groups, $xoopsModule->getVar('mid'))) {
                     //                  if (file_exists(XOOPS_ROOT_PATH."/modules/system/admin/".$fct."/main.php")) {
-                    //                      include_once XOOPS_ROOT_PATH."/modules/system/admin/".$fct."/main.php"; GIJ
+                    //                      require_once XOOPS_ROOT_PATH."/modules/system/admin/".$fct."/main.php"; GIJ
                     if (file_exists("../include/{$fct}.inc.php")) {
-                        include_once "../include/{$fct}.inc.php";
+                        require_once "../include/{$fct}.inc.php";
                     } else {
                         $error = true;
                     }
@@ -94,7 +83,7 @@ if ($admintest != 0) {
                 }
             } elseif ($fct === 'version') {
                 if (file_exists(XOOPS_ROOT_PATH . '/modules/system/admin/version/main.php')) {
-                    include_once XOOPS_ROOT_PATH . '/modules/system/admin/version/main.php';
+                    require_once XOOPS_ROOT_PATH . '/modules/system/admin/version/main.php';
                 } else {
                     $error = true;
                 }

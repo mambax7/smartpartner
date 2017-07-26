@@ -18,7 +18,7 @@ if ($partnerObj->notLoaded()) {
 }
 
 if ($partnerObj->url()) {
-    if (!isset($HTTP_COOKIE_VARS['partners'][$id])) {
+    if (!isset($_COOKIE['partners'][$id])) {
         setcookie("partners[$id]", $id, $xoopsModuleConfig['cookietime']);
         $partnerObj->updateHits();
     }

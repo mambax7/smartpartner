@@ -17,13 +17,13 @@ if (!empty($_POST['fct']) && !empty($_POST['op']) && $_POST['fct'] === 'modulesa
 }
 
 /**
- * @param $module
+ * @param  XoopsModule $module
  * @return bool
  */
-function xoops_module_update_smartpartner($module)
+function xoops_module_update_smartpartner(XoopsModule $module)
 {
-    include_once(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname') . '/include/functions.php');
-    include_once(XOOPS_ROOT_PATH . '/modules/smartobject/class/smartdbupdater.php');
+    require_once XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname') . '/include/functions.php';
+    require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartdbupdater.php';
 
     $dbupdater = new SmartobjectDbupdater();
 
@@ -153,11 +153,12 @@ function xoops_module_update_smartpartner($module)
         $smartpartnerPartnerCatLinkHandler = xoops_getModuleHandler('partner_cat_link', 'smartpartner');
 
         $modulepermHandler = xoops_getHandler('groupperm');
-        $moduleHandler     = xoops_getHandler('module');
-        $module            = $moduleHandler->getByDirname('smartpartner');
-        $groupsArray       = $modulepermHandler->getGroupIds('module_read', $module->mid(), 1);
+        /** @var XoopsModuleHandler $moduleHandler */
+        $moduleHandler = xoops_getHandler('module');
+        $module        = $moduleHandler->getByDirname('smartpartner');
+        $groupsArray   = $modulepermHandler->getGroupIds('module_read', $module->mid(), 1);
 
-        $sql     = 'SELECT id, categoryid from ' . $smartpartnerPartnerHandler->table;
+        $sql     = 'SELECT id, categoryid FROM ' . $smartpartnerPartnerHandler->table;
         $records = $smartpartnerPartnerHandler->query($sql);
         foreach ($records as $record) {
             if ($record['categoryid'] != 0) {
@@ -197,14 +198,14 @@ function xoops_module_update_smartpartner($module)
 }
 
 /**
- * @param $module
+ * @param  XoopsModule $module
  * @return bool
  */
-function xoops_module_install_smartpartner($module)
+function xoops_module_install_smartpartner(XoopsModule $module)
 {
     ob_start();
 
-    include_once(XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname') . '/include/functions.php');
+    require_once XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname') . '/include/functions.php';
 
     smartpartner_create_upload_folders();
 

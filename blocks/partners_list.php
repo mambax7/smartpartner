@@ -12,7 +12,7 @@
 
 function b_partners_list_show($options)
 {
-    include_once(XOOPS_ROOT_PATH . '/modules/smartpartner/include/common.php');
+    require_once XOOPS_ROOT_PATH . '/modules/smartpartner/include/common.php';
 
     // Creating the partner handler object
     $smartPartnerPartnerHandler  = smartpartner_gethandler('partner');
@@ -92,55 +92,55 @@ function b_partners_list_edit($options)
 {
     $form = "<table border='0'>";
     $form .= '<tr><td>' . _MB_SPARTNER_PARTNERS_PSPACE . '</td><td>';
-    $chk = '';
+    $chk  = '';
     if ($options[0] == 0) {
-        $chk = " checked='checked'";
+        $chk = ' checked';
     }
-    $form .= "<input type='radio' name='options[0]' value='0'" . $chk . ' />' . _NO . '';
-    $chk = '';
+    $form .= "<input type='radio' name='options[0]' value='0'" . $chk . '>' . _NO . '';
+    $chk  = '';
     if ($options[0] == 1) {
-        $chk = " checked='checked'";
+        $chk = ' checked';
     }
-    $form .= "<input type='radio' name='options[0]' value='1'" . $chk . ' />' . _YES . '</td></tr>';
+    $form .= "<input type='radio' name='options[0]' value='1'" . $chk . '>' . _YES . '</td></tr>';
     $form .= '<tr><td>' . _MB_SPARTNER_FADE . '</td><td>';
-    $chk = '';
+    $chk  = '';
     if ($options[1] == 0) {
-        $chk = " checked='checked'";
+        $chk = ' checked';
     }
-    $form .= "<input type='radio' name='options[1]' value='0'" . $chk . ' />' . _NO . '';
-    $chk = '';
+    $form .= "<input type='radio' name='options[1]' value='0'" . $chk . '>' . _NO . '';
+    $chk  = '';
     if ($options[1] == 1) {
-        $chk = " checked='checked'";
+        $chk = ' checked';
     }
-    $form .= "<input type='radio' name='options[1]' value='1'" . $chk . ' />' . _YES . '</td></tr>';
+    $form .= "<input type='radio' name='options[1]' value='1'" . $chk . '>' . _YES . '</td></tr>';
     /*$form .= "<tr><td>"._MB_SPARTNER_BRAND."</td><td>";
      $chk   = "";
      if ($options[2] == 0) {
-         $chk = " checked='checked'";
+         $chk = " checked";
      }*/
-    /*$form .= "<input type='radio' name='options[2]' value='0'".$chk." />"._NO."";
+    /*$form .= "<input type='radio' name='options[2]' value='0'".$chk.">"._NO."";
      $chk   = "";
      if ($options[2] == 1) {
-         $chk = " checked='checked'";
+         $chk = " checked";
      }
-     $form .= "<input type='radio' name='options[2]' value='1'".$chk." />"._YES."</td></tr>";*/
+     $form .= "<input type='radio' name='options[2]' value='1'".$chk.">"._YES."</td></tr>";*/
     $form .= '<tr><td>' . _MB_SPARTNER_BLIMIT . '</td><td>';
-    $form .= "<input type='text' name='options[2]' size='16' value='" . $options[2] . "' /></td></tr>";
+    $form .= "<input type='text' name='options[2]' size='16' value='" . $options[2] . "'></td></tr>";
     /*$form .= "<tr><td>"._MB_SPARTNER_BSHOW."</td><td>";
      $form .= "<select size='1' name='options[3]'>";
      $sel = "";
      if ($options[3] == 1) {
-         $sel = " selected='selected'";
+         $sel = " selected";
      }
      $form .= "<option value='1' ".$sel.">"._MB_SPARTNER_IMAGES."</option>";
      $sel = "";
      if ($options[3] == 2) {
-         $sel = " selected='selected'";
+         $sel = " selected";
      }
      $form .= "<option value='2' ".$sel.">"._MB_SPARTNER_TEXT."</option>";
      $sel = "";
      if ($options[3] == 3) {
-         $sel = " selected='selected'";
+         $sel = " selected";
      }
      $form .= "<option value='3' ".$sel.">"._MB_SPARTNER_BOTH."</option>";
      $form .= "</select></td></tr>";
@@ -148,33 +148,33 @@ function b_partners_list_edit($options)
      $form .= "<select size='1' name='options[5]'>";
      $sel = "";
      if ($options[4] == "id") {
-         $sel = " selected='selected'";
+         $sel = " selected";
      }
      $form .= "<option value='id' ".$sel.">"._MB_SPARTNER_ID."</option>";
      $sel = "";
      if ($options[4] == "hits") {
-         $sel = " selected='selected'";
+         $sel = " selected";
      }
      $form .= "<option value='hits' ".$sel.">"._MB_SPARTNER_HITS."</option>";
      $sel = "";
      if ($options[4] == "title") {
-         $sel = " selected='selected'";
+         $sel = " selected";
      }
      $form .= "<option value='title' ".$sel.">"._MB_SPARTNER_TITLE."</option>";
      if ($options[4] == "weight") {
-         $sel = " selected='selected'";
+         $sel = " selected";
      }
      $form .= "<option value='weight' ".$sel.">"._MB_SPARTNER_WEIGHT."</option>";
      $form .= "</select> ";
      $form .= "<select size='1' name='options[6]'>";
      $sel = "";
      if ($options[5] == "ASC") {
-         $sel = " selected='selected'";
+         $sel = " selected";
      }
      $form .= "<option value='ASC' ".$sel.">"._MB_SPARTNER_ASC."</option>";
      $sel = "";
      if ($options[5] == "DESC") {
-         $sel = " selected='selected'";
+         $sel = " selected";
      }
      $form .= "<option value='DESC' ".$sel.">"._MB_SPARTNER_DESC."</option>";
      $form .= "</select></td></tr>";
@@ -182,14 +182,14 @@ function b_partners_list_edit($options)
      $form .= "<tr><td>"._MB_SPARTNER_SEE_ALL."</td><td>";
      $chk   = "";
      if ($options[6] == 0) {
-         $chk = " checked='checked'";
+         $chk = " checked";
      }
-     $form .= "<input type='radio' name='options[7]' value='0'".$chk." />"._NO."";
+     $form .= "<input type='radio' name='options[7]' value='0'".$chk.">"._NO."";
      $chk   = "";
      if ($options[6] == 1) {
-         $chk = " checked='checked'";
+         $chk = " checked";
      }
-     $form .= "<input type='radio' name='options[7]' value='1'".$chk." />"._YES."</td></tr>";*/
+     $form .= "<input type='radio' name='options[7]' value='1'".$chk.">"._YES."</td></tr>";*/
 
     $form .= '</table>';
 

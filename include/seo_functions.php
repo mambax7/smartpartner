@@ -29,7 +29,7 @@ function smartpartner_seo_title($title = '')
  * @param  string $title
  * @return string
  */
-function smartpartner_seo_genUrl($op, $id, $title = '')
+function smartpartner_generateSeoUrl($op, $id, $title = '')
 {
     if (defined('SEO_ENABLED')) {
         if (SEO_ENABLED === 'rewrite') {

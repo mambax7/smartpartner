@@ -6,7 +6,7 @@
  * Licence: GNU
  */
 
-include_once __DIR__ . '/header.php';
+require_once __DIR__ . '/header.php';
 
 $fileid = isset($_GET['fileid']) ? (int)$_GET['fileid'] : 0;
 

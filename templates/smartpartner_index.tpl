@@ -9,7 +9,8 @@
 <{if count($partners) > 0}><{foreach item=category from=$partners}><{if $category.title}>
     <div class="smartpartner_category_block">
     <{if $category.image_url}>
-        <a href="<{$category.link_view}>"><img class="smartpartner_category_image" src="<{$category.image_url}>" alt="<{$category.title}>" align="left"/></a>
+        <a href="<{$category.link_view}>"><img class="smartpartner_category_image" src="<{$category.image_url}>"
+                                               alt="<{$category.title}>" align="left"></a>
     <{/if}>
     <div class="smartpartner_category_block_title">
         <a href="<{$category.link_view}>"><{$category.title}></a>
@@ -28,17 +29,21 @@
         <{foreach item=partner from=$category.partners}> <{if $partner.display_type == 'part' || $partner.display_type == 'full'}>
             <tr valign="top">
                 <td valign="top" width="<{$img_max_width}>" class="smartpartner_leftcol" align='center'>
-                    <a href='<{$smartPartner_url}>partner.php?id=<{$partner.id}>&cid=<{$category.categoryid}>'><img src='<{$partner.image}>' alt='<{$partner.title}>'
-                                                                                                                    title='<{$partner.title}>'/></a><br><br> <{if $partner.update_status == 'new'}>
-                        <img src='<{$smartPartner_url}>assets/images/icon/new_icon.gif'/>
+                    <a href='<{$smartPartner_url}>partner.php?id=<{$partner.id}>&cid=<{$category.categoryid}>'><img
+                                src='<{$partner.image}>' alt='<{$partner.title}>'
+                                title='<{$partner.title}>'></a><br><br> <{if $partner.update_status == 'new'}>
+                        <img src='<{$smartPartner_url}>assets/images/icon/new_icon.gif'>
                     <{elseif $partner.update_status == 'updated'}>
-                        <img src='<{$smartPartner_url}>assets/images/icon/updated_icon.gif'/>
+                        <img src='<{$smartPartner_url}>assets/images/icon/updated_icon.gif'>
                     <{/if}>
                 </td>
                 <td class='<{cycle values="even, odd"}>' style="padding: 5px;" align='left' valign='top'>
                     <div class="smartpartner_partnertitle"><{$partner.title}> <{if $isAdmin}>
-                            <a href="<{$smartPartner_url}>admin/partner.php?op=mod&id=<{$partner.id}>"><img src="<{xoModuleIcons16 edit.png}>" title="<{$lang_edit}>" alt="<{$lang_edit}>"/></a>
-                            <a href="<{$smartPartner_url}>admin/partner.php?op=del&id=<{$partner.id}>"><img src="<{xoModuleIcons16 delete.png}>" title="<{$lang_delete}>" alt="<{$lang_delete}>"/></a>
+                            <a href="<{$smartPartner_url}>admin/partner.php?op=mod&id=<{$partner.id}>"><img
+                                        src="<{xoModuleIcons16 edit.png}>" title="<{$lang_edit}>" alt="<{$lang_edit}>"></a>
+                            <a href="<{$smartPartner_url}>admin/partner.php?op=del&id=<{$partner.id}>"><img
+                                        src="<{xoModuleIcons16 delete.png}>" title="<{$lang_delete}>"
+                                        alt="<{$lang_delete}>"></a>
                         <{/if}>
                     </div>
                     <div class="smartpartner_partnersummary"><{$partner.summary}></div>

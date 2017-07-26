@@ -12,6 +12,7 @@
  *
  * @package   keyhighlighter
  * @author    Setec Astronomy
+ * @version   1.0
  * @abstract  Highlight specific keywords.
  * @copyright 2004
  * @example   sample.php A sample code.

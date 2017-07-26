@@ -20,6 +20,7 @@ function smartpartner_metagen_html2text($document)
 
     $search = array(
         "'<script[^>]*?>.*?</script>'si", // Strip out javascript
+        "'<img.*?>'si", // Strip out img tags
         "'<[\/\!]*?[^<>]*?>'si", // Strip out HTML tags
         "'([\r\n])[\s]+'", // Strip out white space
         "'&(quot|#34);'i", // Replace HTML entities
@@ -30,11 +31,11 @@ function smartpartner_metagen_html2text($document)
         "'&(iexcl|#161);'i",
         "'&(cent|#162);'i",
         "'&(pound|#163);'i",
-        "'&(copy|#169);'i",
-        "'&#(\d+);'e"
+        "'&(copy|#169);'i"
     ); // evaluate as php
 
     $replace = array(
+        '',
         '',
         '',
         "\\1",
@@ -47,10 +48,13 @@ function smartpartner_metagen_html2text($document)
         chr(162),
         chr(163),
         chr(169),
-        "chr(\\1)"
     );
 
     $text = preg_replace($search, $replace, $document);
+
+    preg_replace_callback('/&#(\d+);/', function ($matches) {
+        return chr($matches[1]);
+    }, $document);
 
     return $text;
 }
@@ -131,7 +135,8 @@ function smartpartner_createMetaTags($title, $categoryPath = '', $description = 
     if (isset($title) && ($title != '')) {
         $keywords = smartpartner_findMetaKeywords($title, $minChar);
 
-        if (isset($xoopsModuleConfig) && isset($xoopsModuleConfig['moduleMetaKeywords']) && $xoopsModuleConfig['moduleMetaKeywords'] != '') {
+        if (isset($xoopsModuleConfig) && isset($xoopsModuleConfig['moduleMetaKeywords'])
+            && $xoopsModuleConfig['moduleMetaKeywords'] != '') {
             $moduleKeywords = explode(',', $xoopsModuleConfig['moduleMetaKeywords']);
             foreach ($moduleKeywords as $moduleKeyword) {
                 if (!in_array($moduleKeyword, $keywords)) {

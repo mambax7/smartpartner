@@ -8,8 +8,8 @@
  */
 
 // defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
-include_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobject.php';
-include_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjecthandler.php';
+require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobject.php';
+require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjecthandler.php';
 
 // Partners status
 define('_SPARTNER_STATUS_NOTSET', -1);
@@ -328,7 +328,8 @@ class SmartpartnerPartner extends SmartObject
      */
     public function getImageUrl()
     {
-        if (($this->getVar('image') !== '') && ($this->getVar('image') !== 'blank.png') && ($this->getVar('image') !== '-1')) {
+        if (($this->getVar('image') !== '') && ($this->getVar('image') !== 'blank.png')
+            && ($this->getVar('image') !== '-1')) {
             return smartpartner_getImageDir('', false) . $this->image();
         } elseif (!$this->getVar('image_url')) {
             return smartpartner_getImageDir('', false) . 'blank.png';
@@ -356,9 +357,9 @@ class SmartpartnerPartner extends SmartObject
     {
         $ret = "<a href='rrvpartner.php?id=" . $this->id() . "' target='_blank'>";
         if ($this->getVar('image') != '') {
-            $ret .= "<img src='" . $this->getImageUrl() . "' alt='" . $this->url() . "' border='0' /></a>";
+            $ret .= "<img src='" . $this->getImageUrl() . "' alt='" . $this->url() . "' border='0'></a>";
         } else {
-            $ret .= "<img src='" . $this->image_url() . "' alt='" . $this->url() . "' border='0' /></a>";
+            $ret .= "<img src='" . $this->image_url() . "' alt='" . $this->url() . "' border='0'></a>";
         }
 
         return $ret;
@@ -387,7 +388,7 @@ class SmartpartnerPartner extends SmartObject
                 break;
 
             case _SPARTNER_STATUS_NOTSET:
-            default;
+            default:
 
                 return _CO_SPARTNER_NOTSET;
                 break;
@@ -410,7 +411,8 @@ class SmartpartnerPartner extends SmartObject
         if ($this->_extendedInfo) {
             return $this->_extendedInfo;
         }
-        if (!$this->description() && !$this->contact_name() && !$this->contact_email() && !$this->contact_phone() && !$this->adress()) {
+        if (!$this->description() && !$this->contact_name() && !$this->contact_email() && !$this->contact_phone()
+            && !$this->adress()) {
             $this->_extendedInfo = false;
         } else {
             $this->_extendedInfo = true;
@@ -461,7 +463,7 @@ class SmartpartnerPartner extends SmartObject
      */
     public function sendNotifications($notifications = array())
     {
-        $smartModule =& smartpartner_getModuleInfo();
+        $smartModule = smartpartner_getModuleInfo();
         $module_id   = $smartModule->getVar('mid');
 
         $myts                = MyTextSanitizer::getInstance();
@@ -696,7 +698,7 @@ class SmartpartnerPartner extends SmartObject
         }
         //--------------
         global $smartPermissionsHandler, $smartPartnerPartnerHandler, $xoopsUser;
-        include_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
+        require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
         if (!$smartPartnerPartnerHandler) {
             $smartPartnerPartnerHandler = smartpartner_gethandler('partner');
         }
@@ -861,18 +863,13 @@ class SmartpartnerPartnerHandler extends SmartPersistableObjectHandler
         }
 
         if ($partner->isNew()) {
-            $sql =
-                sprintf('INSERT INTO %s (id,  weight, hits, hits_page, url, image, image_url, title, datesub, summary, description, contact_name, contact_email, contact_phone, adress, `status`, `last_update`, `email_priv`, `phone_priv`, `adress_priv`, `showsummary`) VALUES (null, %u, %u, %u, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %u, %u, %u, %u, %u, %u)',
-                        $this->table, $weight, $hits, $hits_page, $this->db->quoteString($url), $this->db->quoteString($image), $this->db->quoteString($image_url), $this->db->quoteString($title),
-                        time(), $this->db->quoteString($summary), $this->db->quoteString($description), $this->db->quoteString($contact_name), $this->db->quoteString($contact_email),
-                        $this->db->quoteString($contact_phone), $this->db->quoteString($adress), $status, time(), $email_priv, $phone_priv, $adress_priv, $showsummary);
+            $sql = sprintf('INSERT INTO %s (id,  weight, hits, hits_page, url, image, image_url, title, datesub, summary, description, contact_name, contact_email, contact_phone, adress, `status`, `last_update`, `email_priv`, `phone_priv`, `adress_priv`, `showsummary`) VALUES (NULL, %u, %u, %u, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %u, %u, %u, %u, %u, %u)',
+                           $this->table, $weight, $hits, $hits_page, $this->db->quoteString($url), $this->db->quoteString($image), $this->db->quoteString($image_url), $this->db->quoteString($title), time(), $this->db->quoteString($summary), $this->db->quoteString($description),
+                           $this->db->quoteString($contact_name), $this->db->quoteString($contact_email), $this->db->quoteString($contact_phone), $this->db->quoteString($adress), $status, time(), $email_priv, $phone_priv, $adress_priv, $showsummary);
         } else {
-            $sql =
-                sprintf('UPDATE %s SET  weight = %u, hits = %u, hits_page = %u, url = %s, image = %s, image_url = %s, title = %s, datesub = %s, summary = %s, description = %s, contact_name = %s, contact_email = %s, contact_phone = %s, adress = %s, `status` = %u, `last_update` = %u, `email_priv` = %u, `phone_priv` = %u, `adress_priv` = %u, `showsummary` = %u WHERE id = %u',
-                        $this->table, $weight, $hits, $hits_page, $this->db->quoteString($url), $this->db->quoteString($image), $this->db->quoteString($image_url), $this->db->quoteString($title),
-                        $this->db->quoteString($datesub), $this->db->quoteString($summary), $this->db->quoteString($description), $this->db->quoteString($contact_name),
-                        $this->db->quoteString($contact_email), $this->db->quoteString($contact_phone), $this->db->quoteString($adress), $status, time(), $email_priv, $phone_priv, $adress_priv,
-                        $showsummary, $id);
+            $sql = sprintf('UPDATE %s SET  weight = %u, hits = %u, hits_page = %u, url = %s, image = %s, image_url = %s, title = %s, datesub = %s, summary = %s, description = %s, contact_name = %s, contact_email = %s, contact_phone = %s, adress = %s, `status` = %u, `last_update` = %u, `email_priv` = %u, `phone_priv` = %u, `adress_priv` = %u, `showsummary` = %u WHERE id = %u',
+                           $this->table, $weight, $hits, $hits_page, $this->db->quoteString($url), $this->db->quoteString($image), $this->db->quoteString($image_url), $this->db->quoteString($title), $this->db->quoteString($datesub), $this->db->quoteString($summary),
+                           $this->db->quoteString($description), $this->db->quoteString($contact_name), $this->db->quoteString($contact_email), $this->db->quoteString($contact_phone), $this->db->quoteString($adress), $status, time(), $email_priv, $phone_priv, $adress_priv, $showsummary, $id);
         }
 
         //echo "<br>" . $sql . "<br>";exit;
@@ -928,7 +925,7 @@ class SmartpartnerPartnerHandler extends SmartPersistableObjectHandler
     public function delete(XoopsObject $partner, $force = false)
     {
         global $smartPartnerOfferHandler, $smartpartnerPartnerCatLinkHandler;
-        $partnerModule =& smartpartner_getModuleInfo();
+        $partnerModule = smartpartner_getModuleInfo();
         $module_id     = $partnerModule->getVar('mid');
 
         if (strtolower(get_class($partner)) != strtolower($this->className)) {
@@ -971,7 +968,13 @@ class SmartpartnerPartnerHandler extends SmartPersistableObjectHandler
      * @return array  array of <a href='psi_element://SmartpartnerPartner'>SmartpartnerPartner</a> objects
      *                                    objects
      */
-    public function getObjects(CriteriaElement $criteria = null, $id_as_key = false, $as_object = true, $sql = false, $debug = false)//&getObjects($criteria = null, $id_as_key = false)
+    public function getObjects(
+        CriteriaElement $criteria = null,
+        $id_as_key = false,
+        $as_object = true,
+        $sql = false,
+        $debug = false
+    )//&getObjects($criteria = null, $id_as_key = false)
     {
         $ret   = array();
         $limit = $start = 0;
@@ -1147,8 +1150,14 @@ class SmartpartnerPartnerHandler extends SmartPersistableObjectHandler
      * @param  bool   $asobject
      * @return array
      */
-    public function getPartners($limit = 0, $start = 0, $status = _SPARTNER_STATUS_ACTIVE, $sort = 'title', $order = 'ASC', $asobject = true)
-    {
+    public function getPartners(
+        $limit = 0,
+        $start = 0,
+        $status = _SPARTNER_STATUS_ACTIVE,
+        $sort = 'title',
+        $order = 'ASC',
+        $asobject = true
+    ) {
         global $xoopsUser;
         if ($status != _SPARTNER_STATUS_ALL) {
             $criteriaStatus = new CriteriaCompo();
@@ -1176,8 +1185,13 @@ class SmartpartnerPartnerHandler extends SmartPersistableObjectHandler
      * @param  bool   $asobject
      * @return array
      */
-    public function getPartnersForIndex($categoryid = 0, $status = _SPARTNER_STATUS_ACTIVE, $sort = 'title', $order = 'ASC', $asobject = true)
-    {
+    public function getPartnersForIndex(
+        $categoryid = 0,
+        $status = _SPARTNER_STATUS_ACTIVE,
+        $sort = 'title',
+        $order = 'ASC',
+        $asobject = true
+    ) {
         global $xoopsUser;
         if ($status != _SPARTNER_STATUS_ALL) {
             $criteriaStatus = new CriteriaCompo();
