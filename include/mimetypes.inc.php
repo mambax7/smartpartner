@@ -11,7 +11,7 @@
  * See the enclosed file LICENSE for licensing information.
  * If you did not receive this file, get it at http://www.fsf.org/copyleft/gpl.html
  *
- * @copyright    XOOPS Project (http://xoops.org)
+ * @copyright    XOOPS Project (https://xoops.org)
  * @license      http://www.fsf.org/copyleft/gpl.html GNU public license
  * @author       Skalpa Keo <skalpa@xoops.org>
  * @since        2.0.9.3

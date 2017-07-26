@@ -19,7 +19,7 @@ Feedback
 ========
 
 As usual, feedback is very welcomed ! We would like to know if you like the module, if it has bugs or if it can be in any way improved !
-You can easily post any bug you may found here or post any feature request on XOOPS Forums: http://xoops.org/modules/newbb
+You can easily post any bug you may found here or post any feature request on XOOPS Forums: https://xoops.org/modules/newbb
 
 
 Credits

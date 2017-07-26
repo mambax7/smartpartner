@@ -3,7 +3,7 @@
 // ------------------------------------------------------------------------ //
 // XOOPS - PHP Content Management System                      //
 // Copyright (c) 2000-2016 XOOPS.org                           //
-// <http://xoops.org/>                             //
+// <https://xoops.org/>                             //
 // ------------------------------------------------------------------------ //
 // This program is free software; you can redistribute it and/or modify     //
 // it under the terms of the GNU General Public License as published by     //
@@ -25,7 +25,7 @@
 // Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307 USA //
 // ------------------------------------------------------------------------ //
 // Author: Kazumi Ono (AKA onokazu)                                          //
-// URL: http://www.myweb.ne.jp/, http://xoops.org/, http://jp.xoops.org/ //
+// URL: http://www.myweb.ne.jp/, https://xoops.org/, http://jp.xoops.org/ //
 // Project: XOOPS Project                                                    //
 // ------------------------------------------------------------------------- //
 /**
@@ -78,7 +78,7 @@
  * @package       kernel
  * @subpackage    core
  * @author        Kazumi Ono <onokazu@xoops.org>
- * @copyright (c) 2000-2003 XOOPS Project (http://xoops.org)
+ * @copyright (c) 2000-2003 XOOPS Project (https://xoops.org)
  */
 mt_srand((double)microtime() * 1000000);
 
