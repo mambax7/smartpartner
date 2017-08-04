@@ -34,7 +34,7 @@ $modversion['developer_contributor']  = 'Andy Cleff, Raul Recio, chapi, Marco, M
 $modversion['developer_website_url']  = 'http://www.smartfactory.ca';
 $modversion['developer_website_name'] = 'SmartFactory.ca';
 $modversion['developer_email']        = 'marcan@smartfactory';
-$modversion['status_version']         = 'RC 1';
+$modversion['status_version']         = 'RC 2';
 $modversion['status']                 = 'Release Candidate';
 $modversion['date']                   = '2007-09-19';
 $modversion['modicons16']             = 'assets/images/icons/16';
@@ -98,6 +98,15 @@ $modversion['adminmenu']   = 'admin/menu.php';
 
 $modversion['onInstall'] = 'include/onupdate.inc.php';
 $modversion['onUpdate']  = 'include/onupdate.inc.php';
+
+// ------------------- Help files ------------------- //
+$modversion['helpsection'] = array(
+    ['name' => _MI_SPARTNER_OVERVIEW, 'link' => 'page=help'],
+    ['name' => _MI_SPARTNER_DISCLAIMER, 'link' => 'page=disclaimer'],
+    ['name' => _MI_SPARTNER_LICENSE, 'link' => 'page=license'],
+    ['name' => _MI_SPARTNER_SUPPORT, 'link' => 'page=support'],
+);
+
 
 // Blocks
 $modversion['blocks'][1]['file']        = 'partners_list.php';

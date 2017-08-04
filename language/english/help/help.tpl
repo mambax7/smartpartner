@@ -1,12 +1,7 @@
 <div id="help-template" class="outer">
-    <h1 class="head">Help:
-        <a class="ui-corner-all tooltip" href="<{$xoops_url}>/modules/smartpartner/admin/index.php"
-           title="Back to the administration of Smart Partner"> Smart Partner
-            <img src="<{xoAdminIcons home.png}>"
-                 alt="Back to the Administration of Smart Partner">
-        </a></h1>
+    <{include file=$smarty.const._MI_SPARTNER_HELP_HEADER}>
 
-    <h4 class="odd">DESCRIPTION</h4>
+    <h4 class="odd">DESCRIPTION</h4> <br>
 
     <p class="even">SmartPartner is a XOOPS 2 module that allows you to manage partners. Each partner have a unique page
         with its logo, web site and contact information.<br> <br>

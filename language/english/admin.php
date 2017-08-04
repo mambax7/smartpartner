@@ -289,3 +289,11 @@ define('_AM_SPARTNER_SHOW_SUMMARY', 'Show summary on partner page');
 define('_AM_SPARTNER_SHOW_SUMMARY_DSC', "Note: if any users have partial view permissions, you should set this to 'yes.' Otherwise a partner detail page displayed in partial view mode will have no info at all other than the logo and name.");
 define('_SMARTPARTNER_MESSAGE_FILE_ERROR', 'Error: Unable to store uploaded file for the following reasons:<br>%s');
 define('_SMARTPARTNER_MESSAGE_WRONG_MIMETYPE', 'Error: filetype is not allowed. Please re-submit.');
+//2.01
+define('_AM_SPARTNER_UPGRADEFAILED0', "Update failed - couldn't rename field '%s'");
+define('_AM_SPARTNER_UPGRADEFAILED1', "Update failed - couldn't add new fields");
+define('_AM_SPARTNER_UPGRADEFAILED2', "Update failed - couldn't rename table '%s'");
+define('_AM_SPARTNER_ERROR_COLUMN', 'Could not create column in database : %s');
+define('_AM_SPARTNER_ERROR_BAD_XOOPS', 'This module requires XOOPS %s+ (%s installed)');
+define('_AM_SPARTNER_ERROR_BAD_PHP', 'This module requires PHP version %s+ (%s installed)');
+define('_AM_SPARTNER_ERROR_TAG_REMOVAL', 'Could not remove tags from Tag Module');

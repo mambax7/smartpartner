@@ -217,3 +217,15 @@ define('_MI_SPARTNER_DEF_PART_DSC', '');
 
 //2.01
 define('_MI_SPARTNER_IMPORT', 'Import');
+//Help
+define('_MI_SPARTNER_DIRNAME', basename(dirname(dirname(__DIR__))));
+define('_MI_SPARTNER_HELP_HEADER', __DIR__.'/help/helpheader.tpl');
+define('_MI_SPARTNER_BACK_2_ADMIN', 'Back to Administration of ');
+define('_MI_SPARTNER_OVERVIEW', 'Overview');
+
+//define('_MI_SPARTNER_HELP_DIR', __DIR__);
+
+//help multi-page
+define('_MI_SPARTNER_DISCLAIMER', 'Disclaimer');
+define('_MI_SPARTNER_LICENSE', 'License');
+define('_MI_SPARTNER_SUPPORT', 'Support');
