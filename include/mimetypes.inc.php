@@ -1,6 +1,6 @@
 <?php
 
-// 
+//
 
 /**
  * Extension to mimetype lookup table

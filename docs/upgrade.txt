@@ -1,5 +1,5 @@
 /**
-* 
+*
 * Module: SmartPartner
 * Author: The SmartFactory <www.smartfactory.ca>
 * Licence: GNU
