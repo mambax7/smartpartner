@@ -6,7 +6,7 @@
  * Author: The SmartFactory <www.smartfactory.ca>
  * Licence: GNU
  */
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 function smartpartner_xoops_cp_header()
 {
@@ -114,7 +114,7 @@ function smartpartner_highlighter($matches)
  */
 function smartpartner_getAllowedImagesTypes()
 {
-    return array(
+    return [
         'jpg/jpeg',
         'image/bmp',
         'image/gif',
@@ -123,7 +123,7 @@ function smartpartner_getAllowedImagesTypes()
         'image/x-png',
         'image/png',
         'image/pjpeg'
-    );
+    ];
 }
 
 /**
@@ -263,7 +263,7 @@ function smartpartner_imageResize($src, $maxWidth, $maxHeight)
         $attr = " width='$width' height='$height'";
     }
 
-    return array($width, $height, $type, $attr);
+    return [$width, $height, $type, $attr];
 }
 
 /**
@@ -409,7 +409,7 @@ function smartpartner_getCurrentUrls()
 
     $currenturl = $http . $httphost . $phpself . $querystring;
 
-    $urls                = array();
+    $urls                = [];
     $urls['http']        = $http;
     $urls['httphost']    = $httphost;
     $urls['phpself']     = $phpself;
@@ -582,7 +582,7 @@ function smartpartner_getImageDir($item = '', $local = true)
  * @param  array $errors
  * @return string
  */
-function smartpartner_formatErrors($errors = array())
+function smartpartner_formatErrors($errors = [])
 {
     $ret = '';
     foreach ($errors as $key => $value) {
@@ -654,7 +654,6 @@ function smartpartner_upload_file($another = false, $withRedirect = true, $itemO
     if (!$fileObj->store($allowed_mimetypes)) {
         if ($withRedirect) {
             redirect_header('file.php?op=mod&id=' . $fileObj->id(), 3, _AM_SPARTNER_FILEUPLOAD_ERROR . smartpartner_formatErrors($fileObj->getErrors()));
-            exit;
         } else {
             return _AM_SPARTNER_FILEUPLOAD_ERROR . smartpartner_formatErrors($fileObj->getErrors());
         }

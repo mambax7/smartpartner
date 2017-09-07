@@ -8,7 +8,7 @@
  * @param $options
  * @return array
  */
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 function b_partners_list_show($options)
 {
@@ -30,7 +30,7 @@ function b_partners_list_show($options)
         $partnersObj = $newObjs;
     }
 
-    $cat_id = array();
+    $cat_id = [];
     foreach ($partnersObj as $partnerObj) {
         $p_cats     = $partnerObj->categoryid();
         $p_cat_rand = array_rand(explode('|', $p_cats));
@@ -42,7 +42,7 @@ function b_partners_list_show($options)
         $partnerObj->setVar('categoryid', $p_cats[$p_cat_rand]);
     }
 
-    $block = array();
+    $block = [];
     if ($partnersObj) {
         for ($j = 0, $jMax = count($cat_id); $j < $jMax; ++$j) {
             $categoryObj                              = $smartPartnerCategoryHandler->get($cat_id[$j]);

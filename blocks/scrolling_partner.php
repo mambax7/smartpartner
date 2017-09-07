@@ -8,7 +8,7 @@
  * @param $options
  * @return array
  */
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 function b_scrolling_partner_show($options)
 {
@@ -38,7 +38,7 @@ function b_scrolling_partner_show($options)
                 }
             }
     */
-    $block = array();
+    $block = [];
     if ($partnersObj) {
         for ($i = 0, $iMax = count($partnersObj); $i < $iMax; ++$i) {
             if ($partnersObj[$i]->image() != '' && $partnersObj[$i]->image() !== 'blank.png') {

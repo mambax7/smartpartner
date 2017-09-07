@@ -8,7 +8,7 @@
  * @param $options
  * @return array
  */
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 function b_recent_offers_show($options)
 {
@@ -33,7 +33,7 @@ function b_recent_offers_show($options)
         $criteria->setLimit($options[2]);
 
         $offersObj = $offerHandler->getObjects($criteria);
-        $block     = array();
+        $block     = [];
         if ($offersObj) {
             foreach ($offersObj as $offerObj) {
                 $block['offers'][] = $offerObj->toArray('e');

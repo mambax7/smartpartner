@@ -45,7 +45,7 @@ $modversion['module_website_name']    = 'XOOPS';
 $modversion['min_php']                = '5.5';
 $modversion['min_xoops']              = '2.5.9';
 $modversion['min_admin']              = '1.2';
-$modversion['min_db']                 = array('mysql' => '5.5');
+$modversion['min_db']                 = ['mysql' => '5.5'];
 
 $modversion['warning'] = _MI_SPARTNER_WARNING_RC;
 
@@ -100,12 +100,12 @@ $modversion['onInstall'] = 'include/onupdate.inc.php';
 $modversion['onUpdate']  = 'include/onupdate.inc.php';
 
 // ------------------- Help files ------------------- //
-$modversion['helpsection'] = array(
+$modversion['helpsection'] = [
     ['name' => _MI_SPARTNER_OVERVIEW, 'link' => 'page=help'],
     ['name' => _MI_SPARTNER_DISCLAIMER, 'link' => 'page=disclaimer'],
     ['name' => _MI_SPARTNER_LICENSE, 'link' => 'page=license'],
     ['name' => _MI_SPARTNER_SUPPORT, 'link' => 'page=support'],
-);
+];
 
 
 // Blocks
@@ -294,13 +294,13 @@ $modversion['config'][$i]['description'] = '';
 $modversion['config'][$i]['formtype']    = 'select';
 $modversion['config'][$i]['valuetype']   = 'int';
 $modversion['config'][$i]['default']     = 86400;
-$modversion['config'][$i]['options']     = array(
+$modversion['config'][$i]['options']     = [
     '_MI_SPARTNER_HOUR'    => '3600',
     '_MI_SPARTNER_3HOURS'  => '10800',
     '_MI_SPARTNER_5HOURS'  => '18000',
     '_MI_SPARTNER_10HOURS' => '36000',
     '_MI_SPARTNER_DAY'     => '86400'
-);
+];
 $modversion['config'][$i]['category']    = 'other';
 
 ++$i;
@@ -310,7 +310,7 @@ $modversion['config'][$i]['description'] = '_MI_SPARTNER_PERCAT_USER_DSC';
 $modversion['config'][$i]['formtype']    = 'select';
 $modversion['config'][$i]['valuetype']   = 'int';
 $modversion['config'][$i]['default']     = 20;
-$modversion['config'][$i]['options']     = array('2' => 2, '3' => 3, '5' => 5, '10' => 10, '20' => 20);
+$modversion['config'][$i]['options']     = ['2' => 2, '3' => 3, '5' => 5, '10' => 10, '20' => 20];
 $modversion['config'][$i]['category']    = 'format_options';
 
 ++$i;
@@ -319,12 +319,12 @@ $modversion['config'][$i]['title']       = '_MI_SPARTNER_SORT';
 $modversion['config'][$i]['description'] = '_MI_SPARTNER_SORT_DSC';
 $modversion['config'][$i]['formtype']    = 'select';
 $modversion['config'][$i]['valuetype']   = 'text';
-$modversion['config'][$i]['options']     = array(
+$modversion['config'][$i]['options']     = [
     _MI_SPARTNER_SORT_WEIGHT   => 'weight',
     _MI_SPARTNER_SORT_DATE_PUB => 'date_pub',
     _MI_SPARTNER_SORT_DATE_END => 'date_end',
     _MI_SPARTNER_SORT_ALPHA    => 'title'
-);
+];
 $modversion['config'][$i]['default']     = 'date_pub';
 $modversion['config'][$i]['category']    = 'format_options';
 
@@ -334,10 +334,10 @@ $modversion['config'][$i]['title']       = '_MI_SPARTNER_ORDER';
 $modversion['config'][$i]['description'] = '_MI_SPARTNER_ORDER_DSC';
 $modversion['config'][$i]['formtype']    = 'select';
 $modversion['config'][$i]['valuetype']   = 'text';
-$modversion['config'][$i]['options']     = array(
+$modversion['config'][$i]['options']     = [
     _MI_SPARTNER_ORDER_ASC  => 'ASC',
     _MI_SPARTNER_ORDER_DESC => 'DESC'
-);
+];
 $modversion['config'][$i]['default']     = 'DESC';
 $modversion['config'][$i]['category']    = 'format_options';
 
@@ -379,7 +379,7 @@ $modversion['config'][$i]['description'] = '_MI_SPARTNER_PERPAGE_ADMIN_DSC';
 $modversion['config'][$i]['formtype']    = 'select';
 $modversion['config'][$i]['valuetype']   = 'int';
 $modversion['config'][$i]['default']     = 5;
-$modversion['config'][$i]['options']     = array('5' => 5, '10' => 10, '15' => 15, '20' => 20, '25' => 25, '30' => 30, '50' => 50);
+$modversion['config'][$i]['options']     = ['5' => 5, '10' => 10, '15' => 15, '20' => 20, '25' => 25, '30' => 30, '50' => 50];
 $modversion['config'][$i]['category']    = 'format_options';
 
 ++$i;
@@ -398,7 +398,7 @@ $modversion['config'][$i]['description'] = '_MI_SPARTNER_INDEX_SORTBY_DSC';
 $modversion['config'][$i]['formtype']    = 'select';
 $modversion['config'][$i]['valuetype']   = 'text';
 $modversion['config'][$i]['default']     = 'weight';
-$modversion['config'][$i]['options']     = array('_MI_SPARTNER_ID' => 'id', '_MI_SPARTNER_HITS' => 'hits', '_MI_SPARTNER_TITLE' => 'title', '_MI_SPARTNER_WEIGHT' => 'weight');
+$modversion['config'][$i]['options']     = ['_MI_SPARTNER_ID' => 'id', '_MI_SPARTNER_HITS' => 'hits', '_MI_SPARTNER_TITLE' => 'title', '_MI_SPARTNER_WEIGHT' => 'weight'];
 $modversion['config'][$i]['category']    = 'format_options';
 
 ++$i;
@@ -438,7 +438,7 @@ $modversion['config'][$i]['description'] = '_MI_SPARTNER_DEF_FULL_DSC';
 $modversion['config'][$i]['formtype']    = 'select_multi';
 $modversion['config'][$i]['valuetype']   = 'array';
 $modversion['config'][$i]['options']     = $groups;
-$modversion['config'][$i]['default']     = array(1, 2);
+$modversion['config'][$i]['default']     = [1, 2];
 $modversion['config'][$i]['category']    = 'other';
 
 ++$i;
@@ -448,7 +448,7 @@ $modversion['config'][$i]['description'] = '_MI_SPARTNER_DEF_PART_DSC';
 $modversion['config'][$i]['formtype']    = 'select_multi';
 $modversion['config'][$i]['valuetype']   = 'array';
 $modversion['config'][$i]['options']     = $groups;
-$modversion['config'][$i]['default']     = array(3);
+$modversion['config'][$i]['default']     = [3];
 $modversion['config'][$i]['category']    = 'other';
 
 ++$i;
@@ -487,12 +487,12 @@ $modversion['notification']['lookup_func'] = 'smartpartner_notify_iteminfo';
 $modversion['notification']['category'][1]['name']           = 'global_partner';
 $modversion['notification']['category'][1]['title']          = _MI_SPARTNER_PARTNER_NOTIFY;
 $modversion['notification']['category'][1]['description']    = _MI_SPARTNER_PARTNER_NOTIFY_DSC;
-$modversion['notification']['category'][1]['subscribe_from'] = array('index.php');
+$modversion['notification']['category'][1]['subscribe_from'] = ['index.php'];
 
 $modversion['notification']['category'][2]['name']           = 'partner';
 $modversion['notification']['category'][2]['title']          = _MI_SPARTNER_PARTNER_NOTIFY;
 $modversion['notification']['category'][2]['description']    = _MI_SPARTNER_PARTNER_NOTIFY_DSC;
-$modversion['notification']['category'][2]['subscribe_from'] = array('partner.php');
+$modversion['notification']['category'][2]['subscribe_from'] = ['partner.php'];
 $modversion['notification']['category'][2]['item_name']      = 'id';
 
 $modversion['notification']['event'][1]['name']          = 'submitted';

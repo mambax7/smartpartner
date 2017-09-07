@@ -117,7 +117,7 @@ class smartpartner_PersistableObjectHandler extends XoopsObjectHandler
      */
     public function getObjects($criteria = null, $id_as_key = false, $as_object = true)
     {
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->table;
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
@@ -147,7 +147,7 @@ class smartpartner_PersistableObjectHandler extends XoopsObjectHandler
      */
     public function convertResultSet($result, $id_as_key = false, $as_object = true)
     {
-        $ret = array();
+        $ret = [];
         while ($myrow = $this->db->fetchArray($result)) {
             $obj = $this->create(false);
             $obj->assignVars($myrow);
@@ -155,7 +155,7 @@ class smartpartner_PersistableObjectHandler extends XoopsObjectHandler
                 if ($as_object) {
                     $ret[] =& $obj;
                 } else {
-                    $row  = array();
+                    $row  = [];
                     $vars = $obj->getVars();
                     foreach (array_keys($vars) as $i) {
                         $row[$i] = $obj->getVar($i);
@@ -166,7 +166,7 @@ class smartpartner_PersistableObjectHandler extends XoopsObjectHandler
                 if ($as_object) {
                     $ret[$myrow[$this->keyName]] =& $obj;
                 } else {
-                    $row  = array();
+                    $row  = [];
                     $vars = $obj->getVars();
                     foreach (array_keys($vars) as $i) {
                         $row[$i] = $obj->getVar($i);
@@ -191,7 +191,7 @@ class smartpartner_PersistableObjectHandler extends XoopsObjectHandler
      */
     public function getList(CriteriaElement $criteria = null, $limit = 0, $start = 0)
     {
-        $ret = array();
+        $ret = [];
         if ($criteria == null) {
             $criteria = new CriteriaCompo();
         }
@@ -259,7 +259,7 @@ class smartpartner_PersistableObjectHandler extends XoopsObjectHandler
 
             return $count;
         } else {
-            $ret = array();
+            $ret = [];
             while (list($id, $count) = $this->db->fetchRow($result)) {
                 $ret[$id] = $count;
             }
@@ -278,7 +278,7 @@ class smartpartner_PersistableObjectHandler extends XoopsObjectHandler
     public function delete(XoopsObject $obj, $force = false)
     {
         if (is_array($this->keyName)) {
-            $clause = array();
+            $clause = [];
             for ($i = 0, $iMax = count($this->keyName); $i < $iMax; ++$i) {
                 $clause[] = $this->keyName[$i] . ' = ' . $obj->getVar($this->keyName[$i]);
             }

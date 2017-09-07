@@ -18,7 +18,7 @@ function smartpartner_metagen_html2text($document)
     // common HTML entities to their text equivalent.
     // Credits: newbb2
 
-    $search = array(
+    $search = [
         "'<script[^>]*?>.*?</script>'si", // Strip out javascript
         "'<img.*?>'si", // Strip out img tags
         "'<[\/\!]*?[^<>]*?>'si", // Strip out HTML tags
@@ -32,9 +32,9 @@ function smartpartner_metagen_html2text($document)
         "'&(cent|#162);'i",
         "'&(pound|#163);'i",
         "'&(copy|#169);'i"
-    ); // evaluate as php
+    ]; // evaluate as php
 
-    $replace = array(
+    $replace = [
         '',
         '',
         '',
@@ -48,7 +48,7 @@ function smartpartner_metagen_html2text($document)
         chr(162),
         chr(163),
         chr(169),
-    );
+    ];
 
     $text = preg_replace($search, $replace, $document);
 
@@ -68,7 +68,7 @@ function smartpartner_createMetaDescription($description, $maxWords = 100)
 {
     $myts = MyTextSanitizer::getInstance();
 
-    $words = array();
+    $words = [];
     $words = explode(' ', smartpartner_metagen_html2text($description));
 
     $ret       = '';
@@ -94,7 +94,7 @@ function smartpartner_findMetaKeywords($text, $minChar)
 {
     $myts = MyTextSanitizer::getInstance();
 
-    $keywords         = array();
+    $keywords         = [];
     $originalKeywords = explode(' ', $text);
     foreach ($originalKeywords as $originalKeyword) {
         $secondRoundKeywords = explode("'", $originalKeyword);
@@ -162,7 +162,7 @@ function smartpartner_createMetaTags($title, $categoryPath = '', $description = 
 
     // Creating Page Title
     $moduleName = '';
-    $titleTag   = array();
+    $titleTag   = [];
 
     if (isset($xoopsModule)) {
         $moduleName         = $myts->displayTarea($xoopsModule->name());

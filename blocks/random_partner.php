@@ -24,7 +24,7 @@ function b_random_partner_show($options)
         $partnerObj = $partnersObj[$key_rand];
     }
 
-    $block = array();
+    $block = [];
     if ($partnerObj) {
         $partner['id']      = $partnerObj->id();
         $partner['urllink'] = $partnerObj->getUrlLink('block');

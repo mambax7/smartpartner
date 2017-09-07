@@ -21,11 +21,11 @@ if (empty($seoOp)) {
     // $seoArg = substr($data[1], strlen($seoOp) + 1);
 }
 
-$seoMap = array(
+$seoMap = [
     'category' => 'category.php',
     'item'     => 'partner.php',
     'print'    => 'print.php'
-);
+];
 
 if (!empty($seoOp) && !empty($seoMap[$seoOp])) {
     // module specific dispatching logic, other module must implement as

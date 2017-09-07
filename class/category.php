@@ -210,7 +210,7 @@ class SmartpartnerCategory extends XoopsObject
         $myts                = MyTextSanitizer::getInstance();
         $notificationHandler = xoops_getHandler('notification');
 
-        $tags                  = array();
+        $tags                  = [];
         $tags['MODULE_NAME']   = $myts->displayTarea($smartModule->getVar('name'));
         $tags['CATEGORY_NAME'] = $this->name();
         $tags['CATEGORY_URL']  = $this->getCategoryUrl();
@@ -223,7 +223,7 @@ class SmartpartnerCategory extends XoopsObject
      * @param  array $category
      * @return array
      */
-    public function toArray($category = array())
+    public function toArray($category = [])
     {
         $category['categoryid']   = $this->categoryid();
         $category['name']         = $this->name();

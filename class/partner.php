@@ -7,7 +7,7 @@
  * Licence: GNU
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobject.php';
 require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjecthandler.php';
 
@@ -461,7 +461,7 @@ class SmartpartnerPartner extends SmartObject
     /**
      * @param array $notifications
      */
-    public function sendNotifications($notifications = array())
+    public function sendNotifications($notifications = [])
     {
         $smartModule = smartpartner_getModuleInfo();
         $module_id   = $smartModule->getVar('mid');
@@ -469,7 +469,7 @@ class SmartpartnerPartner extends SmartObject
         $myts                = MyTextSanitizer::getInstance();
         $notificationHandler = xoops_getHandler('notification');
 
-        $tags                 = array();
+        $tags                 = [];
         $tags['MODULE_NAME']  = $myts->displayTarea($smartModule->getVar('name'));
         $tags['PARTNER_NAME'] = $this->title(20);
         foreach ($notifications as $notification) {
@@ -504,7 +504,7 @@ class SmartpartnerPartner extends SmartObject
      */
     public function getRedirectMsg($original_status, $new_status)
     {
-        $redirect_msgs = array();
+        $redirect_msgs = [];
 
         switch ($original_status) {
 
@@ -601,39 +601,39 @@ class SmartpartnerPartner extends SmartObject
     {
         switch ($this->status()) {
             case _SPARTNER_STATUS_NOTSET:
-                $ret = array(
+                $ret = [
                     _SPARTNER_STATUS_ACTIVE   => _AM_SPARTNER_ACTIVE,
                     _SPARTNER_STATUS_INACTIVE => _AM_SPARTNER_INACTIVE
-                );
+                ];
                 break;
             case _SPARTNER_STATUS_SUBMITTED:
-                $ret = array(
+                $ret = [
                     _SPARTNER_STATUS_ACTIVE   => _AM_SPARTNER_ACTIVE,
                     _SPARTNER_STATUS_REJECTED => _AM_SPARTNER_REJECTED,
                     _SPARTNER_STATUS_INACTIVE => _AM_SPARTNER_INACTIVE
-                );
+                ];
                 break;
 
             case _SPARTNER_STATUS_ACTIVE:
-                $ret = array(
+                $ret = [
                     _SPARTNER_STATUS_ACTIVE   => _AM_SPARTNER_ACTIVE,
                     _SPARTNER_STATUS_INACTIVE => _AM_SPARTNER_INACTIVE
-                );
+                ];
                 break;
 
             case _SPARTNER_STATUS_INACTIVE:
-                $ret = array(
+                $ret = [
                     _SPARTNER_STATUS_ACTIVE   => _AM_SPARTNER_ACTIVE,
                     _SPARTNER_STATUS_INACTIVE => _AM_SPARTNER_INACTIVE
-                );
+                ];
                 break;
 
             case _SPARTNER_STATUS_REJECTED:
-                $ret = array(
+                $ret = [
                     _SPARTNER_STATUS_ACTIVE   => _AM_SPARTNER_ACTIVE,
                     _SPARTNER_STATUS_REJECTED => _AM_SPARTNER_REJECTED,
                     _SPARTNER_STATUS_INACTIVE => _AM_SPARTNER_INACTIVE
-                );
+                ];
                 break;
         }
 
@@ -706,7 +706,7 @@ class SmartpartnerPartner extends SmartObject
         $grantedGroups           = $smartPermissionsHandler->getGrantedGroups('full_view', $this->id());
         $partGrantedGroups       = $smartPermissionsHandler->getGrantedGroups('partial_view', $this->id());
 
-        $userGroups = is_object($xoopsUser) ? $xoopsUser->getGroups() : array(XOOPS_GROUP_ANONYMOUS);
+        $userGroups = is_object($xoopsUser) ? $xoopsUser->getGroups() : [XOOPS_GROUP_ANONYMOUS];
 
         if (array_intersect($userGroups, $grantedGroups)) {
             $partner['display_type'] = 'full';
@@ -863,13 +863,56 @@ class SmartpartnerPartnerHandler extends SmartPersistableObjectHandler
         }
 
         if ($partner->isNew()) {
-            $sql = sprintf('INSERT INTO %s (id,  weight, hits, hits_page, url, image, image_url, title, datesub, summary, description, contact_name, contact_email, contact_phone, adress, `status`, `last_update`, `email_priv`, `phone_priv`, `adress_priv`, `showsummary`) VALUES (NULL, %u, %u, %u, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %u, %u, %u, %u, %u, %u)',
-                           $this->table, $weight, $hits, $hits_page, $this->db->quoteString($url), $this->db->quoteString($image), $this->db->quoteString($image_url), $this->db->quoteString($title), time(), $this->db->quoteString($summary), $this->db->quoteString($description),
-                           $this->db->quoteString($contact_name), $this->db->quoteString($contact_email), $this->db->quoteString($contact_phone), $this->db->quoteString($adress), $status, time(), $email_priv, $phone_priv, $adress_priv, $showsummary);
+            $sql = sprintf(
+                'INSERT INTO %s (id,  weight, hits, hits_page, url, image, image_url, title, datesub, summary, description, contact_name, contact_email, contact_phone, adress, `status`, `last_update`, `email_priv`, `phone_priv`, `adress_priv`, `showsummary`) VALUES (NULL, %u, %u, %u, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %u, %u, %u, %u, %u, %u)',
+                           $this->table,
+                $weight,
+                $hits,
+                $hits_page,
+                $this->db->quoteString($url),
+                $this->db->quoteString($image),
+                $this->db->quoteString($image_url),
+                $this->db->quoteString($title),
+                time(),
+                $this->db->quoteString($summary),
+                $this->db->quoteString($description),
+                           $this->db->quoteString($contact_name),
+                $this->db->quoteString($contact_email),
+                $this->db->quoteString($contact_phone),
+                $this->db->quoteString($adress),
+                $status,
+                time(),
+                $email_priv,
+                $phone_priv,
+                $adress_priv,
+                $showsummary
+            );
         } else {
-            $sql = sprintf('UPDATE %s SET  weight = %u, hits = %u, hits_page = %u, url = %s, image = %s, image_url = %s, title = %s, datesub = %s, summary = %s, description = %s, contact_name = %s, contact_email = %s, contact_phone = %s, adress = %s, `status` = %u, `last_update` = %u, `email_priv` = %u, `phone_priv` = %u, `adress_priv` = %u, `showsummary` = %u WHERE id = %u',
-                           $this->table, $weight, $hits, $hits_page, $this->db->quoteString($url), $this->db->quoteString($image), $this->db->quoteString($image_url), $this->db->quoteString($title), $this->db->quoteString($datesub), $this->db->quoteString($summary),
-                           $this->db->quoteString($description), $this->db->quoteString($contact_name), $this->db->quoteString($contact_email), $this->db->quoteString($contact_phone), $this->db->quoteString($adress), $status, time(), $email_priv, $phone_priv, $adress_priv, $showsummary, $id);
+            $sql = sprintf(
+                'UPDATE %s SET  weight = %u, hits = %u, hits_page = %u, url = %s, image = %s, image_url = %s, title = %s, datesub = %s, summary = %s, description = %s, contact_name = %s, contact_email = %s, contact_phone = %s, adress = %s, `status` = %u, `last_update` = %u, `email_priv` = %u, `phone_priv` = %u, `adress_priv` = %u, `showsummary` = %u WHERE id = %u',
+                           $this->table,
+                $weight,
+                $hits,
+                $hits_page,
+                $this->db->quoteString($url),
+                $this->db->quoteString($image),
+                $this->db->quoteString($image_url),
+                $this->db->quoteString($title),
+                $this->db->quoteString($datesub),
+                $this->db->quoteString($summary),
+                           $this->db->quoteString($description),
+                $this->db->quoteString($contact_name),
+                $this->db->quoteString($contact_email),
+                $this->db->quoteString($contact_phone),
+                $this->db->quoteString($adress),
+                $status,
+                time(),
+                $email_priv,
+                $phone_priv,
+                $adress_priv,
+                $showsummary,
+                $id
+            );
         }
 
         //echo "<br>" . $sql . "<br>";exit;
@@ -891,7 +934,7 @@ class SmartpartnerPartnerHandler extends SmartPersistableObjectHandler
         $criteria->add(new Criteria('partnerid', $partner->getVar('id')));
         $links        = $smartpartnerPartnerCatLinkHandler->getObjects($criteria);
         $categoryid   = explode('|', $partner->getVar('categoryid'));
-        $parent_array = array();
+        $parent_array = [];
         foreach ($links as $link) {
             if (!in_array($link->getVar('categoryid'), $categoryid)) {
                 $smartpartnerPartnerCatLinkHandler->delete($link);
@@ -976,7 +1019,7 @@ class SmartpartnerPartnerHandler extends SmartPersistableObjectHandler
         $debug = false
     )//&getObjects($criteria = null, $id_as_key = false)
     {
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->table;
 
@@ -1075,11 +1118,11 @@ class SmartpartnerPartnerHandler extends SmartPersistableObjectHandler
      * @param  int    $userid
      * @return array
      */
-    public function &getObjectsForSearch($queryarray = array(), $andor = 'AND', $limit = 0, $offset = 0, $userid = 0)
+    public function &getObjectsForSearch($queryarray = [], $andor = 'AND', $limit = 0, $offset = 0, $userid = 0)
     {
         global $xoopsConfig;
 
-        $ret = array();
+        $ret = [];
         $sql = 'SELECT title, id
                    FROM ' . $this->table . '
                    ';
@@ -1302,7 +1345,7 @@ class SmartpartnerPartnerHandler extends SmartPersistableObjectHandler
             return $ret;
         }
 
-        $partners_ids = array();
+        $partners_ids = [];
         while ($myrow = $this->db->fetchArray($result)) {
             $partners_ids[] = $myrow['id'];
         }

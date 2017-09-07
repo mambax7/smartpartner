@@ -8,7 +8,7 @@
  * @param $options
  * @return array
  */
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 function b_recent_partners_show($options)
 {
@@ -26,7 +26,7 @@ function b_recent_partners_show($options)
     $grantedItems            = $smartPermissionsHandler->getGrantedItems('full_view');
 
     if ($partnersObj) {
-        $block = array();
+        $block = [];
         foreach ($partnersObj as $partnerObj) {
             if (in_array($partnerObj->id(), $grantedItems)) {
                 $block['partners'][] = $partnerObj->toArray();

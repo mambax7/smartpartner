@@ -37,7 +37,7 @@ function b_random_offer_show($options)
             $offerObj = $offersObj[$key_rand];
         }
 
-        $block = array();
+        $block = [];
         if (isset($offerObj) && is_object($offerObj)) {
             $block['offers'][] = $offerObj->toArray('e');
 

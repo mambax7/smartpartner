@@ -6,7 +6,7 @@
  * Author: The SmartFactory <www.smartfactory.ca>
  * Licence: GNU
  */
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 // This must contain the name of the folder in which reside SmartPartner
 if (!defined('SMARTPARTNER_DIRNAME')) {
@@ -59,8 +59,8 @@ $smartPartnerFileHandler = smartpartner_gethandler('file');
 
 define('_SPARTNER_STATUS_OFFLINE', 0);
 define('_SPARTNER_STATUS_ONLINE', 1);
-$statusArray = array(
+$statusArray = [
     _SPARTNER_STATUS_OFFLINE => _CO_SPARTNER_STATUS_OFFLINE,
     _SPARTNER_STATUS_ONLINE  => _CO_SPARTNER_STATUS_ONLINE
-);
+];
 require_once SMARTPARTNER_ROOT_PATH . 'class/smarttree.php';

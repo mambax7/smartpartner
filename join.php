@@ -39,7 +39,6 @@ switch ($op) {
 
                 if ($_FILES[$filename]['tmp_name'] === '' || !is_readable($_FILES[$filename]['tmp_name'])) {
                     redirect_header('javascript:history.go(-1)', 2, _CO_SPARTNER_FILE_UPLOAD_ERROR);
-                    exit;
                 }
 
                 $uploader = new XoopsMediaUploader(smartpartner_getImageDir(), $allowed_mimetypes, $max_size, $max_imgwidth, $max_imgheight);
@@ -48,7 +47,6 @@ switch ($op) {
                     $partnerObj->setVar('image', $uploader->getSavedFileName());
                 } else {
                     redirect_header('javascript:history.go(-1)', 2, _CO_SPARTNER_FILE_UPLOAD_ERROR . $uploader->getErrors());
-                    exit;
                 }
             }
         }
@@ -79,7 +77,6 @@ switch ($op) {
         // Storing the partner
         if (!$partnerObj->store()) {
             redirect_header('javascript:history.go(-1)', 3, _MD_SPARTNER_SUBMIT_ERROR . smartpartner_formatErrors($partnerObj->getErrors()));
-            exit;
         }
 
         if (isset($_POST['notifypub']) && $_POST['notifypub'] === 1) {
@@ -88,9 +85,8 @@ switch ($op) {
             $notificationHandler->subscribe('partner', $partnerObj->id(), 'approved', XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE);
         }
 
-        $partnerObj->sendNotifications(array(_SPARTNER_NOT_PARTNER_SUBMITTED));
+        $partnerObj->sendNotifications([_SPARTNER_NOT_PARTNER_SUBMITTED]);
         redirect_header('index.php', 3, _MD_SPARTNER_SUBMIT_SUCCESS);
-        exit;
         break;
 
     case 'form':
@@ -198,7 +194,7 @@ switch ($op) {
         $form->addElement($button_tray, true);
 
         $form->assign($xoopsTpl);
-        $xoopsTpl->assign(array('lang_main_partner' => _MD_SPARTNER_PARTNERS, 'lang_join' => _MD_SPARTNER_JOIN));
+        $xoopsTpl->assign(['lang_main_partner' => _MD_SPARTNER_PARTNERS, 'lang_join' => _MD_SPARTNER_JOIN]);
         $xoopsTpl->assign('lang_intro_title', _MD_SPARTNER_JOIN);
         $xoopsTpl->assign('lang_intro_text', sprintf(_MD_SPARTNER_INTRO_JOIN, $xoopsConfig['sitename']));
         $xoopsTpl->assign('xoops_pagetitle', $myts->htmlSpecialChars($xoopsModule->name()) . ' - ' . _MD_SPARTNER_JOIN);

@@ -91,8 +91,10 @@ define('_MI_SPARTNER_IMG_MAX_HEIGHT', "Maximum height of the partner's logo:");
 define('_MI_SPARTNER_IMG_MAX_HEIGHT_DSC', 'This will be the maximum height of a logo that is uploaded to the module.');
 
 define('_MI_SPARTNER_HELP_PATH_SELECT', 'Path of SmartPartner help files');
-define('_MI_SPARTNER_HELP_PATH_SELECT_DSC',
-       "SELECT FROM where you would LIKE TO access SmartPartner's help files. If you downloaded the 'SmartPartner's Help Package' AND uploaded it IN 'modules/smartpartner/doc/', you can SELECT 'Inside the module'. Alternatively, you can access the module's help file directly from docs.xoops.org by chosing this in the selector. You can also select 'Custom Path' and specify yourself the path of the help files in the next config option 'Custom path of SmartPartner's help files'");
+define(
+    '_MI_SPARTNER_HELP_PATH_SELECT_DSC',
+       "SELECT FROM where you would LIKE TO access SmartPartner's help files. If you downloaded the 'SmartPartner's Help Package' AND uploaded it IN 'modules/smartpartner/doc/', you can SELECT 'Inside the module'. Alternatively, you can access the module's help file directly from docs.xoops.org by chosing this in the selector. You can also select 'Custom Path' and specify yourself the path of the help files in the next config option 'Custom path of SmartPartner's help files'"
+);
 
 define('_MI_SPARTNER_HELP_PATH_CUSTOM', "Custom path of SmartPartner's help files");
 define('_MI_SPARTNER_HELP_PATH_CUSTOM_DSC', "If you selected 'Custom path' in the previous option 'Path of SmartPartner's help files', please specify the URL of SmartPartner's help files, in that format: http://www.yoursite.com/doc");

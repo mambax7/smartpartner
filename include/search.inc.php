@@ -12,7 +12,7 @@
  * @param $userid
  * @return array
  */
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 function smartpartner_search($queryarray, $andor, $limit, $offset, $userid)
 {
@@ -22,7 +22,7 @@ function smartpartner_search($queryarray, $andor, $limit, $offset, $userid)
     }
     require_once XOOPS_ROOT_PATH . '/modules/' . SMARTPARTNER_DIRNAME . '/include/common.php';
 
-    $ret = array();
+    $ret = [];
 
     if (!isset($smartPartnerPartnerHandler)) {
         $smartPartnerPartnerHandler = smartpartner_gethandler('partner');

@@ -33,7 +33,7 @@
 function get_partners_array($categoryid)
 {
     global $every_partners_array, $count, $xoopsModuleConfig, $view_category_id;
-    $partners = array();
+    $partners = [];
     foreach ($every_partners_array as $partnerObj) {
         if (in_array($categoryid, explode('|', $partnerObj->categoryid()))
             && ($view_category_id
@@ -63,7 +63,7 @@ function get_subcats($every_categories_array, $categoryid, $level)
 {
 
     //global $every_categories_array;
-    $subcatArray = array();
+    $subcatArray = [];
     ++$level;
 
     foreach ($every_categories_array as $subcatObj) {
@@ -87,7 +87,7 @@ function get_subcats($every_categories_array, $categoryid, $level)
  */
 function get_cat_content($every_categories_array, $categoryObj, $level)
 {
-    $category = array();
+    $category = [];
     $decalage = '';
     /*for ($i=0;$i<$level;++$i) {
          $decalage .= '--';
@@ -125,7 +125,7 @@ if ($xoopsModuleConfig['index_sortby'] === 'title' || $xoopsModuleConfig['index_
 $every_categories_array = $smartPartnerCategoryHandler->getCategories(0, 0, -1, 'weight', 'ASC', true);
 $every_partners_array   = $smartPartnerPartnerHandler->getPartnersForIndex(-1, _SPARTNER_STATUS_ACTIVE, $xoopsModuleConfig['index_sortby'], $order);
 
-$partnersArray = array();
+$partnersArray = [];
 
 //display All categories and partners
 if (!$view_category_id) {

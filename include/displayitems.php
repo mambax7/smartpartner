@@ -19,7 +19,7 @@ $sel_cat     = $categoryid;
 smartpartner_collapsableBar('bottomtable', 'bottomtableicon', $items_title, $items_info);
 
 // Get the total number of published ITEMS
-$totalitems = $smartPartnerItemHandler->getItemsCount($sel_cat, array(_SPARTNER_STATUS_PUBLISHED));
+$totalitems = $smartPartnerItemHandler->getItemsCount($sel_cat, [_SPARTNER_STATUS_PUBLISHED]);
 
 // creating the items objects that are published
 $itemsObj = $smartPartnerItemHandler->getAllPublished($xoopsModuleConfig['perpage'], $startitem, $sel_cat);

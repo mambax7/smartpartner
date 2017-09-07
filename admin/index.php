@@ -24,10 +24,10 @@ xoops_cp_header();
 
 $adminObject = \Xmf\Module\Admin::getInstance();
 
-$folder = array(
+$folder = [
     XOOPS_ROOT_PATH . '/uploads/smartpartner/images/',
     XOOPS_ROOT_PATH . '/uploads/smartpartner/images/category/'
-);
+];
 //---------------------
 
 // Creating the Partner handler object
@@ -75,7 +75,7 @@ if ($totalinactive > 0) {
 
 foreach (array_keys($folder) as $i) {
     $adminObject->addConfigBoxLine($folder[$i], 'folder');
-    $adminObject->addConfigBoxLine(array($folder[$i], '777'), 'chmod');
+    $adminObject->addConfigBoxLine([$folder[$i], '777'], 'chmod');
 }
 
 $adminObject->displayNavigation(basename(__FILE__));

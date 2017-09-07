@@ -10,10 +10,10 @@
  * @param $displaysubs
  * @return array
  */
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 function get_content($cat_id, $catsObj, $displaysubs)
 {
-    $content = array();
+    $content = [];
     $i       = 0;
     foreach ($catsObj as $catObj) {
         if ($catObj->getVar('parentid') == $cat_id) {
@@ -44,7 +44,7 @@ function b_categories_list_show($options)
     $catsObj  = $smartPartnerCategoryHandler->getObjects($criteria, true);
     $catArray = get_content(0, $catsObj, $options[2]);
 
-    $block                = array();
+    $block                = [];
     $block['categories']  = $catArray;
     $block['displaysubs'] = $options[2];
     if (isset($_GET['view_category_id'])) {

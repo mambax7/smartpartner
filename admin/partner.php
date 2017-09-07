@@ -385,7 +385,6 @@ switch ($op) {
 
                 if ($_FILES[$filename]['tmp_name'] == '' || !is_readable($_FILES[$filename]['tmp_name'])) {
                     redirect_header('javascript:history.go(-1)', 2, _CO_SPARTNER_FILE_UPLOAD_ERROR);
-                    exit;
                 }
 
                 $uploader = new XoopsMediaUploader(smartpartner_getImageDir(), $allowed_mimetypes, $max_size, $max_imgwidth, $max_imgheight);
@@ -397,7 +396,6 @@ switch ($op) {
                     $partnerObj->setVar('image', $uploader->getSavedFileName());
                 } else {
                     redirect_header('javascript:history.go(-1)', 2, _CO_SPARTNER_FILE_UPLOAD_ERROR . $uploader->getErrors());
-                    exit;
                 }
             }
         } else {
@@ -406,7 +404,7 @@ switch ($op) {
 
         // Putting the values in the partner object
         $partnerObj->setVar('id', isset($_POST['id']) ? (int)$_POST['id'] : 0);
-        $partnerObj->setVar('categoryid', isset($_POST['categoryid']) ? implode('|', $_POST['categoryid']) : array(0));
+        $partnerObj->setVar('categoryid', isset($_POST['categoryid']) ? implode('|', $_POST['categoryid']) : [0]);
         $partnerObj->setVar('status', isset($_POST['status']) ? (int)$_POST['status'] : 0);
         $partnerObj->setVar('title', $_POST['title']);
         $partnerObj->setVar('summary', $_POST['summary']);
@@ -431,10 +429,10 @@ switch ($op) {
         }
 
         if (($_POST['original_status'] == _SPARTNER_STATUS_SUBMITTED) || ($_POST['status'] == _SPARTNER_STATUS_ACTIVE)) {
-            $partnerObj->sendNotifications(array(_SPARTNER_NOT_PARTNER_APPROVED));
+            $partnerObj->sendNotifications([_SPARTNER_NOT_PARTNER_APPROVED]);
         }
         if ($partnerObj->isNew()) {
-            $partnerObj->sendNotifications(array(_SPARTNER_NOT_PARTNER_NEW));
+            $partnerObj->sendNotifications([_SPARTNER_NOT_PARTNER_NEW]);
         }
         redirect_header('partner.php', 2, $redirect_msgs['success']);
 
@@ -457,7 +455,6 @@ switch ($op) {
         if ($confirm) {
             if (!$smartPartnerPartnerHandler->delete($partnerObj)) {
                 redirect_header('partner.php', 2, _AM_SPARTNER_PARTNER_DELETE_ERROR);
-                exit;
             }
 
             redirect_header('partner.php', 2, sprintf(_AM_SPARTNER_PARTNER_DELETE_SUCCESS, $partnerObj->title()));
@@ -465,7 +462,7 @@ switch ($op) {
             // no confirm: show deletion condition
             $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
             xoops_cp_header();
-            xoops_confirm(array('op' => 'del', 'id' => $partnerObj->id(), 'confirm' => 1, 'name' => $partnerObj->title()), 'partner.php', _AM_SPARTNER_DELETETHISP . " <br>'" . $partnerObj->title() . "' <br> <br>", _AM_SPARTNER_DELETE);
+            xoops_confirm(['op' => 'del', 'id' => $partnerObj->id(), 'confirm' => 1, 'name' => $partnerObj->title()], 'partner.php', _AM_SPARTNER_DELETETHISP . " <br>'" . $partnerObj->title() . "' <br> <br>", _AM_SPARTNER_DELETE);
             xoops_cp_footer();
         }
 

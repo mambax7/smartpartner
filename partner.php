@@ -45,8 +45,8 @@ $partner = $partnerObj->toArray();
 // Creating the files object associated with this item
 $filesObj = $partnerObj->getFiles();
 
-$files         = array();
-$embeded_files = array();
+$files         = [];
+$embeded_files = [];
 
 foreach ($filesObj as $fileObj) {
     if ($fileObj->mimetype() === 'application/x-shockwave-flash') {
@@ -82,7 +82,7 @@ $criteria->add(new Criteria('date_end', time(), '>'));
 $criteria->add(new Criteria('status', _SPARTNER_STATUS_ONLINE));
 
 $offersObj = $smartPartnerOfferHandler->getObjects($criteria);
-$offers    = array();
+$offers    = [];
 foreach ($offersObj as $offerObj) {
     $offers[] = $offerObj->toArray();
 }

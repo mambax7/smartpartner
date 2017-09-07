@@ -7,7 +7,7 @@
  * Licence: GNU
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 require_once XOOPS_ROOT_PATH . '/modules/smartpartner/include/common.php';
 
@@ -64,7 +64,7 @@ class SmartpartnerFile extends XoopsObject
         $maxfilewidth  = 100000; //$config['maximum_image_width'];
         $maxfileheight = 100000; //$config['maximum_image_height'];
 
-        $errors = array();
+        $errors = [];
 
         if (!isset($allowed_mimetypes)) {
             $hMime             = xoops_getModuleHandler('mimetype');
@@ -203,7 +203,7 @@ class SmartpartnerFile extends XoopsObject
     public function store(&$allowed_mimetypes, $force = true, $doupload = true)
     {
         if ($this->isNew()) {
-            $errors = array();
+            $errors = [];
             if ($doupload) {
                 $ret = $this->storeUpload('userfile', $allowed_mimetypes, $errors);
             } else {
@@ -476,13 +476,36 @@ class SmartpartnerFileHandler extends XoopsObjectHandler
         }
 
         if ($fileObj->isNew()) {
-            $sql = sprintf('INSERT INTO %s (fileid, id, name, description, filename, mimetype, uid, datesub, `status`, notifypub, counter) VALUES (NULL, %u, %s, %s, %s, %s, %u, %u, %u, %u, %u)',
-                           $this->db->prefix('smartpartner_files'), $id, $this->db->quoteString($name), $this->db->quoteString($description), $this->db->quoteString($filename),
-                           $this->db->quoteString($mimetype), $uid, time(), $status, $notifypub, $counter);
+            $sql = sprintf(
+                'INSERT INTO %s (fileid, id, name, description, filename, mimetype, uid, datesub, `status`, notifypub, counter) VALUES (NULL, %u, %s, %s, %s, %s, %u, %u, %u, %u, %u)',
+                           $this->db->prefix('smartpartner_files'),
+                $id,
+                $this->db->quoteString($name),
+                $this->db->quoteString($description),
+                $this->db->quoteString($filename),
+                           $this->db->quoteString($mimetype),
+                $uid,
+                time(),
+                $status,
+                $notifypub,
+                $counter
+            );
         } else {
-            $sql = sprintf('UPDATE %s SET id = %u, name = %s, description = %s, filename = %s, mimetype = %s, uid = %u, datesub = %u, status = %u, notifypub = %u, counter = %u WHERE fileid = %u',
-                           $this->db->prefix('smartpartner_files'), $id, $this->db->quoteString($name), $this->db->quoteString($description), $this->db->quoteString($filename),
-                           $this->db->quoteString($mimetype), $uid, $datesub, $status, $notifypub, $counter, $fileid);
+            $sql = sprintf(
+                'UPDATE %s SET id = %u, name = %s, description = %s, filename = %s, mimetype = %s, uid = %u, datesub = %u, status = %u, notifypub = %u, counter = %u WHERE fileid = %u',
+                           $this->db->prefix('smartpartner_files'),
+                $id,
+                $this->db->quoteString($name),
+                $this->db->quoteString($description),
+                $this->db->quoteString($filename),
+                           $this->db->quoteString($mimetype),
+                $uid,
+                $datesub,
+                $status,
+                $notifypub,
+                $counter,
+                $fileid
+            );
         }
 
         //echo "<br>$sql<br>";
@@ -570,7 +593,7 @@ class SmartpartnerFileHandler extends XoopsObjectHandler
      */
     public function getObjects($criteria = null, $id_as_key = false)
     {
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->db->prefix('smartpartner_files');
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {

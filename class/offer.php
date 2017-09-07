@@ -27,7 +27,7 @@
 // Project: XOOPS Project                                               //
 // -------------------------------------------------------------------------//
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobject.php';
 require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjecthandler.php';
 
@@ -57,23 +57,23 @@ class SmartpartnerOffer extends SmartObject
         $this->initCommonVar('weight');
         $this->initCommonVar('dohtml', false);
 
-        $this->setControl('image', array('name' => 'image'));
+        $this->setControl('image', ['name' => 'image']);
 
-        $this->setControl('date_sub', array('name' => 'date_time'));
-        $this->setControl('date_pub', array('name' => 'date_time'));
-        $this->setControl('date_end', array('name' => 'date_time'));
+        $this->setControl('date_sub', ['name' => 'date_time']);
+        $this->setControl('date_pub', ['name' => 'date_time']);
+        $this->setControl('date_end', ['name' => 'date_time']);
 
-        $this->setControl('status', array(
+        $this->setControl('status', [
             'name'        => false,
             'itemHandler' => 'offer',
             'method'      => 'getStatus',
             'module'      => 'smartpartner'
-        ));
-        $this->setControl('partnerid', array(
+        ]);
+        $this->setControl('partnerid', [
             'itemHandler' => 'partner',
             'method'      => 'getList',
             'module'      => 'smartpartner'
-        ));
+        ]);
     }
 
     /**
@@ -83,7 +83,7 @@ class SmartpartnerOffer extends SmartObject
      */
     public function getVar($key, $format = 's')
     {
-        if ($format === 's' && in_array($key, array('partnerid', 'status'))) {
+        if ($format === 's' && in_array($key, ['partnerid', 'status'])) {
             //            return call_user_func(array($this, $key));
             return $this->{$key}();
         }
@@ -120,7 +120,7 @@ class SmartpartnerOffer extends SmartObject
     /**
      * @param array $notifications
      */
-    public function sendNotifications($notifications = array())
+    public function sendNotifications($notifications = [])
     {
         global $smartPartnerPartnerHandler;
         $partnerObj  = $smartPartnerPartnerHandler->get($this->getVar('partnerid', 'e'));
@@ -130,7 +130,7 @@ class SmartpartnerOffer extends SmartObject
         $myts                = MyTextSanitizer::getInstance();
         $notificationHandler = xoops_getHandler('notification');
 
-        $tags                 = array();
+        $tags                 = [];
         $tags['MODULE_NAME']  = $myts->displayTarea($smartModule->getVar('name'));
         $tags['PARTNER_NAME'] = $partnerObj->title(20);
         $tags['OFFER_NAME']   = $this->title(20);
@@ -216,7 +216,7 @@ class SmartpartnerOfferHandler extends SmartPersistableObjectHandler
         $smartPermissionsHandler = new SmartobjectPermissionHandler($smartPartnerPartnerHandler);
         $userGroups              = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
         $grantedItems            = $smartPermissionsHandler->getGrantedItems('full_view');
-        $relevantCat             = array();
+        $relevantCat             = [];
 
         foreach ($offersObj as $offerObj) {
             if (in_array($offerObj->getVar('partnerid', 'e'), $grantedItems)) {
@@ -234,13 +234,13 @@ class SmartpartnerOfferHandler extends SmartPersistableObjectHandler
         }
         $relevantCat = array_unique($relevantCat);
 
-        $partnersArray = array();
+        $partnersArray = [];
         foreach ($partnersObj as $partnerObj) {
             $grantedGroups = $smartPermissionsHandler->getGrantedGroups('full_view', $partnerObj->id());
             if (array_intersect($userGroups, $grantedGroups)) {
-                $partnerArray           = array();
+                $partnerArray           = [];
                 $partnerArray['name']   = $partnerObj->title();
-                $partnerArray['offers'] = array();
+                $partnerArray['offers'] = [];
                 foreach ($offersObj as $offerObj) {
                     if ($offerObj->getVar('partnerid', 'e') == $partnerObj->id()) {
                         $partnerArray['offers'][] = $offerObj->toArray();
@@ -251,14 +251,14 @@ class SmartpartnerOfferHandler extends SmartPersistableObjectHandler
             }
         }
 
-        $categoriesArray = array();
+        $categoriesArray = [];
         foreach ($catsObj as $catObj) {
             if (in_array($catObj->categoryid(), $relevantCat)) {
-                $categoryArray               = array();
+                $categoryArray               = [];
                 $categoryArray['parentid']   = $catObj->parentid();
                 $categoryArray['categoryid'] = $catObj->categoryid();
                 $categoryArray['name']       = $catObj->name();
-                $categoryArray['partners']   = array();
+                $categoryArray['partners']   = [];
                 foreach ($partnersObj as $partnerObj) {
                     $catArray = explode('|', $partnerObj->categoryid());
                     if (in_array($catObj->categoryid(), $catArray)) {
@@ -280,7 +280,7 @@ class SmartpartnerOfferHandler extends SmartPersistableObjectHandler
      */
     public function hierarchize($categoriesArray, $parentid = 0)
     {
-        $hierachizedArray = array();
+        $hierachizedArray = [];
         foreach ($categoriesArray as $cat) {
             if ($cat['parentid'] == $parentid) {
                 $id                               = $cat['categoryid'];

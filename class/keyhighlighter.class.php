@@ -75,7 +75,7 @@ class SmartpartnerKeyhighlighter
      */
     public function replace($replace_matches)
     {
-        $patterns = array();
+        $patterns = [];
         if ($this->singlewords) {
             $keywords = explode(' ', $this->preg_keywords);
             foreach ($keywords as $keyword) {
@@ -107,7 +107,7 @@ class SmartpartnerKeyhighlighter
     {
         $buffer              = '>' . $buffer . '<';
         $this->preg_keywords = preg_replace('/[^\w ]/si', '', $this->keywords);
-        $buffer              = preg_replace_callback("/(\>(((?" . ">[^><]+)|(?R))*)\<)/is", array(&$this, 'replace'), $buffer);
+        $buffer              = preg_replace_callback("/(\>(((?" . ">[^><]+)|(?R))*)\<)/is", [&$this, 'replace'], $buffer);
         $buffer              = substr($buffer, 1, -1);
 
         return $buffer;

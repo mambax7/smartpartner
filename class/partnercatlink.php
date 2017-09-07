@@ -27,7 +27,7 @@
 // Project: XOOPS Project                                               //
 // -------------------------------------------------------------------------//
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobject.php';
 require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjecthandler.php';
 
@@ -58,7 +58,7 @@ class SmartpartnerPartner_cat_linkHandler extends SmartPersistableObjectHandler
      */
     public function __construct(XoopsDatabase $db)
     {
-        parent::__construct($db, 'partner_cat_link', array('partnerid', 'categoryid'), '', false, 'smartpartner');
+        parent::__construct($db, 'partner_cat_link', ['partnerid', 'categoryid'], '', false, 'smartpartner');
     }
 
     /**
@@ -70,7 +70,7 @@ class SmartpartnerPartner_cat_linkHandler extends SmartPersistableObjectHandler
         $criteria = new CriteriaCompo();
         $criteria->add(new Criteria('partnerid', $partnerid));
         $links        = $this->getObjects($criteria);
-        $parent_array = array();
+        $parent_array = [];
         foreach ($links as $link) {
             $parent_array[] = $link->getVar('categoryid');
         }

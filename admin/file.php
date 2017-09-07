@@ -167,12 +167,9 @@ switch ($op) {
         // Storing the file
         if (!$fileObj->store()) {
             redirect_header('partner.php?op=mod&id=' . $fileObj->id(), 3, _AM_SPARTNER_FILE_EDITING_ERROR . smartpartner_formatErrors($fileObj->getErrors()));
-            exit;
         }
 
         redirect_header('partner.php?op=mod&id=' . $fileObj->id(), 2, _AM_SPARTNER_FILE_EDITING_SUCCESS);
-
-        exit();
         break;
 
     case 'del':
@@ -192,7 +189,6 @@ switch ($op) {
         if ($confirm) {
             if (!$smartPartnerFileHandler->delete($fileObj)) {
                 redirect_header('partner.php', 2, _AM_SPARTNER_FILE_DELETE_ERROR);
-                exit;
             }
 
             redirect_header('partner.php', 2, sprintf(_AM_SPARTNER_FILEISDELETED, $fileObj->name()));
@@ -201,12 +197,12 @@ switch ($op) {
             $fileid = isset($_GET['fileid']) ? (int)$_GET['fileid'] : 0;
 
             smartpartner_xoops_cp_header();
-            xoops_confirm(array(
+            xoops_confirm([
                               'op'      => 'del',
                               'fileid'  => $fileObj->fileid(),
                               'confirm' => 1,
                               'name'    => $fileObj->name()
-                          ), 'file.php', _AM_SPARTNER_DELETETHISFILE . ' <br>' . $fileObj->name() . ' <br> <br>', _AM_SPARTNER_DELETE);
+                          ], 'file.php', _AM_SPARTNER_DELETETHISFILE . ' <br>' . $fileObj->name() . ' <br> <br>', _AM_SPARTNER_DELETE);
             xoops_cp_footer();
         }
 
@@ -228,7 +224,7 @@ switch ($op) {
         smartpartner_collapsableBar('toptable', 'toptableicon', _AM_SPARTNER_PUBLISHEDITEMS, _AM_SPARTNER_PUBLISHED_DSC);
 
         // Get the total number of published ITEM
-        $totalitems = $smartPartnerItemHandler->getItemsCount(-1, array(_SPARTNER_STATUS_PUBLISHED));
+        $totalitems = $smartPartnerItemHandler->getItemsCount(-1, [_SPARTNER_STATUS_PUBLISHED]);
 
         // creating the item objects that are published
         $itemsObj         = $smartPartnerItemHandler->getAllPublished($xoopsModuleConfig['perpage'], $startitem);

@@ -17,7 +17,7 @@
  * @since        2.0.9.3
  */
 
-return array(
+return [
 
     'hqx' => 'application/mac-binhex40',
 
@@ -216,4 +216,4 @@ return array(
     'avi' => 'video/x-msvideo',
 
     'csv' => 'text/csv'
-);
+];

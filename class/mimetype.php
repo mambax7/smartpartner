@@ -17,7 +17,7 @@
  * @author         XOOPS Development Team
  */
 
-// defined('XOOPS_ROOT_PATH') || exit('XOOPS root path not defined');
+// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 require_once XOOPS_ROOT_PATH . '/modules/smartpartner/include/common.php';
 require_once SMARTPARTNER_ROOT_PATH . 'class/baseObjectHandler.php';
 
@@ -126,7 +126,7 @@ class SmartpartnerMimetypeHandler extends SmartpartnerBaseObjectHandler
      */
     public function &getObjects($criteria = null)
     {
-        $ret   = array();
+        $ret   = [];
         $limit = $start = 0;
         $sql   = $this->_selectQuery($criteria);
         if (isset($criteria)) {
@@ -190,7 +190,7 @@ class SmartpartnerMimetypeHandler extends SmartpartnerBaseObjectHandler
         global $xoopsModuleConfig;
         $mymetypesArray = require_once SMARTPARTNER_ROOT_PATH . '/include/mimetypes.inc.php';
         foreach (explode('|', $xoopsModuleConfig['allowed_ext']) as $ext) {
-            $allowed_mimetypes[] = array('type' => $mymetypesArray[$ext], 'ext' => $ext);
+            $allowed_mimetypes[] = ['type' => $mymetypesArray[$ext], 'ext' => $ext];
         }
 
         return $allowed_mimetypes;

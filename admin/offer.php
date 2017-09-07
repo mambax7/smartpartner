@@ -81,7 +81,7 @@ switch ($op) {
             $partnerObj = $smartPartnerPartnerHandler->get($offerObj->getVar('partnerid', 'e'));
             $partnerObj->setUpdated();
             if ($_POST['offerid'] == '') {
-                $offerObj->sendNotifications(array(_SPARTNER_NOT_OFFER_NEW));
+                $offerObj->sendNotifications([_SPARTNER_NOT_OFFER_NEW]);
             }
 
             redirect_header(smart_get_page_before_form(), 3, _CO_SOBJECT_SAVE_SUCCESS);

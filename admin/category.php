@@ -295,7 +295,6 @@ switch ($op) {
 
                 if ($_FILES[$filename]['tmp_name'] == '' || !is_readable($_FILES[$filename]['tmp_name'])) {
                     redirect_header('javascript:history.go(-1)', 2, _AM_SPARTNER_FILEUPLOAD_ERROR);
-                    exit;
                 }
 
                 $uploader = new XoopsMediaUploader(smartpartner_getImageDir('category'), $allowed_mimetypes, $max_size, $max_imgwidth, $max_imgheight);
@@ -304,7 +303,6 @@ switch ($op) {
                     $categoryObj->setVar('image', $uploader->getSavedFileName());
                 } else {
                     redirect_header('javascript:history.go(-1)', 2, _AM_SPARTNER_FILEUPLOAD_ERROR . $uploader->getErrors());
-                    exit;
                 }
             }
         } else {
@@ -331,7 +329,6 @@ switch ($op) {
 
         if (!$categoryObj->store()) {
             redirect_header('javascript:history.go(-1)', 3, _AM_SPARTNER_CATEGORY_SAVE_ERROR . smartpartner_formatErrors($categoryObj->getErrors()));
-            exit;
         }
         //Added by fx2024
         $parentCat = $categoryObj->categoryid();
@@ -344,7 +341,6 @@ switch ($op) {
 
                 if (!$categoryObj->store()) {
                     redirect_header('javascript:history.go(-1)', 3, _AM_SPARTNER_CATEGORY_SUBCAT_SAVE_ERROR . smartpartner_formatErrors($categoryObj->getErrors()));
-                    exit;
                 }
             }
         }
@@ -394,7 +390,6 @@ switch ($op) {
         if ($confirm) {
             if (!$smartPartnerCategoryHandler->delete($categoryObj)) {
                 redirect_header('category.php', 1, _AM_SPARTNER_CATEGORY_DELETE_ERROR);
-                exit;
             }
 
             redirect_header('category.php', 1, sprintf(_AM_SPARTNER_CATEGORY_DELETED, $name));
@@ -402,12 +397,12 @@ switch ($op) {
             // no confirm: show deletion condition
             $categoryid = isset($_GET['categoryid']) ? (int)$_GET['categoryid'] : 0;
             xoops_cp_header();
-            xoops_confirm(array(
+            xoops_confirm([
                               'op'         => 'del',
                               'categoryid' => $categoryObj->categoryid(),
                               'confirm'    => 1,
                               'name'       => $categoryObj->name()
-                          ), 'category.php', _AM_SPARTNER_CATEGORY_DELETE . " '" . $categoryObj->name() . "'. <br> <br>" . _AM_SPARTNER_CATEGORY_DELETE_CONFIRM, _AM_SPARTNER_DELETE);
+                          ], 'category.php', _AM_SPARTNER_CATEGORY_DELETE . " '" . $categoryObj->name() . "'. <br> <br>" . _AM_SPARTNER_CATEGORY_DELETE_CONFIRM, _AM_SPARTNER_DELETE);
             xoops_cp_footer();
         }
         exit();
@@ -416,6 +411,7 @@ switch ($op) {
     case 'cancel':
         redirect_header('category.php', 1, sprintf(_AM_SPARTNER_BACK2IDX, ''));
 
+        // no break
     case 'default':
     default:
 

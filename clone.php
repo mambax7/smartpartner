@@ -15,7 +15,7 @@ Usage:
 // ##########################################################
 //  Define your mapping here
 // ##########################################################
-$patterns = array(
+$patterns = [
     // first one must be module directory name
     'smartpartner'  => 'smartclient',
     'partner'       => 'client',
@@ -27,7 +27,7 @@ $patterns = array(
     'Partner'       => 'Client',
     'Partenaire'    => 'Client',
     'partenaire'    => 'client'
-);
+];
 
 $patKeys   = array_keys($patterns);
 $patValues = array_values($patterns);
