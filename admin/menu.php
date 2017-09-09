@@ -22,31 +22,31 @@ $moduleHelper->loadLanguage('modinfo');
 
 $adminmenu              = [];
 $i                      = 0;
-$adminmenu[$i]['title'] = _AM_MODULEADMIN_HOME;
-$adminmenu[$i]['link']  = 'admin/index.php';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/home.png';
+'title' =>  _AM_MODULEADMIN_HOME,
+'link' =>  'admin/index.php',
+'icon' =>  $pathIcon32 . '/home.png',
 ++$i;
-$adminmenu[$i]['title'] = _MI_SPARTNER_ADMENU1;
-$adminmenu[$i]['link']  = 'admin/main.php';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/manage.png';
+'title' =>  _MI_SPARTNER_ADMENU1,
+'link' =>  'admin/main.php',
+'icon' =>  $pathIcon32 . '/manage.png',
 
 ++$i;
-$adminmenu[$i]['title'] = _MI_SPARTNER_CATEGORIES;
-$adminmenu[$i]['link']  = 'admin/category.php';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/category.png';
+'title' =>  _MI_SPARTNER_CATEGORIES,
+'link' =>  'admin/category.php',
+'icon' =>  $pathIcon32 . '/category.png',
 ++$i;
-$adminmenu[$i]['title'] = _MI_SPARTNER_ADMENU2;
-$adminmenu[$i]['link']  = 'admin/partner.php';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/users.png';
+'title' =>  _MI_SPARTNER_ADMENU2,
+'link' =>  'admin/partner.php',
+'icon' =>  $pathIcon32 . '/users.png',
 ++$i;
-$adminmenu[$i]['title'] = _MI_SPARTNER_ADMENU3;
-$adminmenu[$i]['link']  = 'admin/offer.php';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/cash_stack.png';
+'title' =>  _MI_SPARTNER_ADMENU3,
+'link' =>  'admin/offer.php',
+'icon' =>  $pathIcon32 . '/cash_stack.png',
 ++$i;
-$adminmenu[$i]['title'] = _MI_SPARTNER_IMPORT;
-$adminmenu[$i]['link']  = 'admin/import.php';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/compfile.png';
+'title' =>  _MI_SPARTNER_IMPORT,
+'link' =>  'admin/import.php',
+'icon' =>  $pathIcon32 . '/compfile.png',
 ++$i;
-$adminmenu[$i]['title'] = _AM_MODULEADMIN_ABOUT;
-$adminmenu[$i]['link']  = 'admin/about.php';
-$adminmenu[$i]['icon']  = $pathIcon32 . '/about.png';
+'title' =>  _AM_MODULEADMIN_ABOUT,
+'link' =>  'admin/about.php',
+'icon' =>  $pathIcon32 . '/about.png',
