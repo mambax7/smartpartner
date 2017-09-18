@@ -1042,7 +1042,7 @@ class SmartpartnerPartnerHandler extends SmartPersistableObjectHandler
             return $ret;
         }
 
-        if (count($result) == 0) {
+        if ($GLOBALS['xoopsDB']->getRowsNum($result) == 0) {
             return $ret;
         }
         global $smartpartnerPartnerCatLinkHandler;
@@ -1341,7 +1341,7 @@ class SmartpartnerPartnerHandler extends SmartPersistableObjectHandler
             return $ret;
         }
 
-        if (count($result) == 0) {
+        if ($GLOBALS['xoopsDB']->getRowsNum($result) == 0) {
             return $ret;
         }
 
@@ -1468,7 +1468,7 @@ class SmartpartnerPartnerHandler extends SmartPersistableObjectHandler
             return $ret;
         }
 
-        If (count($result) == 0) {
+        If ($GLOBALS['xoopsDB']->getRowsNum($result) == 0) {
             return $ret;
         }
 
