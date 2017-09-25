@@ -3,10 +3,10 @@
 // defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
 
 global $modversion;
-if (!empty($_POST['fct']) && !empty($_POST['op']) && $_POST['fct'] === 'modulesadmin' && $_POST['op'] === 'update_ok' && $_POST['dirname'] == $modversion['dirname']) {
+if (!empty($_POST['fct']) && !empty($_POST['op']) && 'modulesadmin' === $_POST['fct'] && 'update_ok' === $_POST['op'] && $_POST['dirname'] == $modversion['dirname']) {
     // referer check
     $ref = xoops_getenv('HTTP_REFERER');
-    if ($ref == '' || strpos($ref, XOOPS_URL . '/modules/system/admin.php') === 0) {
+    if ('' == $ref || 0 === strpos($ref, XOOPS_URL . '/modules/system/admin.php')) {
         /* module specific part */
 
         /* General part */
@@ -161,7 +161,7 @@ function xoops_module_update_smartpartner(XoopsModule $module)
         $sql     = 'SELECT id, categoryid FROM ' . $smartpartnerPartnerHandler->table;
         $records = $smartpartnerPartnerHandler->query($sql);
         foreach ($records as $record) {
-            if ($record['categoryid'] != 0) {
+            if (0 != $record['categoryid']) {
                 $new_link = $smartpartnerPartnerCatLinkHandler->create();
                 $new_link->setVar('partnerid', $record['id']);
                 $new_link->setVar('categoryid', $record['categoryid']);

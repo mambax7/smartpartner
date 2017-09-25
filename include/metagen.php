@@ -132,11 +132,11 @@ function smartpartner_createMetaTags($title, $categoryPath = '', $description = 
     }
 
     // Creating Meta Keywords
-    if (isset($title) && ($title != '')) {
+    if (isset($title) && ('' != $title)) {
         $keywords = smartpartner_findMetaKeywords($title, $minChar);
 
         if (isset($xoopsModuleConfig) && isset($xoopsModuleConfig['moduleMetaKeywords'])
-            && $xoopsModuleConfig['moduleMetaKeywords'] != '') {
+            && '' != $xoopsModuleConfig['moduleMetaKeywords']) {
             $moduleKeywords = explode(',', $xoopsModuleConfig['moduleMetaKeywords']);
             foreach ($moduleKeywords as $moduleKeyword) {
                 if (!in_array($moduleKeyword, $keywords)) {
@@ -156,7 +156,7 @@ function smartpartner_createMetaTags($title, $categoryPath = '', $description = 
         $xoopsTpl->assign('xoops_meta_keywords', $ret);
     }
     // Creating Meta Description
-    if ($description != '') {
+    if ('' != $description) {
         $xoopsTpl->assign('xoops_meta_description', smartpartner_createMetaDescription($description));
     }
 
@@ -169,28 +169,28 @@ function smartpartner_createMetaTags($title, $categoryPath = '', $description = 
         $titleTag['module'] = $moduleName;
     }
 
-    if (isset($title) && ($title != '') && (strtoupper($title) != strtoupper($moduleName))) {
+    if (isset($title) && ('' != $title) && (strtoupper($title) != strtoupper($moduleName))) {
         $titleTag['title'] = $title;
     }
 
-    if (isset($categoryPath) && ($categoryPath != '')) {
+    if (isset($categoryPath) && ('' != $categoryPath)) {
         $titleTag['category'] = $categoryPath;
     }
 
     $ret = '';
 
-    if (isset($titleTag['title']) && $titleTag['title'] != '') {
+    if (isset($titleTag['title']) && '' != $titleTag['title']) {
         $ret .= $titleTag['title'];
     }
 
-    if (isset($titleTag['category']) && $titleTag['category'] != '') {
-        if ($ret != '') {
+    if (isset($titleTag['category']) && '' != $titleTag['category']) {
+        if ('' != $ret) {
             $ret .= ' - ';
         }
         $ret .= $titleTag['category'];
     }
-    if (isset($titleTag['module']) && $titleTag['module'] != '') {
-        if ($ret != '') {
+    if (isset($titleTag['module']) && '' != $titleTag['module']) {
+        if ('' != $ret) {
             $ret .= ' - ';
         }
         $ret .= $titleTag['module'];

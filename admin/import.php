@@ -35,7 +35,7 @@ switch ($op) {
             echo $m . '<br>';
         }
         echo '<br>';
-        if ($error === true) {
+        if (true === $error) {
             $endMsg = _AM_SPARTNER_IMPORT_ERROR;
         } else {
             $endMsg = _AM_SPARTNER_IMPORT_SUCCESS;

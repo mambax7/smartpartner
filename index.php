@@ -116,7 +116,7 @@ $view_category_id = isset($_GET['view_category_id']) ? (int)$_GET['view_category
 
 $partners_total = $smartPartnerPartnerHandler->getPartnerCount();
 
-if ($xoopsModuleConfig['index_sortby'] === 'title' || $xoopsModuleConfig['index_sortby'] === 'weight') {
+if ('title' === $xoopsModuleConfig['index_sortby'] || 'weight' === $xoopsModuleConfig['index_sortby']) {
     $order = 'ASC';
 } else {
     $order = 'DESC';
@@ -136,7 +136,7 @@ if (!$view_category_id) {
 
     //get all categories and content
     foreach ($every_categories_array as $categoryObj) {
-        if ($categoryObj->parentid() == 0) {
+        if (0 == $categoryObj->parentid()) {
             $partnersArray[] = get_cat_content($every_categories_array, $categoryObj, 0);
         }
     }
@@ -168,7 +168,7 @@ $xoopsTpl->assign('partners', $partnersArray);
 //$pagenav = new XoopsPageNav($partners_total_onpage, $xoopsModuleConfig['perpage_user'], $start, 'start', '');
 //$xoopsTpl->assign('pagenav', '<div style="text-align:right;">' . $pagenav->renderNav() . '</div>');
 $xoopsTpl->assign('view_deteils_cat', _MD_SPARTNER_DETAIL_CAT);
-$xoopsTpl->assign('on_index_page', $view_category_id == 0);
+$xoopsTpl->assign('on_index_page', 0 == $view_category_id);
 $xoopsTpl->assign('sitename', $xoopsConfig['sitename']);
 $xoopsTpl->assign('displayjoin', $xoopsModuleConfig['allowsubmit'] && (is_object($xoopsUser) || $xoopsModuleConfig['anonpost']));
 $xoopsTpl->assign('img_max_width', $xoopsModuleConfig['img_max_width']);

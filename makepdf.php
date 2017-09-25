@@ -26,7 +26,7 @@ require_once SMARTPARTNER_ROOT_PATH . 'fpdf/fpdf.inc.php';
 
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
-if ($id == 0) {
+if (0 == $id) {
     redirect_header('javascript:history.go(-1)', 2, _MD_SPARTNER_NOPARTNERSELECTED);
 }
 
@@ -39,7 +39,7 @@ if ($partnerObj->notLoaded()) {
 }
 
 // Chech the status
-if ($partnerObj->status() != _SPARTNER_STATUS_ACTIVE) {
+if (_SPARTNER_STATUS_ACTIVE != $partnerObj->status()) {
     redirect_header('javascript:history.go(-1)', 2, _NOPERM);
 }
 
@@ -82,12 +82,12 @@ $pdf->SetXY(25, 35);
 $pdf->SetFont($pdf_config['font']['title']['family'], $pdf_config['font']['title']['style'], $pdf_config['font']['title']['size']);
 $pdf->WriteHTML($pdf_data['title'], $pdf_config['scale']);
 
-if ($pdf_data['subtitle'] <> '') {
+if ('' <> $pdf_data['subtitle']) {
     $pdf->WriteHTML($puff, $pdf_config['scale']);
     $pdf->SetFont($pdf_config['font']['subtitle']['family'], $pdf_config['font']['subtitle']['style'], $pdf_config['font']['subtitle']['size']);
     $pdf->WriteHTML($pdf_data['subtitle'], $pdf_config['scale']);
 }
-if ($pdf_data['subsubtitle'] <> '') {
+if ('' <> $pdf_data['subsubtitle']) {
     $pdf->WriteHTML($puff, $pdf_config['scale']);
     $pdf->SetFont($pdf_config['font']['subsubtitle']['family'], $pdf_config['font']['subsubtitle']['style'], $pdf_config['font']['subsubtitle']['size']);
     $pdf->WriteHTML($pdf_data['subsubtitle'], $pdf_config['scale']);

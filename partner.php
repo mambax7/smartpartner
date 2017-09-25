@@ -16,7 +16,7 @@ global $xoopsUser, $xoopsConfig, $xoopsModuleConfig, $xoopsModule;
 
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
-if ($id == 0) {
+if (0 == $id) {
     redirect_header('javascript:history.go(-1)', 2, _MD_SPARTNER_NOPARTNERSELECTED);
 }
 
@@ -33,7 +33,7 @@ $grantedItems            = $smartPermissionsHandler->getGrantedItems('full_view'
 $grantedItems            = array_merge($grantedItems, $smartPermissionsHandler->getGrantedItems('partial_view'));
 
 // Chech the status
-if ($partnerObj->status() != _SPARTNER_STATUS_ACTIVE || (!in_array($id, $grantedItems))) {
+if (_SPARTNER_STATUS_ACTIVE != $partnerObj->status() || (!in_array($id, $grantedItems))) {
     redirect_header('javascript:history.go(-1)', 2, _NOPERM);
 }
 
@@ -49,7 +49,7 @@ $files         = [];
 $embeded_files = [];
 
 foreach ($filesObj as $fileObj) {
-    if ($fileObj->mimetype() === 'application/x-shockwave-flash') {
+    if ('application/x-shockwave-flash' === $fileObj->mimetype()) {
         $file['content'] = $fileObj->displayFlash();
 
         if (strpos($partner['maintext'], '[flash-' . $fileObj->getVar('fileid') . ']')) {

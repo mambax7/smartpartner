@@ -29,7 +29,7 @@ function showfiles($partnerObj)
         for ($i = 0, $iMax = count($filesObj); $i < $iMax; ++$i) {
             $modify = "<a href='file.php?op=mod&fileid=" . $filesObj[$i]->fileid() . "'><img src='" . $pathIcon16 . '/edit.png' . "'  title='" . _AM_SPARTNER_EDITFILE . "' alt='" . _AM_SPARTNER_EDITFILE . "'></a>";
             $delete = "<a href='file.php?op=del&fileid=" . $filesObj[$i]->fileid() . "'><img src='" . $pathIcon16 . '/delete.png' . "'  title='" . _AM_SPARTNER_DELETEFILE . "' alt='" . _AM_SPARTNER_DELETEFILE . "'></a>";
-            if ($filesObj[$i]->status() == 0) {
+            if (0 == $filesObj[$i]->status()) {
                 $not_visible = "<img src='" . XOOPS_URL . '/modules/' . $xoopsModule->dirname() . "/assets/images/no.gif'>";
             } else {
                 $not_visible = '';
@@ -68,7 +68,7 @@ function editpartner($showmenu = false, $id = 0)
     }
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     // If there is a parameter, and the id exists, retrieve data: we're editing a partner
-    if ($id != 0) {
+    if (0 != $id) {
         // Creating the partner object
         $partnerObj = new SmartpartnerPartner($id);
 
@@ -246,7 +246,7 @@ function editpartner($showmenu = false, $id = 0)
     require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
     $smartPermissionsHandler = new SmartobjectPermissionHandler($smartPartnerPartnerHandler);
 
-    if ($partnerObj->id() != 0) {
+    if (0 != $partnerObj->id()) {
         $grantedGroups = $smartPermissionsHandler->getGrantedGroups('full_view', $partnerObj->id());
     } else {
         $grantedGroups = $xoopsModuleConfig['default_full_view'];
@@ -255,7 +255,7 @@ function editpartner($showmenu = false, $id = 0)
     $full_view_select->setDescription(_CO_SPARTNER_FULL_PERM_READ_DSC);
     $sform->addElement($full_view_select);
 
-    if ($partnerObj->id() != 0) {
+    if (0 != $partnerObj->id()) {
         $partGrantedGroups = $smartPermissionsHandler->getGrantedGroups('partial_view', $partnerObj->id());
     } else {
         $partGrantedGroups = $xoopsModuleConfig['default_part_view'];
@@ -306,7 +306,7 @@ function editpartner($showmenu = false, $id = 0)
     } else {
         smartpartner_close_collapsable('editpartner', 'editpartnericon');
     }
-    if ($id != 0) {
+    if (0 != $id) {
         showfiles($partnerObj);
     }
 }
@@ -351,7 +351,7 @@ switch ($op) {
         global $xoopsUser;
 
         if (!$xoopsUser) {
-            if ($xoopsModuleConfig['anonpost'] == 1) {
+            if (1 == $xoopsModuleConfig['anonpost']) {
                 $uid = 0;
             } else {
                 redirect_header('index.php', 3, _NOPERM);
@@ -363,7 +363,7 @@ switch ($op) {
         $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
 
         // Creating the partner object
-        if ($id != 0) {
+        if (0 != $id) {
             $partnerObj = new SmartpartnerPartner($id);
         } else {
             $partnerObj = $smartPartnerPartnerHandler->create();
@@ -371,9 +371,9 @@ switch ($op) {
 
         // Uploading the logo, if any
         // Retreive the filename to be uploaded
-        if ($_FILES['logo_file']['name'] != '') {
+        if ('' != $_FILES['logo_file']['name']) {
             $filename = $_POST['xoops_upload_file'][0];
-            if (!empty($filename) || $filename != '') {
+            if (!empty($filename) || '' != $filename) {
                 global $xoopsModuleConfig;
 
                 $max_size          = 10000000;
@@ -383,7 +383,7 @@ switch ($op) {
 
                 require_once XOOPS_ROOT_PATH . '/class/uploader.php';
 
-                if ($_FILES[$filename]['tmp_name'] == '' || !is_readable($_FILES[$filename]['tmp_name'])) {
+                if ('' == $_FILES[$filename]['tmp_name'] || !is_readable($_FILES[$filename]['tmp_name'])) {
                     redirect_header('javascript:history.go(-1)', 2, _CO_SPARTNER_FILE_UPLOAD_ERROR);
                 }
 
@@ -428,7 +428,7 @@ switch ($op) {
             redirect_header('javascript:history.go(-1)', 3, $redirect_msgs['error'] . smartpartner_formatErrors($partnerObj->getErrors()));
         }
 
-        if (($_POST['original_status'] == _SPARTNER_STATUS_SUBMITTED) || ($_POST['status'] == _SPARTNER_STATUS_ACTIVE)) {
+        if ((_SPARTNER_STATUS_SUBMITTED == $_POST['original_status']) || (_SPARTNER_STATUS_ACTIVE == $_POST['status'])) {
             $partnerObj->sendNotifications([_SPARTNER_NOT_PARTNER_APPROVED]);
         }
         if ($partnerObj->isNew()) {

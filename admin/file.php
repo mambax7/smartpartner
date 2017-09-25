@@ -30,7 +30,7 @@ function editfile($showmenu = false, $fileid = 0, $id = 0)
 
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     // if there is a parameter, and the id exists, retrieve data: we're editing a file
-    if ($fileid != 0) {
+    if (0 != $fileid) {
 
         // Creating the File object
         $fileObj = new smartpartnerfile($fileid);
@@ -68,7 +68,7 @@ function editfile($showmenu = false, $fileid = 0, $id = 0)
     $files_form->addElement($description_text);
 
     // FILE TO UPLOAD
-    if ($fileid == 0) {
+    if (0 == $fileid) {
         $file_box = new XoopsFormFile(_AM_SPARTNER_FILE_TO_UPLOAD, 'userfile', 0);
         $file_box->setExtra("size ='50'");
         $files_form->addElement($file_box);
@@ -82,7 +82,7 @@ function editfile($showmenu = false, $fileid = 0, $id = 0)
     $files_hidden      = new XoopsFormHidden('op', 'uploadfile');
     $files_button_tray->addElement($files_hidden);
 
-    if ($fileid == 0) {
+    if (0 == $fileid) {
         $files_butt_create = new XoopsFormButton('', '', _AM_SPARTNER_UPLOAD, 'submit');
         $files_butt_create->setExtra('onclick="this.form.elements.op.value=\'uploadfile\'"');
         $files_button_tray->addElement($files_butt_create);
@@ -113,7 +113,7 @@ function editfile($showmenu = false, $fileid = 0, $id = 0)
 
     $files_form->display();
 
-    if ($fileid != 0) {
+    if (0 != $fileid) {
         smartpartner_close_collapsable('editfile', 'editfileicon');
     } else {
         smartpartner_close_collapsable('addfile', 'addfileicon');
@@ -137,7 +137,7 @@ switch ($op) {
         global $smartPartnerFileHandler;
         $fileid = isset($_GET['fileid']) ? $_GET['fileid'] : 0;
         $id     = isset($_GET['id']) ? $_GET['id'] : 0;
-        if (($fileid == 0) && ($id == 0)) {
+        if ((0 == $fileid) && (0 == $id)) {
             redirect_header('javascript:history.go(-1)', 3, _AM_SPARTNER_NOITEMSELECTED);
         }
 
@@ -153,7 +153,7 @@ switch ($op) {
         $fileid = isset($_POST['fileid']) ? (int)$_POST['fileid'] : 0;
 
         // Creating the file object
-        if ($fileid != 0) {
+        if (0 != $fileid) {
             $fileObj = new SmartpartnerFile($fileid);
         } else {
             $fileObj = $smartPartnerFileHandler->create();

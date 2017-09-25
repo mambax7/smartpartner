@@ -19,7 +19,7 @@ function smartpartner_notify_iteminfo($category, $item_id)
 
     global $xoopsModule, $xoopsModuleConfig, $xoopsConfig;
 
-    if (empty($xoopsModule) || $xoopsModule->getVar('dirname') != SMARTPARTNER_DIRNAME) {
+    if (empty($xoopsModule) || SMARTPARTNER_DIRNAME != $xoopsModule->getVar('dirname')) {
         /** @var XoopsModuleHandler $moduleHandler */
         $moduleHandler = xoops_getHandler('module');
         $module        = $moduleHandler->getByDirname(SMARTPARTNER_DIRNAME);
@@ -30,7 +30,7 @@ function smartpartner_notify_iteminfo($category, $item_id)
         $config = $xoopsModuleConfig;
     }
 
-    if ($category === 'global') {
+    if ('global' === $category) {
         $item['name'] = '';
         $item['url']  = '';
 
@@ -39,7 +39,7 @@ function smartpartner_notify_iteminfo($category, $item_id)
 
     global $xoopsDB;
 
-    if ($category === 'item') {
+    if ('item' === $category) {
         // Assume we have a valid partner id
         $sql          = 'SELECT question FROM ' . $xoopsDB->prefix('smartpartner_partner') . ' WHERE id = ' . $item_id;
         $result       = $xoopsDB->query($sql); // TODO: error check

@@ -154,12 +154,12 @@ function smartpartner_copyr($source, $dest)
     $dir = dir($source);
     while (false !== $entry = $dir->read()) {
         // Skip pointers
-        if ($entry === '.' || $entry === '..') {
+        if ('.' === $entry || '..' === $entry) {
             continue;
         }
 
         // Deep copy directories
-        if (is_dir("$source/$entry") && ($dest !== "$source/$entry")) {
+        if (is_dir("$source/$entry") && ("$source/$entry" !== $dest)) {
             copyr("$source/$entry", "$dest/$entry");
         } else {
             copy("$source/$entry", "$dest/$entry");
@@ -201,7 +201,7 @@ function smartpartner_getModuleInfo()
     static $smartModule;
     if (!isset($smartModule)) {
         global $xoopsModule;
-        if (isset($xoopsModule) && is_object($xoopsModule) && $xoopsModule->getVar('dirname') == SMARTPARTNER_DIRNAME) {
+        if (isset($xoopsModule) && is_object($xoopsModule) && SMARTPARTNER_DIRNAME == $xoopsModule->getVar('dirname')) {
             $smartModule = $xoopsModule;
         } else {
             $hModule     = xoops_getHandler('module');
@@ -220,7 +220,7 @@ function smartpartner_getModuleConfig()
     static $smartConfig;
     if (!$smartConfig) {
         global $xoopsModule;
-        if (isset($xoopsModule) && is_object($xoopsModule) && $xoopsModule->getVar('dirname') == SMARTPARTNER_DIRNAME) {
+        if (isset($xoopsModule) && is_object($xoopsModule) && SMARTPARTNER_DIRNAME == $xoopsModule->getVar('dirname')) {
             global $xoopsModuleConfig;
             $smartConfig = $xoopsModuleConfig;
         } else {
@@ -327,7 +327,7 @@ function smartpartner_collapsableBar($tablename = '', $iconname = '', $tabletitl
     echo "<h3 style=\"color: #2F5376; font-weight: bold; font-size: 14px; margin: 6px 0 0 0; \"><a href='javascript:;' onclick=\"toggle('" . $tablename . "'); toggleIcon('" . $iconname . "')\";>";
     echo "<img id='$iconname' src=" . XOOPS_URL . '/modules/' . $xoopsModule->dirname() . "/assets/images/icon/close12.gif alt=''></a>&nbsp;" . $tabletitle . '</h3>';
     echo "<div id='$tablename'>";
-    if ($tabledsc != '') {
+    if ('' != $tabledsc) {
         echo "<span style=\"color: #567; margin: 3px 0 12px 0; font-size: small; display: block; \">" . $tabledsc . '</span>';
     }
 }
@@ -345,7 +345,7 @@ function smartpartner_openclose_collapsable($name, $icon)
     $cookie_name = str_replace('.', '_', $cookie_name);
     $cookie      = smartpartner_getCookieVar($cookie_name, '');
 
-    if ($cookie === 'none') {
+    if ('none' === $cookie) {
         echo '
         <script type="text/javascript"><!--
         toggle("' . $name . '"); toggleIcon("' . $icon . '");
@@ -372,7 +372,7 @@ function smartpartner_close_collapsable($name, $icon)
  */
 function smartpartner_setCookieVar($name, $value, $time = 0)
 {
-    if ($time == 0) {
+    if (0 == $time) {
         $time = time() + 3600 * 24 * 365;
         //$time = '';
     }
@@ -398,12 +398,12 @@ function smartpartner_getCookieVar($name, $default = '')
  */
 function smartpartner_getCurrentUrls()
 {
-    $http        = (strpos(XOOPS_URL, 'https://') === false) ? 'http://' : 'https://';
+    $http        = (false === strpos(XOOPS_URL, 'https://')) ? 'http://' : 'https://';
     $phpself     = $_SERVER['PHP_SELF'];
     $httphost    = $_SERVER['HTTP_HOST'];
     $querystring = $_SERVER['QUERY_STRING'];
 
-    if ($querystring != '') {
+    if ('' != $querystring) {
         $querystring = '?' . $querystring;
     }
 
@@ -474,7 +474,7 @@ function smartpartner_modFooter()
  */
 function smartpartner_admin_getPathStatus($item, $getStatus = false)
 {
-    if ($item === 'root') {
+    if ('root' === $item) {
         $path = '';
     } else {
         $path = $item;
@@ -546,7 +546,7 @@ function smartpartner_admin_chmod($target, $mode = 0777)
 function smartpartner_getUploadDir($local = true, $item = false)
 {
     if ($item) {
-        if ($item === 'root') {
+        if ('root' === $item) {
             $item = '';
         } else {
             $item .= '/';

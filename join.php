@@ -25,9 +25,9 @@ switch ($op) {
         // Uploading the logo, if any
         // Retreive the filename to be uploaded
 
-        if ($_FILES['logo_file']['name'] !== '') {
+        if ('' !== $_FILES['logo_file']['name']) {
             $filename = $_POST['xoops_upload_file'][0];
-            if (!empty($filename) || $filename !== '') {
+            if (!empty($filename) || '' !== $filename) {
                 global $xoopsModuleConfig;
 
                 $max_size          = 10000000;
@@ -37,7 +37,7 @@ switch ($op) {
 
                 require_once XOOPS_ROOT_PATH . '/class/uploader.php';
 
-                if ($_FILES[$filename]['tmp_name'] === '' || !is_readable($_FILES[$filename]['tmp_name'])) {
+                if ('' === $_FILES[$filename]['tmp_name'] || !is_readable($_FILES[$filename]['tmp_name'])) {
                     redirect_header('javascript:history.go(-1)', 2, _CO_SPARTNER_FILE_UPLOAD_ERROR);
                 }
 
@@ -79,7 +79,7 @@ switch ($op) {
             redirect_header('javascript:history.go(-1)', 3, _MD_SPARTNER_SUBMIT_ERROR . smartpartner_formatErrors($partnerObj->getErrors()));
         }
 
-        if (isset($_POST['notifypub']) && $_POST['notifypub'] === 1) {
+        if (isset($_POST['notifypub']) && 1 === $_POST['notifypub']) {
             require_once XOOPS_ROOT_PATH . '/include/notification_constants.php';
             $notificationHandler = xoops_getHandler('notification');
             $notificationHandler->subscribe('partner', $partnerObj->id(), 'approved', XOOPS_NOTIFICATION_MODE_SENDONCETHENDELETE);
@@ -90,7 +90,7 @@ switch ($op) {
         break;
 
     case 'form':
-        if (($xoopsModuleConfig['allowsubmit'] !== 1) || (!$xoopsUser) && $xoopsModuleConfig['anonpost'] !== 1) {
+        if ((1 !== $xoopsModuleConfig['allowsubmit']) || (!$xoopsUser) && 1 !== $xoopsModuleConfig['anonpost']) {
             redirect_header('index.php', 2, _NOPERM);
         }
 
@@ -167,7 +167,7 @@ switch ($op) {
         $form->addElement($adress_priv_radio);
 
         // NOTIFY ON PUBLISH
-        if (is_object($xoopsUser) && ($xoopsModuleConfig['autoapprove_submitted'] != 1)) {
+        if (is_object($xoopsUser) && (1 != $xoopsModuleConfig['autoapprove_submitted'])) {
             $notify_checkbox = new XoopsFormCheckBox('', 'notifypub', 1);
             $notify_checkbox->addOption(1, _MD_SPARTNER_NOTIFY);
             $form->addElement($notify_checkbox);

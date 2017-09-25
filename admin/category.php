@@ -53,7 +53,7 @@ function editcat($showmenu = false, $categoryid = 0, $nb_subcats = 4, $categoryO
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     // If there is a parameter, and the id exists, retrieve data: we're editing a category
-    if ($categoryid != 0) {
+    if (0 != $categoryid) {
 
         // Creating the category object for the selected category
         //$categoryObj = new SmartpartnerCategory($categoryid);
@@ -136,7 +136,7 @@ function editcat($showmenu = false, $categoryid = 0, $nb_subcats = 4, $categoryO
     $t = new XoopsFormText('', 'nb_subcats', 3, 2);
     $l = new XoopsFormLabel('', sprintf(_AM_SPARTNER_ADD_OPT, $t->render()));
     $b = new XoopsFormButton('', 'submit', _AM_SPARTNER_ADD_OPT_SUBMIT, 'submit');
-    if ($categoryid == 0) {
+    if (0 == $categoryid) {
         $b->setExtra('onclick="this.form.elements.op.value=\'addsubcats\'"');
     } else {
         $b->setExtra('onclick="this.form.elements.op.value=\'mod\'"');
@@ -255,7 +255,7 @@ switch ($op) {
 
         $nb_subcats = isset($_POST['nb_subcats']) ? (int)$_POST['nb_subcats'] : 0;
         $nb_subcats += (isset($_POST['nb_sub_yet']) ? (int)$_POST['nb_sub_yet'] : 4);
-        if ($categoryid == 0) {
+        if (0 == $categoryid) {
             $categoryid = isset($_POST['categoryid']) ? (int)$_POST['categoryid'] : 0;
         }
         //end of fx2024 code
@@ -271,7 +271,7 @@ switch ($op) {
         $categoryid = isset($_POST['categoryid']) ? (int)$_POST['categoryid'] : 0;
         $parentid   = isset($_POST['parentid']) ? (int)$_POST['parentid'] : 0;
 
-        if ($categoryid != 0) {
+        if (0 != $categoryid) {
             $categoryObj = $smartPartnerCategoryHandler->get($categoryid);
         } else {
             $categoryObj = $smartPartnerCategoryHandler->create();
@@ -279,9 +279,9 @@ switch ($op) {
 
         // Uploading the image, if any
         // Retreive the filename to be uploaded
-        if (isset($_FILES['image_file']['name']) && $_FILES['image_file']['name'] != '') {
+        if (isset($_FILES['image_file']['name']) && '' != $_FILES['image_file']['name']) {
             $filename = $_POST['xoops_upload_file'][0];
-            if (!empty($filename) || $filename != '') {
+            if (!empty($filename) || '' != $filename) {
                 global $xoopsModuleConfig;
 
                 // TODO: implement smartpartner mimetype management
@@ -293,7 +293,7 @@ switch ($op) {
 
                 require_once XOOPS_ROOT_PATH . '/class/uploader.php';
 
-                if ($_FILES[$filename]['tmp_name'] == '' || !is_readable($_FILES[$filename]['tmp_name'])) {
+                if ('' == $_FILES[$filename]['tmp_name'] || !is_readable($_FILES[$filename]['tmp_name'])) {
                     redirect_header('javascript:history.go(-1)', 2, _AM_SPARTNER_FILEUPLOAD_ERROR);
                 }
 
@@ -334,7 +334,7 @@ switch ($op) {
         $parentCat = $categoryObj->categoryid();
 
         for ($i = 0, $iMax = count($_POST['scname']); $i < $iMax; ++$i) {
-            if ($_POST['scname'][$i] != '') {
+            if ('' != $_POST['scname'][$i]) {
                 $categoryObj = $smartPartnerCategoryHandler->create();
                 $categoryObj->setVar('name', $_POST['scname'][$i]);
                 $categoryObj->setVar('parentid', $parentCat);

@@ -19,11 +19,11 @@ $scriptname           = 'xoopspartners.php';
 
 $op = 'start';
 
-if (isset($_POST['op']) && ($_POST['op'] === 'go')) {
+if (isset($_POST['op']) && ('go' === $_POST['op'])) {
     $op = $_POST['op'];
 }
 
-if ($op === 'start') {
+if ('start' === $op) {
     smartpartner_xoops_cp_header();
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
@@ -43,7 +43,7 @@ if ($op === 'start') {
     //exit ();
 }
 
-if ($op === 'go') {
+if ('go' === $op) {
     require_once __DIR__ . '/admin_header.php';
 
     smartpartner_xoops_cp_header();
@@ -59,9 +59,9 @@ if ($op === 'go') {
         // insert partner into SmartPartner
         $partnerObj = $smartPartnerPartnerHandler->create();
 
-        if ($xpartner_status == 0) {
+        if (0 == $xpartner_status) {
             $xpartner_status = _SPARTNER_STATUS_INACTIVE;
-        } elseif ($xpartner_status == 1) {
+        } elseif (1 == $xpartner_status) {
             $xpartner_status = _SPARTNER_STATUS_ACTIVE;
         }
 

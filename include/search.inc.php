@@ -31,7 +31,7 @@ function smartpartner_search($queryarray, $andor, $limit, $offset, $userid)
     // Searching the partners
     $partners_result = $smartPartnerPartnerHandler->getObjectsForSearch($queryarray, $andor, $limit, $offset, $userid);
 
-    if ($queryarray == '') {
+    if ('' == $queryarray) {
         $keywords       = '';
         $hightlight_key = '';
     } else {

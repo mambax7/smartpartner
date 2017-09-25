@@ -173,13 +173,13 @@ class XoopsMediaUploader
 
             return false;
         }
-        if ($this->mediaName === '') {
+        if ('' === $this->mediaName) {
             $this->setErrors('Filename Is Empty');
 
             return false;
         }
 
-        if ($this->mediaTmpName === 'none') {
+        if ('none' === $this->mediaTmpName) {
             $this->setErrors('No file uploaded, this is a error');
 
             return false;
@@ -326,7 +326,7 @@ class XoopsMediaUploader
      */
     public function upload($chmod = 0644)
     {
-        if ($this->uploadDir == '') {
+        if ('' == $this->uploadDir) {
             $this->setErrors('Upload directory not set');
 
             return false;

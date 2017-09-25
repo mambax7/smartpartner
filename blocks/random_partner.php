@@ -28,10 +28,10 @@ function b_random_partner_show($options)
     if ($partnerObj) {
         $partner['id']      = $partnerObj->id();
         $partner['urllink'] = $partnerObj->getUrlLink('block');
-        if ($partnerObj->image() && (($options[1] == 1) || ($options[1] == 3))) {
+        if ($partnerObj->image() && ((1 == $options[1]) || (3 == $options[1]))) {
             $partner['image'] = $partnerObj->getImageUrl();
         }
-        if ($partnerObj->image() && (($options[1] == 2) || ($options[1] == 3))) {
+        if ($partnerObj->image() && ((2 == $options[1]) || (3 == $options[1]))) {
             $partner['title'] = $partnerObj->title();
         } else {
             $partner['title'] = '';
@@ -41,7 +41,7 @@ function b_random_partner_show($options)
         $partner['img_attr']     = $image_info[3];
         $partner['extendedInfo'] = $partnerObj->extentedInfo();
 
-        if ($options[0] == 1) {
+        if (1 == $options[0]) {
             $block['fadeImage'] = 'style="filter:alpha(opacity=20);" onmouseover="nereidFade(this,100,30,5)" onmouseout="nereidFade(this,50,30,5)"';
         }
 
@@ -73,12 +73,12 @@ function b_random_partner_edit($options)
      $form .= "<input type='radio' name='options[0]' value='1'".$chk.">"._YES."</td></tr>";*/
     $form .= '<tr><td>' . _MB_SPARTNER_FADE . '</td><td>';
     $chk  = '';
-    if ($options[0] == 0) {
+    if (0 == $options[0]) {
         $chk = ' checked';
     }
     $form .= "<input type='radio' name='options[1]' value='0'" . $chk . '>' . _NO . '';
     $chk  = '';
-    if ($options[0] == 1) {
+    if (1 == $options[0]) {
         $chk = ' checked';
     }
     $form .= "<input type='radio' name='options[1]' value='1'" . $chk . '>' . _YES . '</td></tr>';
@@ -98,17 +98,17 @@ function b_random_partner_edit($options)
     $form .= '<tr><td>' . _MB_SPARTNER_BSHOW . '</td><td>';
     $form .= "<select size='1' name='options[1]'>";
     $sel  = '';
-    if ($options[1] == 1) {
+    if (1 == $options[1]) {
         $sel = ' selected';
     }
     $form .= "<option value='1' " . $sel . '>' . _MB_SPARTNER_IMAGES . '</option>';
     $sel  = '';
-    if ($options[1] == 2) {
+    if (2 == $options[1]) {
         $sel = ' selected';
     }
     $form .= "<option value='2' " . $sel . '>' . _MB_SPARTNER_TEXT . '</option>';
     $sel  = '';
-    if ($options[1] == 3) {
+    if (3 == $options[1]) {
         $sel = ' selected';
     }
     $form .= "<option value='3' " . $sel . '>' . _MB_SPARTNER_BOTH . '</option>';
@@ -150,12 +150,12 @@ function b_random_partner_edit($options)
      */
     $form .= '<tr><td>' . _MB_SPARTNER_SEE_ALL . '</td><td>';
     $chk  = '';
-    if ($options[2] == 0) {
+    if (0 == $options[2]) {
         $chk = ' checked';
     }
     $form .= "<input type='radio' name='options[2]' value='0'" . $chk . '>' . _NO . '';
     $chk  = '';
-    if ($options[7] == 1) {
+    if (1 == $options[7]) {
         $chk = ' checked';
     }
     $form .= "<input type='radio' name='options[2]' value='1'" . $chk . '>' . _YES . '</td></tr>';

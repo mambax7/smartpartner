@@ -23,7 +23,7 @@ function b_partners_list_show($options)
     if (count($partnersObj) > 1) {
         $key_arr  = array_keys($partnersObj);
         $key_rand = array_rand($key_arr, count($key_arr));
-        for ($i = 0; ($i < count($partnersObj)) && (($options[2] == 0) || ($i < $options[2])); ++$i) {
+        for ($i = 0; ($i < count($partnersObj)) && ((0 == $options[2]) || ($i < $options[2])); ++$i) {
             $newObjs[$i] = $partnersObj[$key_rand[$i]];
         }
 
@@ -46,17 +46,17 @@ function b_partners_list_show($options)
     if ($partnersObj) {
         for ($j = 0, $jMax = count($cat_id); $j < $jMax; ++$j) {
             $categoryObj                              = $smartPartnerCategoryHandler->get($cat_id[$j]);
-            $block['categories'][$cat_id[$j]]['link'] = ($cat_id[$j] != 0) ? $categoryObj->getCategoryLink() : false;
+            $block['categories'][$cat_id[$j]]['link'] = (0 != $cat_id[$j]) ? $categoryObj->getCategoryLink() : false;
 
             for ($i = 0, $iMax = count($partnersObj); $i < $iMax; ++$i) {
                 //if (in_array($cat_id[$j], explode('|', $partnersObj[$i]->categoryid()))) {
                 if ($partnersObj[$i]->categoryid() == $cat_id[$j]) {
                     $partner['id']      = $partnersObj[$i]->id();
                     $partner['urllink'] = $partnersObj[$i]->getUrlLink('block');
-                    if ($partnersObj[$i]->image() && (($options[3] == 1) || ($options[3] == 3))) {
+                    if ($partnersObj[$i]->image() && ((1 == $options[3]) || (3 == $options[3]))) {
                         $partner['image'] = $partnersObj[$i]->getImageUrl();
                     }
-                    if ($partnersObj[$i]->image() && (($options[3] == 2) || ($options[3] == 3))) {
+                    if ($partnersObj[$i]->image() && ((2 == $options[3]) || (3 == $options[3]))) {
                         $partner['title'] = $partnersObj[$i]->title();
                     } else {
                         $partner['title'] = '';
@@ -69,10 +69,10 @@ function b_partners_list_show($options)
                 }
             }
         }
-        if ($options[0] == 1) {
+        if (1 == $options[0]) {
             $block['insertBr'] = true;
         }
-        if ($options[1] == 1) {
+        if (1 == $options[1]) {
             $block['fadeImage'] = 'style="filter:alpha(opacity=20);" onmouseover="nereidFade(this,100,30,5)" onmouseout="nereidFade(this,50,30,5)"';
         }
 
@@ -93,23 +93,23 @@ function b_partners_list_edit($options)
     $form = "<table border='0'>";
     $form .= '<tr><td>' . _MB_SPARTNER_PARTNERS_PSPACE . '</td><td>';
     $chk  = '';
-    if ($options[0] == 0) {
+    if (0 == $options[0]) {
         $chk = ' checked';
     }
     $form .= "<input type='radio' name='options[0]' value='0'" . $chk . '>' . _NO . '';
     $chk  = '';
-    if ($options[0] == 1) {
+    if (1 == $options[0]) {
         $chk = ' checked';
     }
     $form .= "<input type='radio' name='options[0]' value='1'" . $chk . '>' . _YES . '</td></tr>';
     $form .= '<tr><td>' . _MB_SPARTNER_FADE . '</td><td>';
     $chk  = '';
-    if ($options[1] == 0) {
+    if (0 == $options[1]) {
         $chk = ' checked';
     }
     $form .= "<input type='radio' name='options[1]' value='0'" . $chk . '>' . _NO . '';
     $chk  = '';
-    if ($options[1] == 1) {
+    if (1 == $options[1]) {
         $chk = ' checked';
     }
     $form .= "<input type='radio' name='options[1]' value='1'" . $chk . '>' . _YES . '</td></tr>';

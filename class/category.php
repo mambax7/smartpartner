@@ -73,7 +73,7 @@ class SmartpartnerCategory extends XoopsObject
     public function name($format = 'S')
     {
         $ret = $this->getVar('name', $format);
-        if (($format === 's') || ($format === 'S') || ($format === 'show')) {
+        if (('s' === $format) || ('S' === $format) || ('show' === $format)) {
             $myts = MyTextSanitizer::getInstance();
             $ret  = $myts->displayTarea($ret);
         }
@@ -96,7 +96,7 @@ class SmartpartnerCategory extends XoopsObject
      */
     public function image($format = 'S')
     {
-        if ($this->getVar('image') != '') {
+        if ('' != $this->getVar('image')) {
             return $this->getVar('image', $format);
         } else {
             return 'blank.png';
@@ -109,8 +109,8 @@ class SmartpartnerCategory extends XoopsObject
      */
     public function getImageUrl($falseIfNoImage = false)
     {
-        if (($this->getVar('image') !== '') && ($this->getVar('image') !== 'blank.png')
-            && ($this->getVar('image') !== '-1')) {
+        if (('' !== $this->getVar('image')) && ('blank.png' !== $this->getVar('image'))
+            && ('-1' !== $this->getVar('image'))) {
             return smartpartner_getImageDir('category', false) . $this->image();
         } elseif ($falseIfNoImage) {
             return false;
@@ -151,7 +151,7 @@ class SmartpartnerCategory extends XoopsObject
         }
         $parentid = $this->parentid();
         global $smartPartnerCategoryHandler;
-        if ($parentid != 0) {
+        if (0 != $parentid) {
             $parentObj = $smartPartnerCategoryHandler->get($parentid);
             if ($parentObj->notLoaded()) {
                 exit;
@@ -231,7 +231,7 @@ class SmartpartnerCategory extends XoopsObject
         $category['total']        = $this->getVar('itemcount');
         $category['description']  = $this->description();
 
-        if ($this->image() !== 'blank.png') {
+        if ('blank.png' !== $this->image()) {
             $category['image_path'] = smartpartner_getImageDir('category', false) . $this->image();
         } else {
             $category['image_path'] = '';
@@ -271,7 +271,7 @@ class SmartpartnerCategoryHandler extends smartpartner_PersistableObjectHandler
 
         return false;*/
 
-        if (strtolower(get_class($category)) !== 'smartpartnercategory') {
+        if ('smartpartnercategory' !== strtolower(get_class($category))) {
             return false;
         }
 

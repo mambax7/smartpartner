@@ -150,7 +150,7 @@ class SmartpartnerPartner extends SmartObject
      */
     public function image($format = 'S')
     {
-        if ($this->getVar('image') != '') {
+        if ('' != $this->getVar('image')) {
             return $this->getVar('image', $format);
         } else {
             return 'blank.png';
@@ -173,7 +173,7 @@ class SmartpartnerPartner extends SmartObject
     public function title($format = 'S')
     {
         $ret = $this->getVar('title', $format);
-        if (($format === 's') || ($format === 'S') || ($format === 'show')) {
+        if (('s' === $format) || ('S' === $format) || ('show' === $format)) {
             $myts = MyTextSanitizer::getInstance();
             $ret  = $myts->displayTarea($ret);
         }
@@ -188,7 +188,7 @@ class SmartpartnerPartner extends SmartObject
     public function datesub($format = 'S')
     {
         $ret = $this->getVar('datesub', $format);
-        if (($format === 's') || ($format === 'S') || ($format === 'show')) {
+        if (('s' === $format) || ('S' === $format) || ('show' === $format)) {
             $ret = formatTimestamp($ret, 's');
         }
 
@@ -204,7 +204,7 @@ class SmartpartnerPartner extends SmartObject
     {
         $ret = $this->getVar('summary', $format);
 
-        if ($maxLength != 0) {
+        if (0 != $maxLength) {
             if (!XOOPS_USE_MULTIBYTES) {
                 if (strlen($ret) >= $maxLength) {
                     $ret = xoops_substr(smartpartner_metagen_html2text($ret), 0, $maxLength);
@@ -231,7 +231,7 @@ class SmartpartnerPartner extends SmartObject
     public function contact_name($format = 'S')
     {
         $ret = $this->getVar('contact_name', $format);
-        if (($format === 's') || ($format === 'S') || ($format === 'show')) {
+        if (('s' === $format) || ('S' === $format) || ('show' === $format)) {
             $myts = MyTextSanitizer::getInstance();
             $ret  = $myts->displayTarea($ret);
         }
@@ -246,7 +246,7 @@ class SmartpartnerPartner extends SmartObject
     public function contact_email($format = 'S')
     {
         $ret = $this->getVar('contact_email', $format);
-        if (($format === 's') || ($format === 'S') || ($format === 'show')) {
+        if (('s' === $format) || ('S' === $format) || ('show' === $format)) {
             $myts = MyTextSanitizer::getInstance();
             $ret  = $myts->displayTarea($ret);
         }
@@ -261,7 +261,7 @@ class SmartpartnerPartner extends SmartObject
     public function contact_phone($format = 'S')
     {
         $ret = $this->getVar('contact_phone', $format);
-        if (($format === 's') || ($format === 'S') || ($format === 'show')) {
+        if (('s' === $format) || ('S' === $format) || ('show' === $format)) {
             $myts = MyTextSanitizer::getInstance();
             $ret  = $myts->displayTarea($ret);
         }
@@ -294,7 +294,7 @@ class SmartpartnerPartner extends SmartObject
      */
     public function getUrlLink($forWhere)
     {
-        if ($forWhere === 'block') {
+        if ('block' === $forWhere) {
             if ($this->extentedInfo()) {
                 return '<a href="' . SMARTPARTNER_URL . 'partner.php?id=' . $this->id() . '">';
             } else {
@@ -304,7 +304,7 @@ class SmartpartnerPartner extends SmartObject
                     return '';
                 }
             }
-        } elseif ($forWhere === 'index') {
+        } elseif ('index' === $forWhere) {
             if ($this->extentedInfo()) {
                 return '<a href="' . SMARTPARTNER_URL . 'partner.php?id=' . $this->id() . '">';
             } else {
@@ -314,7 +314,7 @@ class SmartpartnerPartner extends SmartObject
                     return '';
                 }
             }
-        } elseif ($forWhere === 'partner') {
+        } elseif ('partner' === $forWhere) {
             if ($this->url()) {
                 return '<a href="' . SMARTPARTNER_URL . 'vpartner.php?id=' . $this->id() . '">';
             } else {
@@ -328,8 +328,8 @@ class SmartpartnerPartner extends SmartObject
      */
     public function getImageUrl()
     {
-        if (($this->getVar('image') !== '') && ($this->getVar('image') !== 'blank.png')
-            && ($this->getVar('image') !== '-1')) {
+        if (('' !== $this->getVar('image')) && ('blank.png' !== $this->getVar('image'))
+            && ('-1' !== $this->getVar('image'))) {
             return smartpartner_getImageDir('', false) . $this->image();
         } elseif (!$this->getVar('image_url')) {
             return smartpartner_getImageDir('', false) . 'blank.png';
@@ -343,7 +343,7 @@ class SmartpartnerPartner extends SmartObject
      */
     public function getImagePath()
     {
-        if (($this->getVar('image') !== '') && ($this->getVar('image') !== 'blank.png')) {
+        if (('' !== $this->getVar('image')) && ('blank.png' !== $this->getVar('image'))) {
             return smartpartner_getImageDir() . $this->image();
         } else {
             return false;
@@ -356,7 +356,7 @@ class SmartpartnerPartner extends SmartObject
     public function getImageLink()
     {
         $ret = "<a href='rrvpartner.php?id=" . $this->id() . "' target='_blank'>";
-        if ($this->getVar('image') != '') {
+        if ('' != $this->getVar('image')) {
             $ret .= "<img src='" . $this->getImageUrl() . "' alt='" . $this->url() . "' border='0'></a>";
         } else {
             $ret .= "<img src='" . $this->image_url() . "' alt='" . $this->url() . "' border='0'></a>";
@@ -400,7 +400,7 @@ class SmartpartnerPartner extends SmartObject
      */
     public function notLoaded()
     {
-        return ($this->getVar('id') == 0);
+        return (0 == $this->getVar('id'));
     }
 
     /**
@@ -715,7 +715,7 @@ class SmartpartnerPartner extends SmartObject
         } else {
             $partner['display_type'] = 'none';
         }
-        if ($this->description() != '' && $partner['display_type'] === 'full') {
+        if ('' != $this->description() && 'full' === $partner['display_type']) {
             $partner['description'] = $this->description();
         } else {
             //$partner['description'] = $this->summary();
@@ -817,7 +817,7 @@ class SmartpartnerPartnerHandler extends SmartPersistableObjectHandler
             }
 
             $numrows = $this->db->getRowsNum($result);
-            if ($numrows == 1) {
+            if (1 == $numrows) {
                 $partner = new SmartpartnerPartner();
                 $partner->assignVars($this->db->fetchArray($result));
                 global $smartpartnerPartnerCatLinkHandler;
@@ -1026,9 +1026,9 @@ class SmartpartnerPartnerHandler extends SmartPersistableObjectHandler
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $whereClause = $criteria->renderWhere();
 
-            if ($whereClause !== 'WHERE ()') {
+            if ('WHERE ()' !== $whereClause) {
                 $sql .= ' ' . $criteria->renderWhere();
-                if ($criteria->getSort() != '') {
+                if ('' != $criteria->getSort()) {
                     $sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
                 }
                 $limit = $criteria->getLimit();
@@ -1042,7 +1042,7 @@ class SmartpartnerPartnerHandler extends SmartPersistableObjectHandler
             return $ret;
         }
 
-        if ($GLOBALS['xoopsDB']->getRowsNum($result) == 0) {
+        if (0 == $GLOBALS['xoopsDB']->getRowsNum($result)) {
             return $ret;
         }
         global $smartpartnerPartnerCatLinkHandler;
@@ -1076,7 +1076,7 @@ class SmartpartnerPartnerHandler extends SmartPersistableObjectHandler
         $sql = 'SELECT COUNT(*) FROM ' . $this->table;
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $whereClause = $criteria->renderWhere();
-            if ($whereClause !== 'WHERE ()') {
+            if ('WHERE ()' !== $whereClause) {
                 $sql .= ' ' . $criteria->renderWhere();
             }
         }
@@ -1097,7 +1097,7 @@ class SmartpartnerPartnerHandler extends SmartPersistableObjectHandler
      */
     public function getPartnerCount($status = _SPARTNER_STATUS_ACTIVE)
     {
-        if ($status != _SPARTNER_STATUS_ALL) {
+        if (_SPARTNER_STATUS_ALL != $status) {
             $criteriaStatus = new CriteriaCompo();
             $criteriaStatus->add(new Criteria('status', $status));
         }
@@ -1150,7 +1150,7 @@ class SmartpartnerPartnerHandler extends SmartPersistableObjectHandler
 
         $criteria->add(new Criteria('status', _SPARTNER_STATUS_ACTIVE, '='), 'AND');
 
-        if ($userid != 0) {
+        if (0 != $userid) {
             $criteria->add(new Criteria('id', $userid), 'AND');
         }
 
@@ -1159,7 +1159,7 @@ class SmartpartnerPartnerHandler extends SmartPersistableObjectHandler
 
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
-            if ($criteria->getSort() != '') {
+            if ('' != $criteria->getSort()) {
                 $sql .= ' ORDER BY ' . $criteria->getSort() . '
                     ' . $criteria->getOrder();
             }
@@ -1202,7 +1202,7 @@ class SmartpartnerPartnerHandler extends SmartPersistableObjectHandler
         $asobject = true
     ) {
         global $xoopsUser;
-        if ($status != _SPARTNER_STATUS_ALL) {
+        if (_SPARTNER_STATUS_ALL != $status) {
             $criteriaStatus = new CriteriaCompo();
             $criteriaStatus->add(new Criteria('status', $status));
         }
@@ -1236,7 +1236,7 @@ class SmartpartnerPartnerHandler extends SmartPersistableObjectHandler
         $asobject = true
     ) {
         global $xoopsUser;
-        if ($status != _SPARTNER_STATUS_ALL) {
+        if (_SPARTNER_STATUS_ALL != $status) {
             $criteriaStatus = new CriteriaCompo();
             $criteriaStatus->add(new Criteria('status', $status));
         }
@@ -1341,7 +1341,7 @@ class SmartpartnerPartnerHandler extends SmartPersistableObjectHandler
             return $ret;
         }
 
-        if ($GLOBALS['xoopsDB']->getRowsNum($result) == 0) {
+        if (0 == $GLOBALS['xoopsDB']->getRowsNum($result)) {
             return $ret;
         }
 

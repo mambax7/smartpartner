@@ -83,7 +83,7 @@ class SmartpartnerOffer extends SmartObject
      */
     public function getVar($key, $format = 's')
     {
-        if ($format === 's' && in_array($key, ['partnerid', 'status'])) {
+        if ('s' === $format && in_array($key, ['partnerid', 'status'])) {
             //            return call_user_func(array($this, $key));
             return $this->{$key}();
         }
@@ -159,7 +159,7 @@ class SmartpartnerOffer extends SmartObject
             $myts = MyTextSanitizer::getInstance();
         }
         $ret = parent::toArray();
-        if ($format === 'e') {
+        if ('e' === $format) {
             $ret['partnerid'] = $this->getVar('partnerid', 'e');
         }
         $ret['description'] = $myts->undoHtmlSpecialChars($ret['description']);
@@ -225,7 +225,7 @@ class SmartpartnerOfferHandler extends SmartPersistableObjectHandler
                 $relevantCat    = array_merge($relevantCat, $parentCatArray);
                 foreach ($parentCatArray as $p_cat) {
                     $parentid = $p_cat;
-                    while ($catsObj[$parentid]->parentid() != 0) {
+                    while (0 != $catsObj[$parentid]->parentid()) {
                         $parentid      = $catsObj[$parentid]->parentid();
                         $relevantCat[] = $parentid;
                     }

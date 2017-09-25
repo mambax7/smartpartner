@@ -42,7 +42,7 @@ function editoffer($showmenu = false, $offerid = 0, $fct = '')
     smart_collapsableBar($collaps_name, $title, $info);
 
     $sform = $offerObj->getForm($form_name, 'addoffer', false, $submit_button_caption);
-    if ($fct === 'app') {
+    if ('app' === $fct) {
         $sform->addElement(new XoopsFormHidden('fct', 'app'));
     }
     $sform->display();
@@ -80,7 +80,7 @@ switch ($op) {
         } else {
             $partnerObj = $smartPartnerPartnerHandler->get($offerObj->getVar('partnerid', 'e'));
             $partnerObj->setUpdated();
-            if ($_POST['offerid'] == '') {
+            if ('' == $_POST['offerid']) {
                 $offerObj->sendNotifications([_SPARTNER_NOT_OFFER_NEW]);
             }
 

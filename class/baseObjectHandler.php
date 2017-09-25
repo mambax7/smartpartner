@@ -59,7 +59,7 @@ class SmartpartnerBaseObjectHandler extends XoopsObjectHandler
                 return false;
             }
             $numrows = $this->_db->getRowsNum($result);
-            if ($numrows == 1) {
+            if (1 == $numrows) {
                 $obj = new $this->classname($this->_db->fetchArray($result));
 
                 return $obj;
@@ -117,7 +117,7 @@ class SmartpartnerBaseObjectHandler extends XoopsObjectHandler
     public function insert(XoopsObject $obj, $force = false)
     {
         // Make sure object is of correct type
-        if (strcasecmp($this->classname, get_class($obj)) != 0) {
+        if (0 != strcasecmp($this->classname, get_class($obj))) {
             return false;
         }
 
@@ -172,7 +172,7 @@ class SmartpartnerBaseObjectHandler extends XoopsObjectHandler
         $sql = sprintf('SELECT * FROM %s', $this->_db->prefix($this->_dbtable));
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
-            if ($criteria->getSort() != '') {
+            if ('' != $criteria->getSort()) {
                 $sql .= ' ORDER BY ' . $criteria->getSort() . '
                     ' . $criteria->getOrder();
             }
@@ -212,7 +212,7 @@ class SmartpartnerBaseObjectHandler extends XoopsObjectHandler
      */
     public function delete($obj, $force = false)
     {
-        if (strcasecmp($this->classname, get_class($obj)) != 0) {
+        if (0 != strcasecmp($this->classname, get_class($obj))) {
             return false;
         }
 

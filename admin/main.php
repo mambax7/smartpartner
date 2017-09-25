@@ -16,7 +16,7 @@ switch ($op) {
     case 'createdir':
         $path = isset($_GET['path']) ? $_GET['path'] : false;
         if ($path) {
-            if ($path === 'root') {
+            if ('root' === $path) {
                 $path = '';
             }
             $thePath = smartpartner_getUploadDir(true, $path);
@@ -258,7 +258,7 @@ echo "
     </form>";
 
 // Get number of entries in the selected state
-$statusSelected = ($statussel == 0) ? _SPARTNER_STATUS_ALL : $statussel;
+$statusSelected = (0 == $statussel) ? _SPARTNER_STATUS_ALL : $statussel;
 
 $numrows = $smartPartnerPartnerHandler->getPartnerCount($statusSelected);
 // creating the Q&As objects
@@ -328,7 +328,7 @@ echo "<span style=\"color: #567; margin: 3px 0 18px 0; font-size: small; display
 
 $pagenav = new XoopsPageNav($numrows, $xoopsModuleConfig['perpage_admin'], $startentry, 'startentry', "statussel=$statussel&amp;sortsel=$sortsel&amp;ordersel=$ordersel");
 
-if ($xoopsModuleConfig['useimagenavpage'] == 1) {
+if (1 == $xoopsModuleConfig['useimagenavpage']) {
     echo '<div style="text-align:right; background-color: white; margin: 10px 0;">' . $pagenav->renderImageNav() . '</div>';
 } else {
     echo '<div style="text-align:right; background-color: white; margin: 10px 0;">' . $pagenav->renderNav() . '</div>';

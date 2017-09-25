@@ -34,10 +34,10 @@ function b_recent_partners_show($options)
         }
     }
     if (!empty($block['partners'])) {
-        if ($options[0] == 1) {
+        if (1 == $options[0]) {
             $block['insertBr'] = true;
         }
-        if ($options[1] == 1) {
+        if (1 == $options[1]) {
             $block['fadeImage'] = 'style="filter:alpha(opacity=20);" onmouseover="nereidFade(this,100,30,5)" onmouseout="nereidFade(this,50,30,5)"';
         }
 
@@ -58,23 +58,23 @@ function b_recent_partners_edit($options)
     $form = "<table border='0'>";
     $form .= '<tr><td>' . _MB_SPARTNER_PARTNERS_PSPACE . '</td><td>';
     $chk  = '';
-    if ($options[0] == 0) {
+    if (0 == $options[0]) {
         $chk = ' checked';
     }
     $form .= "<input type='radio' name='options[0]' value='0'" . $chk . '>' . _NO . '';
     $chk  = '';
-    if ($options[0] == 1) {
+    if (1 == $options[0]) {
         $chk = ' checked';
     }
     $form .= "<input type='radio' name='options[0]' value='1'" . $chk . '>' . _YES . '</td></tr>';
     $form .= '<tr><td>' . _MB_SPARTNER_FADE . '</td><td>';
     $chk  = '';
-    if ($options[1] == 0) {
+    if (0 == $options[1]) {
         $chk = ' checked';
     }
     $form .= "<input type='radio' name='options[1]' value='0'" . $chk . '>' . _NO . '';
     $chk  = '';
-    if ($options[1] == 1) {
+    if (1 == $options[1]) {
         $chk = ' checked';
     }
     $form .= "<input type='radio' name='options[1]' value='1'" . $chk . '>' . _YES . '</td></tr>';

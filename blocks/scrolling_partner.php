@@ -23,7 +23,7 @@ function b_scrolling_partner_show($options)
     if (count($partnersObj) > 1) {
         $key_arr  = array_keys($partnersObj);
         $key_rand = array_rand($key_arr, count($key_arr));
-        for ($i = 0; ($i < count($partnersObj)) && (($options[0] == 0) || ($i < $options[0])); ++$i) {
+        for ($i = 0; ($i < count($partnersObj)) && ((0 == $options[0]) || ($i < $options[0])); ++$i) {
             $newObjs[$i] = $partnersObj[$key_rand[$i]];
         }
         $partnersObj = $newObjs;
@@ -41,7 +41,7 @@ function b_scrolling_partner_show($options)
     $block = [];
     if ($partnersObj) {
         for ($i = 0, $iMax = count($partnersObj); $i < $iMax; ++$i) {
-            if ($partnersObj[$i]->image() != '' && $partnersObj[$i]->image() !== 'blank.png') {
+            if ('' != $partnersObj[$i]->image() && 'blank.png' !== $partnersObj[$i]->image()) {
                 //$partner['id'] = $partnersObj[$i]->id();
                 $partner['urllink']  = $partnersObj[$i]->getUrlLink('block');
                 $partner['image']    = $partnersObj[$i]->getImageUrl();
@@ -56,7 +56,7 @@ function b_scrolling_partner_show($options)
     $block['height']     = $options[2];
     $block['speed']      = $options[3];
     $block['space']      = $options[4];
-    $block['background'] = isset($options[5]) && $options[5] != '' ? $options[5] : 'FFFFFF';
+    $block['background'] = isset($options[5]) && '' != $options[5] ? $options[5] : 'FFFFFF';
 
     return $block;
 }

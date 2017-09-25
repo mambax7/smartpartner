@@ -176,7 +176,7 @@ class SmartpartnerFile extends XoopsObject
             $uploader->setTargetFileName($id . '_' . $file_title);
             if ($uploader->upload()) {
                 $this->setVar('filename', $uploader->getSavedFileName());
-                if ($this->getVar('name') == '') {
+                if ('' == $this->getVar('name')) {
                     $this->setVar('name', $this->getNameFromFilename());
                 }
                 $this->setVar('mimetype', $uploader->getMediaType());
@@ -322,7 +322,7 @@ class SmartpartnerFile extends XoopsObject
      */
     public function notLoaded()
     {
-        return ($this->getVar('id') == 0);
+        return (0 == $this->getVar('id'));
     }
 
     /**
@@ -440,7 +440,7 @@ class SmartpartnerFileHandler extends XoopsObjectHandler
             }
 
             $numrows = $this->db->getRowsNum($result);
-            if ($numrows == 1) {
+            if (1 == $numrows) {
                 $file = new SmartpartnerFile();
                 $file->assignVars($this->db->fetchArray($result));
 
@@ -461,7 +461,7 @@ class SmartpartnerFileHandler extends XoopsObjectHandler
      */
     public function insert(XoopsObject $fileObj, $force = false)
     {
-        if (strtolower(get_class($fileObj)) !== 'smartpartnerfile') {
+        if ('smartpartnerfile' !== strtolower(get_class($fileObj))) {
             return false;
         }
         if (!$fileObj->isDirty()) {
@@ -540,7 +540,7 @@ class SmartpartnerFileHandler extends XoopsObjectHandler
      */
     public function delete(XoopsObject $file, $force = false)
     {
-        if (strtolower(get_class($file)) !== 'smartpartnerfile') {
+        if ('smartpartnerfile' !== strtolower(get_class($file))) {
             return false;
         }
         // Delete the actual file
@@ -570,7 +570,7 @@ class SmartpartnerFileHandler extends XoopsObjectHandler
      */
     public function deleteItemFiles(&$itemObj)
     {
-        if (strtolower(get_class($itemObj)) !== 'smartpartneritem') {
+        if ('smartpartneritem' !== strtolower(get_class($itemObj))) {
             return false;
         }
         $files  = $this->getAllFiles($itemObj->id());
@@ -598,7 +598,7 @@ class SmartpartnerFileHandler extends XoopsObjectHandler
         $sql   = 'SELECT * FROM ' . $this->db->prefix('smartpartner_files');
         if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
             $sql .= ' ' . $criteria->renderWhere();
-            if ($criteria->getSort() != '') {
+            if ('' != $criteria->getSort()) {
                 $sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
             }
             $limit = $criteria->getLimit();
@@ -653,7 +653,7 @@ class SmartpartnerFileHandler extends XoopsObjectHandler
 
         $criteria = new CriteriaCompo();
 
-        if ($id != 0) {
+        if (0 != $id) {
             $criteria->add($criteriaItemid);
         }
 
