@@ -39,7 +39,7 @@ function smartpartner_metagen_html2text($document)
         '',
         '',
         "\\1",
-        "\"",
+        '"',
         '&',
         '<',
         '>',
@@ -66,7 +66,7 @@ function smartpartner_metagen_html2text($document)
  */
 function smartpartner_createMetaDescription($description, $maxWords = 100)
 {
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
     $words = [];
     $words = explode(' ', smartpartner_metagen_html2text($description));
@@ -92,7 +92,7 @@ function smartpartner_createMetaDescription($description, $maxWords = 100)
  */
 function smartpartner_findMetaKeywords($text, $minChar)
 {
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
     $keywords         = [];
     $originalKeywords = explode(' ', $text);
@@ -119,7 +119,7 @@ function smartpartner_findMetaKeywords($text, $minChar)
 function smartpartner_createMetaTags($title, $categoryPath = '', $description = '', $minChar = 4)
 {
     global $xoopsTpl, $xoopsModule, $xoopsModuleConfig;
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
 
     $ret = '';
 

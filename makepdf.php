@@ -17,12 +17,15 @@
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
 
+//TODO needs to be refactored for TCPDF
+
 require_once __DIR__ . '/header.php';
 //error_reporting(0);
 //error_reporting(0);
 
-$myts = MyTextSanitizer::getInstance();
-require_once SMARTPARTNER_ROOT_PATH . 'fpdf/fpdf.inc.php';
+$myts = \MyTextSanitizer::getInstance();
+//require_once SMARTPARTNER_ROOT_PATH . 'fpdf/fpdf.inc.php';
+require_once XOOPS_ROOT_PATH . '/class/libraries/vendor/tecnickcom/tcpdf/tcpdf.php';
 
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
@@ -59,7 +62,8 @@ $puffer = '<br><br><br>';
 //create the A4-PDF...
 $pdf_config['slogan'] = $xoopsConfig['sitename'] . ' - ' . $xoopsConfig['slogan'];
 
-$pdf = new PDF();
+//$pdf = new PDF();
+$pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, _CHARSET, false);
 $pdf->SetCreator($pdf_config['creator']);
 $pdf->SetTitle($pdf_data['title']);
 $pdf->SetAuthor($pdf_config['url']);

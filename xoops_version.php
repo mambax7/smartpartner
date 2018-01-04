@@ -12,6 +12,8 @@ if (!defined('SMARTPARTNER_DIRNAME')) {
     define('SMARTPARTNER_DIRNAME', 'smartpartner');
 }
 
+require_once __DIR__ . '/preloads/autoloader.php';
+
 $modversion['version']       = 2.01;
 $modversion['module_status'] = 'RC 2';
 $modversion['release_date']  = '2017/07/20';

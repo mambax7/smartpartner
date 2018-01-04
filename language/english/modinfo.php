@@ -231,3 +231,6 @@ define('_MI_SPARTNER_OVERVIEW', 'Overview');
 define('_MI_SPARTNER_DISCLAIMER', 'Disclaimer');
 define('_MI_SPARTNER_LICENSE', 'License');
 define('_MI_SPARTNER_SUPPORT', 'Support');
+
+define('_MI_SPARTNER_HOME', 'Home');
+define('_MI_SPARTNER_ABOUT', 'About');

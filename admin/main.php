@@ -8,7 +8,7 @@
  */
 
 require_once __DIR__ . '/admin_header.php';
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 
 $op = isset($_GET['op']) ? $_GET['op'] : '';
 

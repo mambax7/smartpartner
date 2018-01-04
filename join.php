@@ -12,7 +12,7 @@ $GLOBALS['xoopsOption']['template_main'] = 'smartpartner_join.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
 include __DIR__ . '/footer.php';
 
-$myts = MyTextSanitizer::getInstance();
+$myts = \MyTextSanitizer::getInstance();
 
 $op = isset($_POST['op']) ? $_POST['op'] : 'form';
 

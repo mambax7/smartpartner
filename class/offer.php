@@ -127,7 +127,7 @@ class SmartpartnerOffer extends SmartObject
         $smartModule = smartpartner_getModuleInfo();
         $module_id   = $smartModule->getVar('mid');
 
-        $myts                = MyTextSanitizer::getInstance();
+        $myts                = \MyTextSanitizer::getInstance();
         $notificationHandler = xoops_getHandler('notification');
 
         $tags                 = [];
@@ -156,7 +156,7 @@ class SmartpartnerOffer extends SmartObject
     {
         global $myts;
         if (!$myts) {
-            $myts = MyTextSanitizer::getInstance();
+            $myts = \MyTextSanitizer::getInstance();
         }
         $ret = parent::toArray();
         if ('e' === $format) {

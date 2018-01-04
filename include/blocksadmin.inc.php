@@ -96,7 +96,7 @@ if (isset($_POST['previewblock'])) {
     xoops_cp_header();
     require_once XOOPS_ROOT_PATH . '/class/template.php';
     $xoopsTpl = new XoopsTpl();
-    $xoopsTpl->xoops_setCaching(0);
+    $xoopsTpl->caching=(0);
     $block['bid'] = $bid;
 
     if ('clone_ok' === $op) {
@@ -112,7 +112,7 @@ if (isset($_POST['previewblock'])) {
         $block['name']          = $myblock->getVar('name');
     }
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $myblock->setVar('title', $myts->stripSlashesGPC($btitle));
     $myblock->setVar('content', $myts->stripSlashesGPC($bcontent));
     //  $dummyhtml = '<html><head><meta http-equiv="content-type" content="text/html; charset='._CHARSET.'"><meta http-equiv="content-language" content="'._LANGCODE.'"><title>'.$xoopsConfig['sitename'].'</title><link rel="stylesheet" type="text/css" media="all" href="'.getcss($xoopsConfig['theme_set']).'"></head><body><table><tr><th>'.$myblock->getVar('title').'</th></tr><tr><td>'.$myblock->getContent('S', $bctype).'</td></tr></table></body></html>';
@@ -132,7 +132,7 @@ if (isset($_POST['previewblock'])) {
     $block['modules']   =& $bmodule;
     $block['ctype']     = isset($bctype) ? $bctype : $myblock->getVar('c_type');
     $block['is_custom'] = true;
-    $block['cachetime'] = (int)$bcachetime;
+    $block['cachetime'] = $bcachetime;
     echo '<a href="myblocksadmin.php">' . _AM_BADMIN . '</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;' . $block['form_title'] . '<br><br>';
     include __DIR__ . '/../admin/myblockform.php'; //GIJ
     //echo '<a href="admin.php?fct=blocksadmin">'. _AM_BADMIN .'</a>&nbsp;<span style="font-weight:bold;">&raquo;&raquo;</span>&nbsp;'.$block['form_title'].'<br><br>';
@@ -469,7 +469,7 @@ if ('clone_ok' === $op) {
     }
     $cblock->setNew();
 
-    $myts = MyTextSanitizer::getInstance();
+    $myts = \MyTextSanitizer::getInstance();
     $cblock->setVar('side', $_POST['bside']);
     $cblock->setVar('weight', $_POST['bweight']);
     $cblock->setVar('visible', $_POST['bvisible']);
@@ -607,7 +607,7 @@ function myblocksadmin_update_block(
         }
         require_once XOOPS_ROOT_PATH . '/class/template.php';
         $xoopsTpl = new XoopsTpl();
-        $xoopsTpl->xoops_setCaching(2);
+        $xoopsTpl->caching=(2);
         if ('' != $myblock->getVar('template')) {
             if ($xoopsTpl->is_cached('db:' . $myblock->getVar('template'))) {
                 if (!$xoopsTpl->clear_cache('db:' . $myblock->getVar('template'))) {
@@ -724,7 +724,7 @@ function myblocksadmin_update_blockinstance(
     /*          // CLEAR TEMPLATE CACHE
                 require_once XOOPS_ROOT_PATH.'/class/template.php';
                 $xoopsTpl = new XoopsTpl();
-                $xoopsTpl->xoops_setCaching(2);
+                $xoopsTpl->caching=(2);
                 if ($instance->getVar('template') != '') {
                     if ($xoopsTpl->is_cached('db:'.$instance->getVar('template'))) {
                         if (!$xoopsTpl->clear_cache('db:'.$instance->getVar('template'))) {

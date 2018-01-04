@@ -88,7 +88,7 @@ function editcat($showmenu = false, $categoryid = 0, $nb_subcats = 4, $categoryO
     $image_select = new XoopsFormSelect('', 'image', $categoryObj->image());
     $image_select->addOption('-1', '---------------');
     $image_select->addOptionArray($image_array);
-    $image_select->setExtra("onchange='showImgSelected(\"image3\", \"image\", \"" . 'uploads/smartpartner/assets/images/category/' . "\", \"\", \"" . XOOPS_URL . "\")'");
+    $image_select->setExtra("onchange='showImgSelected(\"image3\", \"image\", \"" . 'uploads/smartpartner/assets/images/category/' . '", "", "' . XOOPS_URL . "\")'");
     $image_tray = new XoopsFormElementTray(_AM_SPARTNER_CATEGORY_IMAGE, '&nbsp;');
     $image_tray->addElement($image_select);
     $image_tray->addElement(new XoopsFormLabel('', "<br><br><img src='" . smartpartner_getImageDir('category', false) . $categoryObj->image() . "' name='image3' id='image3' alt=''>"));

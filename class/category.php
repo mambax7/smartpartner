@@ -74,7 +74,7 @@ class SmartpartnerCategory extends XoopsObject
     {
         $ret = $this->getVar('name', $format);
         if (('s' === $format) || ('S' === $format) || ('show' === $format)) {
-            $myts = MyTextSanitizer::getInstance();
+            $myts = \MyTextSanitizer::getInstance();
             $ret  = $myts->displayTarea($ret);
         }
 
@@ -207,7 +207,7 @@ class SmartpartnerCategory extends XoopsObject
         $smartModule =& $hModule->getByDirname('smartpartner');
         $module_id   = $smartModule->getVar('mid');
 
-        $myts                = MyTextSanitizer::getInstance();
+        $myts                = \MyTextSanitizer::getInstance();
         $notificationHandler = xoops_getHandler('notification');
 
         $tags                  = [];

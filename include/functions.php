@@ -224,7 +224,7 @@ function smartpartner_getModuleConfig()
             global $xoopsModuleConfig;
             $smartConfig = $xoopsModuleConfig;
         } else {
-            $smartModule =& smartpartner_getModuleInfo();
+            $smartModule = smartpartner_getModuleInfo();
             $hModConfig  = xoops_getHandler('config');
             $smartConfig = $hModConfig->getConfigsByCat(0, $smartModule->getVar('mid'));
         }
@@ -328,7 +328,7 @@ function smartpartner_collapsableBar($tablename = '', $iconname = '', $tabletitl
     echo "<img id='$iconname' src=" . XOOPS_URL . '/modules/' . $xoopsModule->dirname() . "/assets/images/icon/close12.gif alt=''></a>&nbsp;" . $tabletitle . '</h3>';
     echo "<div id='$tablename'>";
     if ('' != $tabledsc) {
-        echo "<span style=\"color: #567; margin: 3px 0 12px 0; font-size: small; display: block; \">" . $tabledsc . '</span>';
+        echo '<span style="color: #567; margin: 3px 0 12px 0; font-size: small; display: block; ">' . $tabledsc . '</span>';
     }
 }
 

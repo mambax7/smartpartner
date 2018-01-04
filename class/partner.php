@@ -174,7 +174,7 @@ class SmartpartnerPartner extends SmartObject
     {
         $ret = $this->getVar('title', $format);
         if (('s' === $format) || ('S' === $format) || ('show' === $format)) {
-            $myts = MyTextSanitizer::getInstance();
+            $myts = \MyTextSanitizer::getInstance();
             $ret  = $myts->displayTarea($ret);
         }
 
@@ -232,7 +232,7 @@ class SmartpartnerPartner extends SmartObject
     {
         $ret = $this->getVar('contact_name', $format);
         if (('s' === $format) || ('S' === $format) || ('show' === $format)) {
-            $myts = MyTextSanitizer::getInstance();
+            $myts = \MyTextSanitizer::getInstance();
             $ret  = $myts->displayTarea($ret);
         }
 
@@ -247,7 +247,7 @@ class SmartpartnerPartner extends SmartObject
     {
         $ret = $this->getVar('contact_email', $format);
         if (('s' === $format) || ('S' === $format) || ('show' === $format)) {
-            $myts = MyTextSanitizer::getInstance();
+            $myts = \MyTextSanitizer::getInstance();
             $ret  = $myts->displayTarea($ret);
         }
 
@@ -262,7 +262,7 @@ class SmartpartnerPartner extends SmartObject
     {
         $ret = $this->getVar('contact_phone', $format);
         if (('s' === $format) || ('S' === $format) || ('show' === $format)) {
-            $myts = MyTextSanitizer::getInstance();
+            $myts = \MyTextSanitizer::getInstance();
             $ret  = $myts->displayTarea($ret);
         }
 
@@ -466,7 +466,7 @@ class SmartpartnerPartner extends SmartObject
         $smartModule = smartpartner_getModuleInfo();
         $module_id   = $smartModule->getVar('mid');
 
-        $myts                = MyTextSanitizer::getInstance();
+        $myts                = \MyTextSanitizer::getInstance();
         $notificationHandler = xoops_getHandler('notification');
 
         $tags                 = [];
@@ -727,7 +727,7 @@ class SmartpartnerPartner extends SmartObject
         // Hightlighting searched words
         $highlight = true;
         if ($highlight && isset($_GET['keywords'])) {
-            $myts                     = MyTextSanitizer::getInstance();
+            $myts                     = \MyTextSanitizer::getInstance();
             $keywords                 = $myts->htmlSpecialChars(trim(urldecode($_GET['keywords'])));
             $h                        = new SmartpartnerKeyhighlighter($keywords, true, 'smartpartner_highlighter');
             $partner['title']         = $h->highlight($partner['title']);
@@ -1023,7 +1023,7 @@ class SmartpartnerPartnerHandler extends SmartPersistableObjectHandler
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->table;
 
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $whereClause = $criteria->renderWhere();
 
             if ('WHERE ()' !== $whereClause) {
@@ -1074,7 +1074,7 @@ class SmartpartnerPartnerHandler extends SmartPersistableObjectHandler
     public function getCount(CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->table;
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $whereClause = $criteria->renderWhere();
             if ('WHERE ()' !== $whereClause) {
                 $sql .= ' ' . $criteria->renderWhere();
@@ -1157,7 +1157,7 @@ class SmartpartnerPartnerHandler extends SmartPersistableObjectHandler
         $criteria->setSort('datesub');
         $criteria->setOrder('DESC');
 
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
             if ('' != $criteria->getSort()) {
                 $sql .= ' ORDER BY ' . $criteria->getSort() . '
@@ -1288,7 +1288,7 @@ class SmartpartnerPartnerHandler extends SmartPersistableObjectHandler
     public function deleteAll(CriteriaElement $criteria = null)
     {
         $sql = 'DELETE FROM ' . $this->db->prefix('smartpartner_partner');
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->db->query($sql)) {
@@ -1312,7 +1312,7 @@ class SmartpartnerPartnerHandler extends SmartPersistableObjectHandler
     {
         $set_clause = is_numeric($fieldvalue) ? $fieldname . ' = ' . $fieldvalue : $fieldname . ' = ' . $this->db->quoteString($fieldvalue);
         $sql        = 'UPDATE ' . $this->db->prefix('smartpartner_partner') . ' SET ' . $set_clause;
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->db->queryF($sql)) {
@@ -1446,7 +1446,7 @@ class SmartpartnerPartnerHandler extends SmartPersistableObjectHandler
 
         $sql = 'SELECT faq.faqid FROM '.$this->db->prefix('smartfaq_faq') . ' as faq INNER JOIN '.$this->db->prefix('smartfaq_answers') . ' as answer ON faq.faqid = answer.faqid';
 
-        if (isset($criteria) && is_subclass_of($criteria, 'criteriaelement')) {
+        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $whereClause = $criteria->renderWhere();
 
             If ($whereClause != 'WHERE ()') {

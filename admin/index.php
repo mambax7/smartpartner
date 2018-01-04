@@ -52,24 +52,24 @@ $totalrejected = $smartPartnerPartnerHandler->getPartnerCount(_SPARTNER_STATUS_R
 $adminObject->addInfoBox(_AM_SPARTNER_INVENTORY);
 
 if ($totalsubmitted > 0) {
-    $adminObject->addInfoBoxLine(_AM_SPARTNER_INVENTORY, '<infolabel>' . '<a href="category.php">' . _AM_SPARTNER_TOTAL_SUBMITTED . '</a><b>' . '</infolabel>', $totalsubmitted, 'Green');
+    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . '<a href="category.php">' . _AM_SPARTNER_TOTAL_SUBMITTED . '</a><b>' . '</infolabel>', $totalsubmitted), '', 'Green');
 } else {
-    $adminObject->addInfoBoxLine(_AM_SPARTNER_INVENTORY, '<infolabel>' . _AM_SPARTNER_TOTAL_SUBMITTED . '</infolabel>', $totalsubmitted, 'Green');
+    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_SPARTNER_TOTAL_SUBMITTED . '</infolabel>', $totalsubmitted), '', 'Green');
 }
 if ($totalactive > 0) {
-    $adminObject->addInfoBoxLine(_AM_SPARTNER_INVENTORY, '<infolabel>' . '<a href="partner.php">' . _AM_SPARTNER_TOTAL_ACTIVE . '</a><b>' . '</infolabel>', $totalactive, 'Green');
+    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . '<a href="partner.php">' . _AM_SPARTNER_TOTAL_ACTIVE . '</a><b>' . '</infolabel>', $totalactive), '', 'Green');
 } else {
-    $adminObject->addInfoBoxLine(_AM_SPARTNER_INVENTORY, '<infolabel>' . _AM_SPARTNER_TOTAL_ACTIVE . '</infolabel>', $totalactive, 'Green');
+    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_SPARTNER_TOTAL_ACTIVE . '</infolabel>', $totalactive), '', 'Green');
 }
 if ($totalrejected > 0) {
-    $adminObject->addInfoBoxLine(_AM_SPARTNER_INVENTORY, '<infolabel>' . '<a href="main.php">' . _AM_SPARTNER_TOTAL_REJECTED . '</a><b>' . '</infolabel>', $totalrejected, 'Green');
+    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . '<a href="main.php">' . _AM_SPARTNER_TOTAL_REJECTED . '</a><b>' . '</infolabel>', $totalrejected), '', 'Green');
 } else {
-    $adminObject->addInfoBoxLine(_AM_SPARTNER_INVENTORY, '<infolabel>' . _AM_SPARTNER_TOTAL_REJECTED . '</infolabel>', $totalrejected, 'Green');
+    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_SPARTNER_TOTAL_REJECTED . '</infolabel>', $totalrejected), '', 'Green');
 }
 if ($totalinactive > 0) {
-    $adminObject->addInfoBoxLine(_AM_SPARTNER_INVENTORY, '<infolabel>' . '<a href="main.php">' . _AM_SPARTNER_TOTAL_INACTIVE . '</a><b>' . '</infolabel>', $totalinactive, 'Green');
+    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . '<a href="main.php">' . _AM_SPARTNER_TOTAL_INACTIVE . '</a><b>' . '</infolabel>', $totalinactive), '', 'Green');
 } else {
-    $adminObject->addInfoBoxLine(_AM_SPARTNER_INVENTORY, '<infolabel>' . _AM_SPARTNER_TOTAL_INACTIVE . '</infolabel>', $totalinactive, 'Green');
+    $adminObject->addInfoBoxLine(sprintf('<infolabel>' . _AM_SPARTNER_TOTAL_INACTIVE . '</infolabel>', $totalinactive), '', 'Green');
 }
 //---------------------
 

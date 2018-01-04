@@ -46,10 +46,10 @@ function showfiles($partnerObj)
         echo '</table>';
         echo '<br >';
     } else {
-        echo "<span style=\"color: #567; margin: 3px 0 12px 0; font-size: small; display: block; \">" . _AM_SPARTNER_NOFILE . '</span>';
+        echo '<span style="color: #567; margin: 3px 0 12px 0; font-size: small; display: block; ">' . _AM_SPARTNER_NOFILE . '</span>';
     }
 
-    echo "<form><div style=\"margin-bottom: 24px;\">";
+    echo '<form><div style="margin-bottom: 24px;">';
     echo "<input type='button' name='button' onclick=\"location='file.php?op=mod&id=" . $partnerObj->id() . "'\" value='" . _AM_SPARTNER_UPLOAD_FILE_NEW . "'>&nbsp;&nbsp;";
     echo '</div></form>';
 
@@ -154,7 +154,7 @@ function editpartner($showmenu = false, $id = 0)
     $logo_select = new XoopsFormSelect('', 'image', $partnerObj->image());
     $logo_select->addOption('-1', '---------------');
     $logo_select->addOptionArray($logo_array);
-    $logo_select->setExtra("onchange='showImgSelected(\"image3\", \"image\", \"" . 'uploads/' . SMARTPARTNER_DIRNAME . '/images' . "\", \"\", \"" . XOOPS_URL . "\")'");
+    $logo_select->setExtra("onchange='showImgSelected(\"image3\", \"image\", \"" . 'uploads/' . SMARTPARTNER_DIRNAME . '/images' . '", "", "' . XOOPS_URL . "\")'");
     $logo_tray = new XoopsFormElementTray(_AM_SPARTNER_LOGO, '&nbsp;');
     $logo_tray->addElement($logo_select);
     $logo_tray->addElement(new XoopsFormLabel('', "<br><br><img src='" . smartpartner_getImageDir('', false) . $partnerObj->image() . "' name='image3' id='image3' alt=''>"));

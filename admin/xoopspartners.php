@@ -6,7 +6,7 @@
  * Author: Marius Scurtescu <mariuss@romanians.bc.ca>
  * Licence: GNU
  *
- * Import script from XoopsPartners to SmartPartner.
+ * Import script from Xpartners to SmartPartner.
  *
  * It was tested with XoosPartners version 1.1 and SmartPartner version 1.0 beta
  *
@@ -14,7 +14,7 @@
 
 require_once __DIR__ . '/admin_header.php';
 
-$importFromModuleName = 'XoopsPartners';
+$importFromModuleName = 'Xpartners';
 $scriptname           = 'xoopspartners.php';
 
 $op = 'start';

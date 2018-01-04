@@ -97,7 +97,7 @@ switch ($op) {
             $sform->display();
             unset($hidden);
         } else {
-            echo "<span style=\"color: #567; margin: 3px 0 12px 0; font-weight: bold; font-size: small; display: block; \">" . _AM_SPARTNER_IMPORT_NO_MODULE . '</span>';
+            echo '<span style="color: #567; margin: 3px 0 12px 0; font-weight: bold; font-size: small; display: block; ">' . _AM_SPARTNER_IMPORT_NO_MODULE . '</span>';
         }
 
         // End of collapsable bar

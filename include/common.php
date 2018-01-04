@@ -36,7 +36,7 @@ $smartModule = smartpartner_getModuleInfo();
 // Find if the user is admin of the module
 $smartPartnerIsAdmin = smartpartner_userIsAdmin();
 
-$myts                   = MyTextSanitizer::getInstance();
+$myts                   = \MyTextSanitizer::getInstance();
 $smartPartnerModuleName = $smartModule->getVar('name');
 
 // Creating the SmartModule config Object
