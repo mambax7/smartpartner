@@ -1,6 +1,8 @@
 <?php
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+use XoopsModules\Smartpartner;
+
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 global $modversion;
 if (!empty($_POST['fct']) && !empty($_POST['op']) && 'modulesadmin' === $_POST['fct'] && 'update_ok' === $_POST['op'] && $_POST['dirname'] == $modversion['dirname']) {
@@ -20,18 +22,18 @@ if (!empty($_POST['fct']) && !empty($_POST['op']) && 'modulesadmin' === $_POST['
  * @param  XoopsModule $module
  * @return bool
  */
-function xoops_module_update_smartpartner(XoopsModule $module)
+function xoops_module_update_smartpartner(\XoopsModule $module)
 {
     require_once XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname') . '/include/functions.php';
     require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartdbupdater.php';
 
-    $dbupdater = new SmartobjectDbupdater();
+    $dbupdater = new Smartpartner\Dbupdater();
 
     ob_start();
 
     $dbVersion = smartpartner_GetMeta('version');
 
-    $dbupdater = new SmartobjectDbupdater();
+    $dbupdater = new Smartpartner\Dbupdater();
 
     echo '<code>' . _SDU_UPDATE_UPDATING_DATABASE . '<br>';
 
@@ -42,7 +44,7 @@ function xoops_module_update_smartpartner(XoopsModule $module)
     if ($dbVersion < $newDbVersion) {
         echo 'Database migrate to version ' . $newDbVersion . '<br>';
 
-        $table = new SmartDbTable('smartpartner_partner');
+        $table = new Smartpartner\DbTable('smartpartner_partner');
         $table->addNewField('email_priv', " tinyint(1) NOT NULL default '0'");
         $table->addNewField('phone_priv', " tinyint(1) NOT NULL default '0'");
         $table->addNewField('adress_priv', " tinyint(1) NOT NULL default '0'");
@@ -60,7 +62,7 @@ function xoops_module_update_smartpartner(XoopsModule $module)
         echo 'Database migrate to version ' . $newDbVersion . '<br>';
         //create new tables
         // Create table smartpartner_categories
-        $table = new SmartDbTable('smartpartner_categories');
+        $table = new Smartpartner\DbTable('smartpartner_categories');
         if (!$table->exists()) {
             $table->setStructure("
               `categoryid` int(11) NOT NULL auto_increment,
@@ -81,7 +83,7 @@ function xoops_module_update_smartpartner(XoopsModule $module)
             }
         }
         // Create table smartpartner_partner_cat_link
-        $table = new SmartDbTable('smartpartner_partner_cat_link');
+        $table = new Smartpartner\DbTable('smartpartner_partner_cat_link');
         if (!$table->exists()) {
             $table->setStructure("
               `partner_cat_linkid` int(11) NOT NULL auto_increment,
@@ -98,7 +100,7 @@ function xoops_module_update_smartpartner(XoopsModule $module)
         }
 
         // Create table smartpartner_offer
-        $table = new SmartDbTable('smartpartner_offer');
+        $table = new Smartpartner\DbTable('smartpartner_offer');
         if (!$table->exists()) {
             $table->setStructure("
                `offerid` int(11) NOT NULL auto_increment,
@@ -124,7 +126,7 @@ function xoops_module_update_smartpartner(XoopsModule $module)
         }
 
         // Create table smartpartner_offer
-        $table = new SmartDbTable('smartpartner_files');
+        $table = new Smartpartner\DbTable('smartpartner_files');
         if (!$table->exists()) {
             $table->setStructure("
               `fileid` int(11) NOT NULL auto_increment,
@@ -173,7 +175,7 @@ function xoops_module_update_smartpartner(XoopsModule $module)
             }
         }
         //drop cat_id in partner table
-        $table = new SmartDbTable('smartpartner_partner');
+        $table = new Smartpartner\DbTable('smartpartner_partner');
         $table->addNewField('last_update', " int(11) NOT NULL default '0'");
         $table->addNewField('showsummary', " tinyint(1) NOT NULL default '0'");
         $table->addDroppedField('categoryid');
@@ -201,7 +203,7 @@ function xoops_module_update_smartpartner(XoopsModule $module)
  * @param  XoopsModule $module
  * @return bool
  */
-function xoops_module_install_smartpartner(XoopsModule $module)
+function xoops_module_install_smartpartner(\XoopsModule $module)
 {
     ob_start();
 

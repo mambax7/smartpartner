@@ -17,6 +17,10 @@
  * @author       XOOPS Development Team
  */
 
+use XoopsModules\Smartpartner;
+use XoopsModules\Smartpartner\Common;
+use XoopsModules\Smartpartner\Constants;
+
 require_once __DIR__ . '/../../../include/cp_header.php';
 require_once __DIR__ . '/admin_header.php';
 
@@ -31,22 +35,22 @@ $folder = [
 //---------------------
 
 // Creating the Partner handler object
-$smartPartnerPartnerHandler = smartpartner_gethandler('partner');
+//$smartPartnerPartnerHandler = smartpartner_gethandler('partner');
 
 // Total Partners -- includes everything on the table
-$totalpartners = $smartPartnerPartnerHandler->getPartnerCount(_SPARTNER_STATUS_ALL);
+$totalpartners = $smartPartnerPartnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_ALL);
 
 // Total Submitted Partners
-$totalsubmitted = $smartPartnerPartnerHandler->getPartnerCount(_SPARTNER_STATUS_SUBMITTED);
+$totalsubmitted = $smartPartnerPartnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_SUBMITTED);
 
 // Total active Partners
-$totalactive = $smartPartnerPartnerHandler->getPartnerCount(_SPARTNER_STATUS_ACTIVE);
+$totalactive = $smartPartnerPartnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_ACTIVE);
 
 // Total inactive Partners
-$totalinactive = $smartPartnerPartnerHandler->getPartnerCount(_SPARTNER_STATUS_INACTIVE);
+$totalinactive = $smartPartnerPartnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_INACTIVE);
 
 // Total rejected Partners
-$totalrejected = $smartPartnerPartnerHandler->getPartnerCount(_SPARTNER_STATUS_REJECTED);
+$totalrejected = $smartPartnerPartnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_REJECTED);
 
 //create info block
 $adminObject->addInfoBox(_AM_SPARTNER_INVENTORY);
@@ -80,5 +84,7 @@ foreach (array_keys($folder) as $i) {
 
 $adminObject->displayNavigation(basename(__FILE__));
 $adminObject->displayIndex();
+
+echo $utility::getServerStats();
 
 require_once __DIR__ . '/admin_footer.php';

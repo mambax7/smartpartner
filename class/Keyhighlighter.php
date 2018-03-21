@@ -1,9 +1,12 @@
-<?php
+<?php namespace XoopsModules\Smartpartner;
+
 /**
  * This file contains the keyhighlighter class that highlight the chosen keyword in the current output buffer.
  *
  * @package keyhighlighter
  */
+
+use XoopsModules\Smartpartner;
 
 /**
  * keyhighlighter class
@@ -18,7 +21,7 @@
  * @example   sample.php A sample code.
  * @link      http://setecastronomy.stufftoread.com
  */
-class SmartpartnerKeyhighlighter
+class Keyhighlighter
 {
     /**
      * @access private
@@ -49,7 +52,7 @@ class SmartpartnerKeyhighlighter
      * @param callback $replace_callback a custom callback for keyword highlight.
      *                                   <code>
      *                                   <?php
-     *                                   require ('keyhighlighter.class.php');
+     *                                   require ('Keyhighlighter.php');
      *
      * function my_highlighter ($matches) {
      *     return '<span style="font-weight: bolder; color: #FF0000;">' . $matches[0] . '</span>';

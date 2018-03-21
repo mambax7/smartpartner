@@ -9,6 +9,9 @@
  * @return array
  */
 
+use XoopsModules\Smartpartner;
+use XoopsModules\Smartobject;
+
 function b_random_offer_show($options)
 {
     require_once XOOPS_ROOT_PATH . '/modules/smartpartner/include/common.php';
@@ -17,17 +20,17 @@ function b_random_offer_show($options)
     $smartPartnerOfferHandler   = smartpartner_gethandler('offer');
     $smartPartnerPartnerHandler = smartpartner_gethandler('partner');
 
-    require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
-    $smartPermissionsHandler = new SmartobjectPermissionHandler($smartPartnerPartnerHandler);
+//    require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
+    $smartPermissionsHandler = new Smartobject\PermissionHandler($smartPartnerPartnerHandler);
     //var_dump($smartPermissionsHandler->handler);exit;
     $grantedItems = $smartPermissionsHandler->getGrantedItems('full_view');
 
     if (!empty($grantedItems)) {
-        $criteria = new CriteriaCompo();
-        $criteria->add(new Criteria('partnerid', '(' . implode(', ', $grantedItems) . ')', 'IN'));
-        $criteria->add(new Criteria('date_pub', time(), '<'));
-        $criteria->add(new Criteria('date_end', time(), '>'));
-        $criteria->add(new Criteria('status', _SPARTNER_STATUS_ONLINE));
+        $criteria = new \CriteriaCompo();
+        $criteria->add(new \Criteria('partnerid', '(' . implode(', ', $grantedItems) . ')', 'IN'));
+        $criteria->add(new \Criteria('date_pub', time(), '<'));
+        $criteria->add(new \Criteria('date_end', time(), '>'));
+        $criteria->add(new \Criteria('status', _SPARTNER_STATUS_ONLINE));
 
         // Randomize
         $offersObj = $smartPartnerOfferHandler->getObjects($criteria);

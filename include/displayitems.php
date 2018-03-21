@@ -9,6 +9,8 @@
 
 /* THIS FILE COMES FROM SMARTSECTION AND NEEDS TO EDITED TO WORK... */
 
+use XoopsModules\Smartpartner;
+
 global $xoopsUser, $xoopsUser, $xoopsConfig, $xoopsDB, $xoopsModuleConfig, $xoopsModule, $smartPartnerItemHandler;
 $startitem = isset($_GET['startitem']) ? (int)$_GET['startitem'] : 0;
 
@@ -61,7 +63,7 @@ if ($totalitems > 0) {
 echo "</table>\n";
 echo "<br>\n";
 $pagenav_extra_args = "op=mod&categoryid=$sel_cat&parentid=$parentid";
-$pagenav            = new XoopsPageNav($totalitems, $xoopsModuleConfig['perpage'], $startitem, 'startitem', $pagenav_extra_args);
+$pagenav            = new \XoopsPageNav($totalitems, $xoopsModuleConfig['perpage'], $startitem, 'startitem', $pagenav_extra_args);
 echo '<div style="text-align:right;">' . $pagenav->renderNav() . '</div>';
 echo "<input type='button' name='button' onclick=\"location='item.php?op=mod&categoryid=" . $sel_cat . "'\" value='" . _AM_SPARTNER_CREATEITEM . "'>&nbsp;&nbsp;";
 echo '</div>';

@@ -1,4 +1,4 @@
-<?php
+<?php namespace XoopsModules\Smartpartner;
 
 /**
  * Detemines if a table exists in the current db
@@ -10,15 +10,17 @@
  * @author xhelp development team
  */
 
+use XoopsModules\Smartpartner;
+
 function smart_TableExists($table)
 {
     $bRetVal = false;
     //Verifies that a MySQL table exists
-    $xoopsDB  = XoopsDatabaseFactory::getDatabaseConnection();
+    $xoopsDB  = \XoopsDatabaseFactory::getDatabaseConnection();
     $realname = $xoopsDB->prefix($table);
     $sql      = 'SHOW TABLES FROM ' . XOOPS_DB_NAME;
     $ret      = $xoopsDB->queryF($sql);
-    while (list($m_table) = $xoopsDB->fetchRow($ret)) {
+    while (false !== (list($m_table) = $xoopsDB->fetchRow($ret))) {
         if ($m_table == $realname) {
             $bRetVal = true;
             break;
@@ -39,7 +41,7 @@ function smart_TableExists($table)
  */
 
 /**
- * SmartDbTable class
+ * Smartpartner\DbTable class
  *
  * Information about an individual table
  *
@@ -47,7 +49,7 @@ function smart_TableExists($table)
  * @author  marcan <marcan@smartfactory.ca>
  * @link    http://www.smartfactory.ca The SmartFactory
  */
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
  * Include the language constants for the SmartObjectDBUpdater
@@ -61,9 +63,9 @@ if (!file_exists($common_file)) {
 include $common_file;
 
 /**
- * Class SmartDbTable
+ * Class Smartpartner\DbTable
  */
-class SmartDbTable
+class DbTable
 {
     /**
      * @var string $_name name of the table
@@ -153,7 +155,7 @@ class SmartDbTable
     {
         global $xoopsDB;
         $result = $xoopsDB->query('SHOW COLUMNS FROM ' . $this->name());
-        while ($existing_field = $xoopsDB->fetchArray($result)) {
+        while (false !== ($existing_field = $xoopsDB->fetchArray($result))) {
             $fields[$existing_field['Field']] = $existing_field['Type'];
             if ('YES' !== $existing_field['Null']) {
                 $fields[$existing_field['Field']] .= ' NOT NULL';
@@ -554,7 +556,7 @@ class SmartDbTable
 }
 
 /**
- * SmartobjectDbupdater class
+ * Smartpartner\Dbupdater class
  *
  * Class performing the database update for the module
  *
@@ -562,10 +564,10 @@ class SmartDbTable
  * @author  marcan <marcan@smartfactory.ca>
  * @link    http://www.smartfactory.ca The SmartFactory
  */
-class SmartobjectDbupdater
+class Dbupdater
 {
     /**
-     * SmartobjectDbupdater constructor.
+     * Smartpartner\Dbupdater constructor.
      */
     public function __construct()
     {
@@ -627,9 +629,9 @@ class SmartobjectDbupdater
     /**
      * Use to update a table
      *
-     * @param object $table {@link SmartDbTable} that will be updated
+     * @param object $table {@link Smartpartner\DbTable} that will be updated
      *
-     * @see SmartDbTable
+     * @see Smartpartner\DbTable
      *
      * @return bool true if success, false if an error occured
      */

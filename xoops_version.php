@@ -7,6 +7,8 @@
  * Licence: GNU
  */
 
+use XoopsModules\Smartpartner;
+
 // This must contain the name of the folder in which reside SmartPartner
 if (!defined('SMARTPARTNER_DIRNAME')) {
     define('SMARTPARTNER_DIRNAME', 'smartpartner');

@@ -10,6 +10,8 @@
  * @return mixed
  */
 
+use XoopsModules\Smartpartner;
+
 function smartpartner_notify_iteminfo($category, $item_id)
 {
     // This must contain the name of the folder in which reside SmartPartner

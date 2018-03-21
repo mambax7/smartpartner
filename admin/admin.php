@@ -17,6 +17,8 @@
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
 
+use XoopsModules\Smartpartner;
+
 $admin_mydirname = basename(dirname(__DIR__));
 
 $fct = empty($_POST['fct']) ? '' : trim($_POST['fct']);
@@ -63,6 +65,9 @@ if (0 != $admintest) {
             } elseif (file_exists(XOOPS_ROOT_PATH . '/modules/system/language/english/admin/' . $fct . '.php')) {
                 include XOOPS_ROOT_PATH . '/modules/system/language/english/admin/' . $fct . '.php';
             }
+
+
+
             include XOOPS_ROOT_PATH . '/modules/system/admin/' . $fct . '/xoops_version.php';
             $syspermHandler = xoops_getHandler('groupperm');
             $category       = !empty($modversion['category']) ? (int)$modversion['category'] : 0;

@@ -17,6 +17,8 @@
  * @since        2.0.9.3
  */
 
+use XoopsModules\Smartpartner;
+
 return [
 
     'hqx' => 'application/mac-binhex40',

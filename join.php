@@ -7,6 +7,8 @@
  * Licence: GNU
  */
 
+use XoopsModules\Smartpartner;
+
 include __DIR__ . '/header.php';
 $GLOBALS['xoopsOption']['template_main'] = 'smartpartner_join.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
@@ -41,7 +43,7 @@ switch ($op) {
                     redirect_header('javascript:history.go(-1)', 2, _CO_SPARTNER_FILE_UPLOAD_ERROR);
                 }
 
-                $uploader = new XoopsMediaUploader(smartpartner_getImageDir(), $allowed_mimetypes, $max_size, $max_imgwidth, $max_imgheight);
+                $uploader = new \XoopsMediaUploader(smartpartner_getImageDir(), $allowed_mimetypes, $max_size, $max_imgwidth, $max_imgheight);
 
                 if ($uploader->fetchMedia($filename) && $uploader->upload()) {
                     $partnerObj->setVar('image', $uploader->getSavedFileName());
@@ -96,79 +98,79 @@ switch ($op) {
 
         include XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
         include XOOPS_ROOT_PATH . '/modules/smartobject/class/form/elements/smartformhidden.php';
-        $form = new XoopsThemeForm(_MD_SPARTNER_JOIN, 'joinform', 'join.php');
+        $form = new \XoopsThemeForm(_MD_SPARTNER_JOIN, 'joinform', 'join.php');
         $form->setExtra('enctype="multipart/form-data"');
 
         // TITLE
-        $title_text = new XoopsFormText(_CO_SPARTNER_TITLE, 'title', 50, 255, '');
+        $title_text = new \XoopsFormText(_CO_SPARTNER_TITLE, 'title', 50, 255, '');
         $title_text->setDescription(_CO_SPARTNER_TITLE_DSC);
         $form->addElement($title_text, true);
 
         // LOGO UPLOAD
         $max_size = 5000000;
-        $file_box = new XoopsFormFile(_CO_SPARTNER_LOGO_UPLOAD, 'logo_file', $max_size);
+        $file_box = new \XoopsFormFile(_CO_SPARTNER_LOGO_UPLOAD, 'logo_file', $max_size);
         $file_box->setExtra("size ='45'");
         $file_box->setDescription(sprintf(_CO_SPARTNER_LOGO_UPLOAD_DSC, $xoopsModuleConfig['img_max_width'], $xoopsModuleConfig['img_max_height']));
         $form->addElement($file_box);
 
         // IMAGE_URL
-        $image_url_text = new XoopsFormText(_CO_SPARTNER_IMAGE_URL, 'image_url', 50, 255, '');
+        $image_url_text = new \XoopsFormText(_CO_SPARTNER_IMAGE_URL, 'image_url', 50, 255, '');
         $image_url_text->setDescription(_CO_SPARTNER_IMAGE_URL_DSC);
         $form->addElement($image_url_text, false);
 
         // URL
-        $url_text = new XoopsFormText(_CO_SPARTNER_URL, 'url', 50, 255, '');
+        $url_text = new \XoopsFormText(_CO_SPARTNER_URL, 'url', 50, 255, '');
         $url_text->setDescription(_CO_SPARTNER_URL_DSC);
         $form->addElement($url_text, false);
 
         // SUMMARY
-        $summary_text = new XoopsFormTextArea(_CO_SPARTNER_SUMMARY, 'summary', '', 7, 60);
+        $summary_text = new \XoopsFormTextArea(_CO_SPARTNER_SUMMARY, 'summary', '', 7, 60);
         $summary_text->setDescription(_CO_SPARTNER_SUMMARY_DSC);
         $form->addElement($summary_text, true);
 
         // DESCRIPTION
-        $description_text = new XoopsFormDhtmlTextArea(_CO_SPARTNER_DESCRIPTION, 'description', '', 15, 60);
+        $description_text = new \XoopsFormDhtmlTextArea(_CO_SPARTNER_DESCRIPTION, 'description', '', 15, 60);
         $description_text->setDescription(_CO_SPARTNER_DESCRIPTION_DSC);
         $form->addElement($description_text, false);
 
         // CONTACT_NAME
-        $contact_name_text = new XoopsFormText(_CO_SPARTNER_CONTACT_NAME, 'contact_name', 50, 255, '');
+        $contact_name_text = new \XoopsFormText(_CO_SPARTNER_CONTACT_NAME, 'contact_name', 50, 255, '');
         $contact_name_text->setDescription(_CO_SPARTNER_CONTACT_NAME_DSC);
         $form->addElement($contact_name_text, false);
 
         // CONTACT_EMAIL
-        $contact_email_text = new XoopsFormText(_CO_SPARTNER_CONTACT_EMAIL, 'contact_email', 50, 255, '');
+        $contact_email_text = new \XoopsFormText(_CO_SPARTNER_CONTACT_EMAIL, 'contact_email', 50, 255, '');
         $contact_email_text->setDescription(_CO_SPARTNER_CONTACT_EMAIL_DSC);
         $form->addElement($contact_email_text, false);
 
         // EMAIL_PRIV
-        $email_priv_radio = new XoopsFormRadioYN(_CO_SPARTNER_CONTACT_EMAILPRIV, 'email_priv', 0);
+        $email_priv_radio = new \XoopsFormRadioYN(_CO_SPARTNER_CONTACT_EMAILPRIV, 'email_priv', 0);
         $email_priv_radio->setDescription(_CO_SPARTNER_CONTACT_EMAILPRIV_DSC);
         $form->addElement($email_priv_radio);
 
         // CONTACT_PHONE
-        $contact_phone_text = new XoopsFormText(_CO_SPARTNER_CONTACT_PHONE, 'contact_phone', 50, 255, '');
+        $contact_phone_text = new \XoopsFormText(_CO_SPARTNER_CONTACT_PHONE, 'contact_phone', 50, 255, '');
         $contact_phone_text->setDescription(_CO_SPARTNER_CONTACT_PHONE_DSC);
         $form->addElement($contact_phone_text, false);
 
         // PHONE_PRIV
-        $phone_priv_radio = new XoopsFormRadioYN(_CO_SPARTNER_CONTACT_PHONEPRIV, 'phone_priv', 0);
+        $phone_priv_radio = new \XoopsFormRadioYN(_CO_SPARTNER_CONTACT_PHONEPRIV, 'phone_priv', 0);
         $phone_priv_radio->setDescription(_CO_SPARTNER_CONTACT_PHONEPRIV_DSC);
         $form->addElement($phone_priv_radio);
 
         // ADRESS
-        $adress_text = new XoopsFormTextArea(_CO_SPARTNER_ADRESS, 'adress', '', 4, 60);
+        $adress_text = new \XoopsFormTextArea(_CO_SPARTNER_ADRESS, 'adress', '', 4, 60);
         $adress_text->setDescription(_CO_SPARTNER_ADRESS_DSC);
         $form->addElement($adress_text, false);
 
         // ADRESS_PRIV
-        $adress_priv_radio = new XoopsFormRadioYN(_CO_SPARTNER_CONTACT_ADRESSPRIV, 'adress_priv', 0);
+        $adress_priv_radio = new \XoopsFormRadioYN(_CO_SPARTNER_CONTACT_ADRESSPRIV, 'adress_priv', 0);
         $adress_priv_radio->setDescription(_CO_SPARTNER_CONTACT_ADRESSPRIV_DSC);
         $form->addElement($adress_priv_radio);
 
         // NOTIFY ON PUBLISH
         if (is_object($xoopsUser) && (1 != $xoopsModuleConfig['autoapprove_submitted'])) {
-            $notify_checkbox = new XoopsFormCheckBox('', 'notifypub', 1);
+            $notify_checkbox = new \XoopsFormCheckBox('', 'notifypub', 1);
             $notify_checkbox->addOption(1, _MD_SPARTNER_NOTIFY);
             $form->addElement($notify_checkbox);
         }
@@ -176,18 +178,18 @@ switch ($op) {
         $form->addElement(new SmartFormHidden('full_view', $xoopsModuleConfig['default_full_view']));
 
         // BUTTONS
-        $button_tray = new XoopsFormElementTray('', '');
-        $hidden      = new XoopsFormHidden('op', 'submitPartner');
+        $button_tray = new \XoopsFormElementTray('', '');
+        $hidden      = new \XoopsFormHidden('op', 'submitPartner');
         $button_tray->addElement($hidden);
 
-        $butt_create = new XoopsFormButton('', '', _CO_SPARTNER_SUBMIT, 'submit');
+        $butt_create = new \XoopsFormButton('', '', _CO_SPARTNER_SUBMIT, 'submit');
         $butt_create->setExtra('onclick="this.form.elements.op.value=\'submitPartner\'"');
         $button_tray->addElement($butt_create);
 
-        $butt_clear = new XoopsFormButton('', '', _CO_SPARTNER_CLEAR, 'reset');
+        $butt_clear = new \XoopsFormButton('', '', _CO_SPARTNER_CLEAR, 'reset');
         $button_tray->addElement($butt_clear);
 
-        $butt_cancel = new XoopsFormButton('', '', _CO_SPARTNER_CANCEL, 'button');
+        $butt_cancel = new \XoopsFormButton('', '', _CO_SPARTNER_CANCEL, 'button');
         $butt_cancel->setExtra('onclick="history.go(-1)"');
         $button_tray->addElement($butt_cancel);
 

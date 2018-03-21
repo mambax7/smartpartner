@@ -22,6 +22,8 @@
  *
  */
 
+use XoopsModules\Smartpartner;
+
 /**
  *Loop inside the array of all partners to match with current category
  *
@@ -165,7 +167,7 @@ $xoopsTpl->assign('partners', $partnersArray);
 //end new code to implement categories
 
 // Partners Navigation Bar
-//$pagenav = new XoopsPageNav($partners_total_onpage, $xoopsModuleConfig['perpage_user'], $start, 'start', '');
+//$pagenav = new \XoopsPageNav($partners_total_onpage, $xoopsModuleConfig['perpage_user'], $start, 'start', '');
 //$xoopsTpl->assign('pagenav', '<div style="text-align:right;">' . $pagenav->renderNav() . '</div>');
 $xoopsTpl->assign('view_deteils_cat', _MD_SPARTNER_DETAIL_CAT);
 $xoopsTpl->assign('on_index_page', 0 == $view_category_id);

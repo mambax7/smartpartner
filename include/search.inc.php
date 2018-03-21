@@ -12,15 +12,15 @@
  * @param $userid
  * @return array
  */
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+
+use XoopsModules\Smartpartner;
+
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 function smartpartner_search($queryarray, $andor, $limit, $offset, $userid)
 {
     // This must contain the name of the folder in which reside SmartPartner
-    if (!defined('SMARTPARTNER_DIRNAME')) {
-        define('SMARTPARTNER_DIRNAME', 'smartpartner');
-    }
-    require_once XOOPS_ROOT_PATH . '/modules/' . SMARTPARTNER_DIRNAME . '/include/common.php';
+    require_once __DIR__ . '/common.php';
 
     $ret = [];
 

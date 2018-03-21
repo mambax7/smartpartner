@@ -1,4 +1,4 @@
-<?php
+<?php namespace XoopsModules\Smartpartner;
 /*
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -8,6 +8,8 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  */
+
+use XoopsModules\Smartpartner;
 
 /**
  * @copyright    XOOPS Project https://xoops.org/
@@ -26,7 +28,7 @@
  * @copyright copyright (c) 2000-2004 XOOPS.org
  * @package   Kernel
  */
-class smartpartner_PersistableObjectHandler extends XoopsObjectHandler
+class PersistableObjectHandler extends \XoopsObjectHandler
 {
     /**#@+
      * Information about the class, the handler is managing
@@ -50,7 +52,7 @@ class smartpartner_PersistableObjectHandler extends XoopsObjectHandler
      *
      * @param bool               $idenfierName
      */
-    public function __construct(XoopsDatabase $db, $tablename, $classname, $keyname, $idenfierName = false)
+    public function __construct(\XoopsDatabase $db, $tablename, $classname, $keyname, $idenfierName = false)
     {
         parent::__construct($db);
         $this->table     = $db->prefix($tablename);
@@ -68,7 +70,7 @@ class smartpartner_PersistableObjectHandler extends XoopsObjectHandler
      *
      * @return object
      */
-    public function &create($isNew = true)
+    public function create($isNew = true)
     {
         $obj = new $this->className();
         if (true === $isNew) {
@@ -88,15 +90,15 @@ class smartpartner_PersistableObjectHandler extends XoopsObjectHandler
     public function get($id, $as_object = true)
     {
         if (is_array($this->keyName)) {
-            $criteria = new CriteriaCompo();
+            $criteria = new \CriteriaCompo();
             for ($i = 0, $iMax = count($this->keyName); $i < $iMax; ++$i) {
-                $criteria->add(new Criteria($this->keyName[$i], (int)$id[$i]));
+                $criteria->add(new \Criteria($this->keyName[$i], (int)$id[$i]));
             }
         } else {
-            $criteria = new Criteria($this->keyName, (int)$id);
+            $criteria = new \Criteria($this->keyName, (int)$id);
         }
         $criteria->setLimit(1);
-        $obj_array = $this->getObjects($criteria, false, $as_object);
+        $obj_array =& $this->getObjects($criteria, false, $as_object);
         if (1 != count($obj_array)) {
             $obj = $this->create();
 
@@ -109,13 +111,13 @@ class smartpartner_PersistableObjectHandler extends XoopsObjectHandler
     /**
      * retrieve objects from the database
      *
-     * @param object $criteria  {@link CriteriaElement} conditions to be met
+     * @param \CriteriaElement $criteria  {@link CriteriaElement} conditions to be met
      * @param bool   $id_as_key use the ID as key for the array?
      * @param bool   $as_object return an array of objects?
      *
      * @return array
      */
-    public function getObjects($criteria = null, $id_as_key = false, $as_object = true)
+    public function getObjects(\CriteriaElement $criteria = null, $id_as_key = false, $as_object = true)
     {
         $ret   = [];
         $limit = $start = 0;
@@ -148,7 +150,7 @@ class smartpartner_PersistableObjectHandler extends XoopsObjectHandler
     public function convertResultSet($result, $id_as_key = false, $as_object = true)
     {
         $ret = [];
-        while ($myrow = $this->db->fetchArray($result)) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             $obj = $this->create(false);
             $obj->assignVars($myrow);
             if (!$id_as_key) {
@@ -193,7 +195,7 @@ class smartpartner_PersistableObjectHandler extends XoopsObjectHandler
     {
         $ret = [];
         if (null == $criteria) {
-            $criteria = new CriteriaCompo();
+            $criteria = new \CriteriaCompo();
         }
 
         if ('' == $criteria->getSort()) {
@@ -219,7 +221,7 @@ class smartpartner_PersistableObjectHandler extends XoopsObjectHandler
         }
 
         $myts = \MyTextSanitizer::getInstance();
-        while ($myrow = $this->db->fetchArray($result)) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             //identifiers should be textboxes, so sanitize them like that
             $ret[$myrow[$this->keyName]] = empty($this->identifierName) ? 1 : $myts->htmlSpecialChars($myrow[$this->identifierName]);
         }
@@ -230,10 +232,10 @@ class smartpartner_PersistableObjectHandler extends XoopsObjectHandler
     /**
      * count objects matching a condition
      *
-     * @param  object $criteria {@link CriteriaElement} to match
+     * @param  \CriteriaElement $criteria {@link CriteriaElement} to match
      * @return int    count of objects
      */
-    public function getCount($criteria = null)
+    public function getCount(\CriteriaElement $criteria = null)
     {
         $field   = '';
         $groupby = false;
@@ -260,7 +262,7 @@ class smartpartner_PersistableObjectHandler extends XoopsObjectHandler
             return $count;
         } else {
             $ret = [];
-            while (list($id, $count) = $this->db->fetchRow($result)) {
+            while (false !== (list($id, $count) = $this->db->fetchRow($result))) {
                 $ret[$id] = $count;
             }
 
@@ -275,7 +277,7 @@ class smartpartner_PersistableObjectHandler extends XoopsObjectHandler
      * @param  bool        $force
      * @return bool        FALSE if failed.
      */
-    public function delete(XoopsObject $obj, $force = false)
+    public function delete(\XoopsObject $obj, $force = false)
     {
         if (is_array($this->keyName)) {
             $clause = [];
@@ -308,7 +310,7 @@ class smartpartner_PersistableObjectHandler extends XoopsObjectHandler
      * @return bool        FALSE if failed, TRUE if already present and unchanged or successful
      */
 
-    public function insert(XoopsObject $obj, $force = false, $checkObject = true)
+    public function insert(\XoopsObject $obj, $force = false, $checkObject = true)
     {
         if (false !== $checkObject) {
             if (!is_object($obj)) {
@@ -322,6 +324,7 @@ class smartpartner_PersistableObjectHandler extends XoopsObjectHandler
 
                 return false;
             }
+
             if (!$obj->isDirty()) {
                 $obj->setErrors('Not dirty'); //will usually not be outputted as errors are not displayed when the method returns true, but it can be helpful when troubleshooting code - Mith
 
@@ -395,12 +398,12 @@ class smartpartner_PersistableObjectHandler extends XoopsObjectHandler
      *
      * @param string $fieldname  Name of the field
      * @param string $fieldvalue Value to write
-     * @param object $criteria   {@link CriteriaElement}
+     * @param \CriteriaElement $criteria   {@link CriteriaElement}
      *
      * @param  bool  $force
      * @return bool
      */
-    public function updateAll($fieldname, $fieldvalue, $criteria = null, $force = false)
+    public function updateAll($fieldname, $fieldvalue, \CriteriaElement $criteria = null, $force = false)
     {
         $set_clause = $fieldname . ' = ';
         if (is_numeric($fieldvalue)) {
@@ -429,11 +432,11 @@ class smartpartner_PersistableObjectHandler extends XoopsObjectHandler
     /**
      * delete all objects meeting the conditions
      *
-     * @param  object $criteria {@link CriteriaElement} with conditions to meet
+     * @param  \CriteriaElement $criteria {@link CriteriaElement} with conditions to meet
      * @return bool
      */
 
-    public function deleteAll($criteria = null)
+    public function deleteAll(\CriteriaElement $criteria = null)
     {
         if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql = 'DELETE FROM ' . $this->table;

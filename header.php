@@ -7,6 +7,8 @@
  * Licence: GNU
  */
 
+use XoopsModules\Smartpartner;
+
 include __DIR__ . '/../../mainfile.php';
 
 // This must contain the name of the folder in which reside SmartPartner

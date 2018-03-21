@@ -9,6 +9,9 @@
  * @param string $fct
  */
 
+use XoopsModules\Smartpartner;
+use XoopsModules\Smartobject;
+
 function editoffer($showmenu = false, $offerid = 0, $fct = '')
 {
     global $smartPartnerOfferHandler, $smartPartnerCategoryHandler, $smartPartnerPartnerHandler;
@@ -43,7 +46,7 @@ function editoffer($showmenu = false, $offerid = 0, $fct = '')
 
     $sform = $offerObj->getForm($form_name, 'addoffer', false, $submit_button_caption);
     if ('app' === $fct) {
-        $sform->addElement(new XoopsFormHidden('fct', 'app'));
+        $sform->addElement(new \XoopsFormHidden('fct', 'app'));
     }
     $sform->display();
     smart_close_collapsable($collaps_name);
@@ -71,7 +74,7 @@ switch ($op) {
     case 'addoffer':
         require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectcontroller.php';
 
-        $controller = new SmartObjectController($smartPartnerOfferHandler);
+        $controller = new Smartobject\Controller($smartPartnerOfferHandler);
         $offerObj   = $controller->storeSmartObject();
         $fct        = isset($_POST['fct']) ? $_POST['fct'] : '';
 
@@ -90,8 +93,8 @@ switch ($op) {
         break;
 
     case 'del':
-        require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectcontroller.php';
-        $controller = new SmartObjectController($smartPartnerOfferHandler);
+//        require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectcontroller.php';
+        $controller = new Smartobject\Controller($smartPartnerOfferHandler);
         $controller->handleObjectDeletion();
         break;
 
@@ -117,8 +120,8 @@ switch ($op) {
 
         smart_collapsableBar('createdoffers', _AM_SPARTNER_OFFERS, _AM_SPARTNER_OFFERS_DSC);
 
-        require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjecttable.php';
-        $objectTable = new SmartObjectTable($smartPartnerOfferHandler);
+//        require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjecttable.php';
+        $objectTable = new Smartpartner\Table($smartPartnerOfferHandler);
         $objectTable->addFilter('partnerid', 'getPartnerList');
         $objectTable->addFilter('status', 'getStatusList');
         $objectTable->addColumn(new SmartObjectColumn('title', 'left'));

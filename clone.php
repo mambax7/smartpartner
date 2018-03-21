@@ -15,6 +15,9 @@ Usage:
 // ##########################################################
 //  Define your mapping here
 // ##########################################################
+
+use XoopsModules\Smartpartner;
+
 $patterns = [
     // first one must be module directory name
     'smartpartner'  => 'smartclient',

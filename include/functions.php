@@ -6,7 +6,10 @@
  * Author: The SmartFactory <www.smartfactory.ca>
  * Licence: GNU
  */
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+
+use XoopsModules\Smartpartner;
+
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 function smartpartner_xoops_cp_header()
 {
@@ -29,11 +32,11 @@ function smartpartner_TableExists($table)
 {
     $bRetVal = false;
     //Verifies that a MySQL table exists
-    $xoopsDB  = XoopsDatabaseFactory::getDatabaseConnection();
+    $xoopsDB  = \XoopsDatabaseFactory::getDatabaseConnection();
     $realname = $xoopsDB->prefix($table);
     $sql      = 'SHOW TABLES FROM ' . XOOPS_DB_NAME;
     $ret      = $xoopsDB->queryF($sql);
-    while (list($m_table) = $xoopsDB->fetchRow($ret)) {
+    while (false !== (list($m_table) = $xoopsDB->fetchRow($ret))) {
         if ($m_table == $realname) {
             $bRetVal = true;
             break;
@@ -55,7 +58,7 @@ function smartpartner_TableExists($table)
  */
 function smartpartner_GetMeta($key)
 {
-    $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
+    $xoopsDB = \XoopsDatabaseFactory::getDatabaseConnection();
     $sql     = sprintf('SELECT metavalue FROM %s WHERE metakey=%s', $xoopsDB->prefix('smartpartner_meta'), $xoopsDB->quoteString($key));
     $ret     = $xoopsDB->query($sql);
     if (!$ret) {
@@ -79,7 +82,7 @@ function smartpartner_GetMeta($key)
  */
 function smartpartner_SetMeta($key, $value)
 {
-    $xoopsDB = XoopsDatabaseFactory::getDatabaseConnection();
+    $xoopsDB = \XoopsDatabaseFactory::getDatabaseConnection();
     if ($ret = smartpartner_GetMeta($key)) {
         $sql = sprintf('UPDATE %s SET metavalue = %s WHERE metakey = %s', $xoopsDB->prefix('smartpartner_meta'), $xoopsDB->quoteString($value), $xoopsDB->quoteString($key));
     } else {
@@ -606,7 +609,7 @@ function smartpartner_upload_file($another = false, $withRedirect = true, $itemO
 
     $id      = isset($_POST['id']) ? (int)$_POST['id'] : 0;
     $uid     = is_object($xoopsUser) ? $xoopsUser->uid() : 0;
-    $session = SmartpartnerSession::getInstance();
+    $session = Session::getInstance();
     $session->set('smartpartner_file_filename', isset($_POST['name']) ? $_POST['name'] : '');
     $session->set('smartpartner_file_description', isset($_POST['description']) ? $_POST['description'] : '');
     $session->set('smartpartner_file_status', $_POST['file_status']);
@@ -630,9 +633,9 @@ function smartpartner_upload_file($another = false, $withRedirect = true, $itemO
     // Get available mimetypes for file uploading
     /*    $hMime = xoops_getModuleHandler('mimetype');
         if ($smartPartnerIsAdmin) {
-            $crit = new Criteria('mime_admin', 1);
+            $crit = new \Criteria('mime_admin', 1);
         } else {
-            $crit = new Criteria('mime_user', 1);
+            $crit = new \Criteria('mime_user', 1);
         }
         $mimetypes = $hMime->getObjects($crit);
         // TODO: display the available mimetypes to the user

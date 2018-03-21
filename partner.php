@@ -7,6 +7,8 @@
  * Licence: GNU
  */
 
+use XoopsModules\Smartpartner;
+
 require_once __DIR__ . '/header.php';
 $GLOBALS['xoopsOption']['template_main'] = 'smartpartner_partner.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
@@ -21,7 +23,7 @@ if (0 == $id) {
 }
 
 // Creating the Partner object for the selected FAQ
-$partnerObj = new SmartpartnerPartner($id);
+$partnerObj = new Smartpartner\Partner($id);
 
 // If the selected partner was not found, exit
 if ($partnerObj->notLoaded()) {
@@ -75,11 +77,11 @@ $partner['embeded_files'] = $embeded_files;
 $xoopsTpl->assign('partner', $partner);
 
 //Get offers of this partner
-$criteria = new CriteriaCompo();
-$criteria->add(new Criteria('partnerid', $id));
-$criteria->add(new Criteria('date_pub', time(), '<'));
-$criteria->add(new Criteria('date_end', time(), '>'));
-$criteria->add(new Criteria('status', _SPARTNER_STATUS_ONLINE));
+$criteria = new \CriteriaCompo();
+$criteria->add(new \Criteria('partnerid', $id));
+$criteria->add(new \Criteria('date_pub', time(), '<'));
+$criteria->add(new \Criteria('date_end', time(), '>'));
+$criteria->add(new \Criteria('status', _SPARTNER_STATUS_ONLINE));
 
 $offersObj = $smartPartnerOfferHandler->getObjects($criteria);
 $offers    = [];

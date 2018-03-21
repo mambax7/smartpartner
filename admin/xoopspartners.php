@@ -12,6 +12,9 @@
  *
  */
 
+
+use XoopsModules\Smartpartner;
+
 require_once __DIR__ . '/admin_header.php';
 
 $importFromModuleName = 'Xpartners';
@@ -31,13 +34,13 @@ if ('start' === $op) {
     list($totalpartners) = $xoopsDB->fetchRow($result);
     smartpartner_collapsableBar('bottomtable', 'bottomtableicon', sprintf(_AM_SPARTNER_IMPORT_FROM, $importFromModuleName), sprintf(_AM_SPARTNER_IMPORT_MODULE_FOUND, $importFromModuleName, $totalpartners));
 
-    $form = new XoopsThemeForm(_AM_SPARTNER_IMPORT_SETTINGS, 'import_form', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/' . $scriptname);
+    $form = new \XoopsThemeForm(_AM_SPARTNER_IMPORT_SETTINGS, 'import_form', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/' . $scriptname);
 
     // Auto-Approve
-    $form->addElement(new XoopsFormLabel(_AM_SPARTNER_SMARTPARTNER_IMPORT_SETTINGS, _AM_SPARTNER_SMARTPARTNER_IMPORT_SETTINGS_VALUE));
+    $form->addElement(new \XoopsFormLabel(_AM_SPARTNER_SMARTPARTNER_IMPORT_SETTINGS, _AM_SPARTNER_SMARTPARTNER_IMPORT_SETTINGS_VALUE));
 
-    $form->addElement(new XoopsFormHidden('op', 'go'));
-    $form->addElement(new XoopsFormButton('', 'import', _AM_SPARTNER_IMPORT, 'submit'));
+    $form->addElement(new \XoopsFormHidden('op', 'go'));
+    $form->addElement(new \XoopsFormButton('', 'import', _AM_SPARTNER_IMPORT, 'submit'));
     $form->display();
 
     //exit ();
@@ -53,7 +56,7 @@ if ('go' === $op) {
     $smartPartnerPartnerHandler = smartpartner_gethandler('partner');
 
     $resultPartners = $xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('partners') . ' ');
-    while ($arrPartners = $xoopsDB->fetchArray($resultPartners)) {
+    while (false !== ($arrPartners = $xoopsDB->fetchArray($resultPartners))) {
         extract($arrPartners, EXTR_PREFIX_ALL, 'xpartner');
 
         // insert partner into SmartPartner

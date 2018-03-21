@@ -6,6 +6,9 @@
  * Licence: GNU
  */
 
+
+use XoopsModules\Smartpartner;
+
 // define SEO_ENABLED in mainfile.php, possible values
 //   are "rewrite" & "path-info"
 /**

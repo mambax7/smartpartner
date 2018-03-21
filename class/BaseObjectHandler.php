@@ -1,13 +1,15 @@
-<?php
+<?php namespace XoopsModules\Smartpartner;
+
+use XoopsModules\Smartpartner;
 
 /**
- * smartpartnerBaseObjectHandler class
+ * BaseObjectHandler class
  *
  * @author  Nazar Aziz <nazar@panthersoftware.com>
  * @access  public
  * @package xhelp
  */
-class SmartpartnerBaseObjectHandler extends XoopsObjectHandler
+class BaseObjectHandler extends \XoopsObjectHandler
 {
     /**
      * Database connection
@@ -24,12 +26,13 @@ class SmartpartnerBaseObjectHandler extends XoopsObjectHandler
      */
     public $_idfield = 'id';
 
+    public $classname;
     /**
      * Constructor
      *
-     * @param object|XoopsDatabase $db reference to a xoopsDB object
+     * @param object|\XoopsDatabase $db reference to a xoopsDB object
      */
-    public function init(XoopsDatabase $db)
+    public function init(\XoopsDatabase $db)
     {
         $this->_db = $db;
     }
@@ -54,7 +57,7 @@ class SmartpartnerBaseObjectHandler extends XoopsObjectHandler
     {
         $id = (int)$id;
         if ($id > 0) {
-            $sql = $this->_selectQuery(new Criteria($this->_idfield, $id));
+            $sql = $this->_selectQuery(new \Criteria($this->_idfield, $id));
             if (!$result = $this->_db->query($sql)) {
                 return false;
             }
@@ -96,7 +99,7 @@ class SmartpartnerBaseObjectHandler extends XoopsObjectHandler
         }
 
         // Add each returned record to the result array
-        while ($myrow = $this->_db->fetchArray($result)) {
+        while (false !== ($myrow = $this->_db->fetchArray($result))) {
             $obj = new $this->classname($myrow);
             if (!$id_as_key) {
                 $ret[] =& $obj;
@@ -114,10 +117,11 @@ class SmartpartnerBaseObjectHandler extends XoopsObjectHandler
      * @param  bool        $force
      * @return bool
      */
-    public function insert(XoopsObject $obj, $force = false)
+    public function insert(\XoopsObject $obj, $force = false)
     {
         // Make sure object is of correct type
-        if (0 != strcasecmp($this->classname, get_class($obj))) {
+//        if (0 != strcasecmp($this->classname, get_class($obj))) {
+        if (!is_a($obj, $this->classname)) {
             return false;
         }
 
@@ -307,7 +311,7 @@ class SmartpartnerBaseObjectHandler extends XoopsObjectHandler
      * @return object               <a href='psi_element://pagesCategoryHandler'>pagesCategoryHandler</a>
      * @access public
      */
-    public function getInstance(XoopsDatabase $db)
+    public function getInstance(\XoopsDatabase $db)
     {
         static $instance;
         if (null === $instance) {

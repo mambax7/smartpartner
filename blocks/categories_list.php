@@ -10,7 +10,7 @@
  * @param $displaysubs
  * @return array
  */
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 function get_content($cat_id, $catsObj, $displaysubs)
 {
     $content = [];
@@ -36,7 +36,7 @@ function b_categories_list_show($options)
     require_once XOOPS_ROOT_PATH . '/modules/smartpartner/include/common.php';
 
     $smartPartnerCategoryHandler = smartpartner_gethandler('category');
-    $criteria                    = new CriteriaCompo();
+    $criteria                    = new \CriteriaCompo();
 
     $criteria->setSort(isset($options[0]) ? $options[0] : 'name');
     $criteria->setOrder(isset($options[1]) ? $options[1] : 'ASC');

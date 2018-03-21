@@ -8,7 +8,7 @@
  * @param $options
  * @return array
  */
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 function b_recent_partners_show($options)
 {

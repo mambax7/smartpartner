@@ -9,6 +9,8 @@
  * @return mixed
  */
 
+use XoopsModules\Smartpartner;
+
 function smartpartner_metagen_html2text($document)
 {
     // PHP Manual:: function preg_replace

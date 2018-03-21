@@ -7,6 +7,8 @@
  * Licence: GNU
  */
 
+use XoopsModules\Smartpartner;
+
 require_once __DIR__ . '/admin_header.php';
 
 global $smartPartnerFileHandler;
@@ -33,7 +35,7 @@ function editfile($showmenu = false, $fileid = 0, $id = 0)
     if (0 != $fileid) {
 
         // Creating the File object
-        $fileObj = new smartpartnerfile($fileid);
+        $fileObj = new Smartpartner\File($fileid);
 
         if ($fileObj->notLoaded()) {
             redirect_header('javascript:history.go(-1)', 1, _AM_SPARTNER_NOFILESELECTED);
@@ -54,62 +56,62 @@ function editfile($showmenu = false, $fileid = 0, $id = 0)
     }
 
     // FILES UPLOAD FORM
-    $files_form = new XoopsThemeForm(_AM_SPARTNER_UPLOAD_FILE, 'files_form', xoops_getenv('PHP_SELF'), 'post', true);
+    $files_form = new \XoopsThemeForm(_AM_SPARTNER_UPLOAD_FILE, 'files_form', xoops_getenv('PHP_SELF'), 'post', true);
     $files_form->setExtra("enctype='multipart/form-data'");
 
     // NAME
-    $name_text = new XoopsFormText(_AM_SPARTNER_FILE_NAME, 'name', 50, 255, $fileObj->name());
+    $name_text = new \XoopsFormText(_AM_SPARTNER_FILE_NAME, 'name', 50, 255, $fileObj->name());
     $name_text->setDescription(_AM_SPARTNER_FILE_NAME_DSC);
     $files_form->addElement($name_text, true);
 
     // DESCRIPTION
-    $description_text = new XoopsFormTextArea(_AM_SPARTNER_FILE_DESCRIPTION, 'description', $fileObj->description());
+    $description_text = new \XoopsFormTextArea(_AM_SPARTNER_FILE_DESCRIPTION, 'description', $fileObj->description());
     $description_text->setDescription(_AM_SPARTNER_FILE_DESCRIPTION_DSC);
     $files_form->addElement($description_text);
 
     // FILE TO UPLOAD
     if (0 == $fileid) {
-        $file_box = new XoopsFormFile(_AM_SPARTNER_FILE_TO_UPLOAD, 'userfile', 0);
+        $file_box = new \XoopsFormFile(_AM_SPARTNER_FILE_TO_UPLOAD, 'userfile', 0);
         $file_box->setExtra("size ='50'");
         $files_form->addElement($file_box);
     }
 
-    $status_select = new XoopsFormRadioYN(_AM_SPARTNER_FILE_STATUS, 'file_status', $fileObj->status());
+    $status_select = new \XoopsFormRadioYN(_AM_SPARTNER_FILE_STATUS, 'file_status', $fileObj->status());
     $status_select->setDescription(_AM_SPARTNER_FILE_STATUS_DSC);
     $files_form->addElement($status_select);
 
-    $files_button_tray = new XoopsFormElementTray('', '');
-    $files_hidden      = new XoopsFormHidden('op', 'uploadfile');
+    $files_button_tray = new \XoopsFormElementTray('', '');
+    $files_hidden      = new \XoopsFormHidden('op', 'uploadfile');
     $files_button_tray->addElement($files_hidden);
 
     if (0 == $fileid) {
-        $files_butt_create = new XoopsFormButton('', '', _AM_SPARTNER_UPLOAD, 'submit');
+        $files_butt_create = new \XoopsFormButton('', '', _AM_SPARTNER_UPLOAD, 'submit');
         $files_butt_create->setExtra('onclick="this.form.elements.op.value=\'uploadfile\'"');
         $files_button_tray->addElement($files_butt_create);
 
-        $files_butt_another = new XoopsFormButton('', '', _AM_SPARTNER_FILE_UPLOAD_ANOTHER, 'submit');
+        $files_butt_another = new \XoopsFormButton('', '', _AM_SPARTNER_FILE_UPLOAD_ANOTHER, 'submit');
         $files_butt_another->setExtra('onclick="this.form.elements.op.value=\'uploadanother\'"');
         $files_button_tray->addElement($files_butt_another);
     } else {
-        $files_butt_create = new XoopsFormButton('', '', _AM_SPARTNER_MODIFY, 'submit');
+        $files_butt_create = new \XoopsFormButton('', '', _AM_SPARTNER_MODIFY, 'submit');
         $files_butt_create->setExtra('onclick="this.form.elements.op.value=\'modify\'"');
         $files_button_tray->addElement($files_butt_create);
     }
 
-    $files_butt_clear = new XoopsFormButton('', '', _AM_SPARTNER_CLEAR, 'reset');
+    $files_butt_clear = new \XoopsFormButton('', '', _AM_SPARTNER_CLEAR, 'reset');
     $files_button_tray->addElement($files_butt_clear);
 
-    $butt_cancel = new XoopsFormButton('', '', _AM_SPARTNER_CANCEL, 'button');
+    $butt_cancel = new \XoopsFormButton('', '', _AM_SPARTNER_CANCEL, 'button');
     $butt_cancel->setExtra('onclick="history.go(-1)"');
     $files_button_tray->addElement($butt_cancel);
 
     $files_form->addElement($files_button_tray);
 
     // fileid
-    $files_form->addElement(new XoopsFormHidden('fileid', $fileid));
+    $files_form->addElement(new \XoopsFormHidden('fileid', $fileid));
 
     // id
-    $files_form->addElement(new XoopsFormHidden('id', $id));
+    $files_form->addElement(new \XoopsFormHidden('id', $id));
 
     $files_form->display();
 
@@ -154,7 +156,7 @@ switch ($op) {
 
         // Creating the file object
         if (0 != $fileid) {
-            $fileObj = new SmartpartnerFile($fileid);
+            $fileObj = new Smartpartner\File($fileid);
         } else {
             $fileObj = $smartPartnerFileHandler->create();
         }
@@ -181,7 +183,7 @@ switch ($op) {
         $fileid = isset($_POST['fileid']) ? (int)$_POST['fileid'] : 0;
         $fileid = isset($_GET['fileid']) ? (int)$_GET['fileid'] : $fileid;
 
-        $fileObj = new SmartpartnerFile($fileid);
+        $fileObj = new Smartpartner\File($fileid);
 
         $confirm = isset($_POST['confirm']) ? $_POST['confirm'] : 0;
         $title   = isset($_POST['title']) ? $_POST['title'] : '';
@@ -262,7 +264,7 @@ switch ($op) {
         echo "</table>\n";
         echo "<br>\n";
 
-        $pagenav = new XoopsPageNav($totalitems, $xoopsModuleConfig['perpage'], $startitem, 'startitem');
+        $pagenav = new \XoopsPageNav($totalitems, $xoopsModuleConfig['perpage'], $startitem, 'startitem');
         echo '<div style="text-align:right;">' . $pagenav->renderNav() . '</div>';
         echo '</div>';
 

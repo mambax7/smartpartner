@@ -15,12 +15,12 @@
  * @author          XOOPS Project <www.xoops.org> <www.xoops.ir>
  */
 
-defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 /**
- * Class UserlogCorePreload
+ * Class SmartpartnerCorePreload
  */
-class SmartpartnerCorePreload extends XoopsPreloadItem
+class SmartpartnerCorePreload extends \XoopsPreloadItem
 {
     // to add PSR-4 autoloader
     /**

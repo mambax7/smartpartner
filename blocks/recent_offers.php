@@ -8,7 +8,11 @@
  * @param $options
  * @return array
  */
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+
+use XoopsModules\Smartpartner;
+use XoopsModules\Smartobject;
+
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 function b_recent_offers_show($options)
 {
@@ -18,16 +22,16 @@ function b_recent_offers_show($options)
     $offerHandler   = smartpartner_gethandler('offer');
     $partnerHandler = smartpartner_gethandler('partner');
 
-    require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
-    $smartPermissionsHandler = new SmartobjectPermissionHandler($partnerHandler);
+//    require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
+    $smartPermissionsHandler = new Smartobject\PermissionHandler($partnerHandler);
     $grantedItems            = $smartPermissionsHandler->getGrantedItems('full_view');
 
     if (!empty($grantedItems)) {
-        $criteria = new CriteriaCompo();
-        $criteria->add(new Criteria('partnerid', '(' . implode(', ', $grantedItems) . ')', 'IN'));
-        $criteria->add(new Criteria('date_pub', time(), '<'));
-        $criteria->add(new Criteria('date_end', time(), '>'));
-        $criteria->add(new Criteria('status', _SPARTNER_STATUS_ONLINE));
+        $criteria = new \CriteriaCompo();
+        $criteria->add(new \Criteria('partnerid', '(' . implode(', ', $grantedItems) . ')', 'IN'));
+        $criteria->add(new \Criteria('date_pub', time(), '<'));
+        $criteria->add(new \Criteria('date_end', time(), '>'));
+        $criteria->add(new \Criteria('status', _SPARTNER_STATUS_ONLINE));
         $criteria->setSort('date_sub');
         $criteria->setOrder('DESC');
         $criteria->setLimit($options[2]);

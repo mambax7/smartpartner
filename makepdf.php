@@ -17,6 +17,8 @@
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
 
+use XoopsModules\Smartpartner;
+
 //TODO needs to be refactored for TCPDF
 
 require_once __DIR__ . '/header.php';
@@ -34,7 +36,7 @@ if (0 == $id) {
 }
 
 // Creating the Partner object for the selected FAQ
-$partnerObj = new SmartpartnerPartner($id);
+$partnerObj = new Smartpartner\Partner($id);
 
 // If the selected partner was not found, exit
 if ($partnerObj->notLoaded()) {

@@ -1,4 +1,5 @@
-<?php
+<?php namespace XoopsModules\Smartpartner;
+
 /*
  * You may not change or alter any portion of this comment or credits
  * of supporting developers from this source code or any supporting source code
@@ -17,10 +18,12 @@
  * @author       XOOPS Development Team, Kazumi Ono (AKA onokazu)
  */
 
+use XoopsModules\Smartpartner;
+
 /**
  * Class SmartTree
  */
-class smarttree
+class SmartTree
 {
     public $table; //table with parent-child structure
     public $id; //name of unique id for records in table $table
@@ -39,7 +42,7 @@ class smarttree
      */
     public function __construct($table_name, $id_name, $pid_name)
     {
-        $this->db    = XoopsDatabaseFactory::getDatabaseConnection();
+        $this->db    = \XoopsDatabaseFactory::getDatabaseConnection();
         $this->table = $table_name;
         $this->id    = $id_name;
         $this->pid   = $pid_name;
@@ -64,7 +67,7 @@ class smarttree
         if (0 == $count) {
             return $arr;
         }
-        while ($myrow = $this->db->fetchArray($result)) {
+        while (false !== ($myrow = $this->db->fetchArray($result))) {
             array_push($arr, $myrow);
         }
 
@@ -85,7 +88,7 @@ class smarttree
         if (0 == $count) {
             return $idarray;
         }
-        while (list($id) = $this->db->fetchRow($result)) {
+        while (false !== (list($id) = $this->db->fetchRow($result))) {
             array_push($idarray, $id);
         }
 
@@ -111,7 +114,7 @@ class smarttree
         if (0 == $count) {
             return $idarray;
         }
-        while (list($r_id) = $this->db->fetchRow($result)) {
+        while (false !== (list($r_id) = $this->db->fetchRow($result))) {
             array_push($idarray, $r_id);
             $idarray = $this->getAllChildId($r_id, $order, $idarray);
         }
@@ -222,7 +225,7 @@ class smarttree
         if ($none) {
             echo "<option value='0'>----</option>\n";
         }
-        while (list($catid, $name) = $this->db->fetchRow($result)) {
+        while (false !== (list($catid, $name) = $this->db->fetchRow($result))) {
             $sel = '';
             if ($catid == $preset_id) {
                 $sel = ' selected';
@@ -337,7 +340,7 @@ class smarttree
         if (0 == $count) {
             return $parray;
         }
-        while ($row = $this->db->fetchArray($result)) {
+        while (false !== ($row = $this->db->fetchArray($result))) {
             array_push($parray, $row);
             $parray = $this->getAllChild($row[$this->id], $order, $parray);
         }
@@ -363,7 +366,7 @@ class smarttree
         if (0 == $count) {
             return $parray;
         }
-        while ($row = $this->db->fetchArray($result)) {
+        while (false !== ($row = $this->db->fetchArray($result))) {
             $row['prefix'] = $r_prefix . '.';
             array_push($parray, $row);
             $parray = $this->getChildTreeArray($row[$this->id], $order, $parray, $row['prefix']);

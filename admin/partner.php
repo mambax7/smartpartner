@@ -7,6 +7,11 @@
  * Licence: GNU
  * @param $partnerObj
  */
+
+
+use XoopsModules\Smartpartner;
+use XoopsModules\Smartobject;
+
 function showfiles($partnerObj)
 {
     // UPLOAD FILES
@@ -70,7 +75,7 @@ function editpartner($showmenu = false, $id = 0)
     // If there is a parameter, and the id exists, retrieve data: we're editing a partner
     if (0 != $id) {
         // Creating the partner object
-        $partnerObj = new SmartpartnerPartner($id);
+        $partnerObj = new Smartpartner\Partner($id);
 
         if ($partnerObj->notLoaded()) {
             redirect_header('partner.php', 1, _AM_SPARTNER_NOPARTNERSELECTED);
@@ -132,126 +137,126 @@ function editpartner($showmenu = false, $id = 0)
     }
 
     // PARTNER FORM
-    $sform = new XoopsThemeForm(_AM_SPARTNER_PARTNERS, 'op', xoops_getenv('PHP_SELF'), 'post', true);
+    $sform = new \XoopsThemeForm(_AM_SPARTNER_PARTNERS, 'op', xoops_getenv('PHP_SELF'), 'post', true);
     $sform->setExtra('enctype="multipart/form-data"');
 
     // TITLE
-    $title_text = new XoopsFormText(_AM_SPARTNER_TITLE, 'title', 50, 255, $partnerObj->title('e'));
+    $title_text = new \XoopsFormText(_AM_SPARTNER_TITLE, 'title', 50, 255, $partnerObj->title('e'));
     $sform->addElement($title_text, true);
 
     // Parent Category
-    $mytree = new SmartTree($xoopsDB->prefix('smartpartner_categories'), 'categoryid', 'parentid');
+    $mytree = new Smartpartner\SmartTree($xoopsDB->prefix('smartpartner_categories'), 'categoryid', 'parentid');
     ob_start();
     $mytree->makeMySelBox('name', 'weight', explode('|', $partnerObj->categoryid()), 0, 'categoryid', '', true);
     //makeMySelBox($title,$order="",$preset_id=0, $none=0, $sel_name="", $onchange="")
-    $parent_cat_select = new XoopsFormLabel(_AM_SPARTNER_CATEGORY_BELONG, ob_get_contents());
+    $parent_cat_select = new \XoopsFormLabel(_AM_SPARTNER_CATEGORY_BELONG, ob_get_contents());
     $parent_cat_select->setDescription(_AM_SPARTNER_BELONG_CATEGORY_DSC);
     $sform->addElement($parent_cat_select);
     ob_end_clean();
 
     // LOGO
     $logo_array  = XoopsLists:: getImgListAsArray(smartpartner_getImageDir());
-    $logo_select = new XoopsFormSelect('', 'image', $partnerObj->image());
+    $logo_select = new \XoopsFormSelect('', 'image', $partnerObj->image());
     $logo_select->addOption('-1', '---------------');
     $logo_select->addOptionArray($logo_array);
     $logo_select->setExtra("onchange='showImgSelected(\"image3\", \"image\", \"" . 'uploads/' . SMARTPARTNER_DIRNAME . '/images' . '", "", "' . XOOPS_URL . "\")'");
-    $logo_tray = new XoopsFormElementTray(_AM_SPARTNER_LOGO, '&nbsp;');
+    $logo_tray = new \XoopsFormElementTray(_AM_SPARTNER_LOGO, '&nbsp;');
     $logo_tray->addElement($logo_select);
-    $logo_tray->addElement(new XoopsFormLabel('', "<br><br><img src='" . smartpartner_getImageDir('', false) . $partnerObj->image() . "' name='image3' id='image3' alt=''>"));
+    $logo_tray->addElement(new \XoopsFormLabel('', "<br><br><img src='" . smartpartner_getImageDir('', false) . $partnerObj->image() . "' name='image3' id='image3' alt=''>"));
     $logo_tray->setDescription(_AM_SPARTNER_LOGO_DSC);
     $sform->addElement($logo_tray);
 
     // LOGO UPLOAD
     $max_size = 5000000;
-    $file_box = new XoopsFormFile(_AM_SPARTNER_LOGO_UPLOAD, 'logo_file', $max_size);
+    $file_box = new \XoopsFormFile(_AM_SPARTNER_LOGO_UPLOAD, 'logo_file', $max_size);
     $file_box->setExtra("size ='45'");
     $file_box->setDescription(sprintf(_AM_SPARTNER_LOGO_UPLOAD_DSC, $xoopsModuleConfig['img_max_width'], $xoopsModuleConfig['img_max_height']));
     $sform->addElement($file_box);
 
     // IMAGE_URL
-    $image_url_text = new XoopsFormText(_CO_SPARTNER_IMAGE_URL, 'image_url', 50, 255, $partnerObj->image_url());
+    $image_url_text = new \XoopsFormText(_CO_SPARTNER_IMAGE_URL, 'image_url', 50, 255, $partnerObj->image_url());
     $image_url_text->setDescription(_CO_SPARTNER_IMAGE_URL_DSC);
     $sform->addElement($image_url_text, false);
 
     // URL
-    $url_text = new XoopsFormText(_AM_SPARTNER_URL, 'url', 50, 255, $partnerObj->url());
+    $url_text = new \XoopsFormText(_AM_SPARTNER_URL, 'url', 50, 255, $partnerObj->url());
     $url_text->setDescription(_AM_SPARTNER_URL_DSC);
     $sform->addElement($url_text, false);
 
     // SUMMARY
-    $summary_text = new XoopsFormTextArea(_AM_SPARTNER_SUMMARY, 'summary', $partnerObj->summary(0, 'e'), 7, 60);
+    $summary_text = new \XoopsFormTextArea(_AM_SPARTNER_SUMMARY, 'summary', $partnerObj->summary(0, 'e'), 7, 60);
     $summary_text->setDescription(_AM_SPARTNER_SUMMARY_DSC);
     $sform->addElement($summary_text, true);
 
     // SHOW summary on partner page
-    $showsum_radio = new XoopsFormRadioYN(_AM_SPARTNER_SHOW_SUMMARY, 'showsummary', $partnerObj->getVar('showsummary'));
+    $showsum_radio = new \XoopsFormRadioYN(_AM_SPARTNER_SHOW_SUMMARY, 'showsummary', $partnerObj->getVar('showsummary'));
     $showsum_radio->setDescription(_AM_SPARTNER_SHOW_SUMMARY_DSC);
     $sform->addElement($showsum_radio);
 
     // DESCRIPTION
-    $description_text = new XoopsFormDhtmlTextArea(_AM_SPARTNER_DESCRIPTION, 'description', $partnerObj->description(0, 'e'), 15, 60);
+    $description_text = new \XoopsFormDhtmlTextArea(_AM_SPARTNER_DESCRIPTION, 'description', $partnerObj->description(0, 'e'), 15, 60);
     $description_text->setDescription(_AM_SPARTNER_DESCRIPTION_DSC);
     $sform->addElement($description_text, false);
 
     // CONTACT_NAME
-    $contact_name_text = new XoopsFormText(_CO_SPARTNER_CONTACT_NAME, 'contact_name', 50, 255, $partnerObj->contact_name('e'));
+    $contact_name_text = new \XoopsFormText(_CO_SPARTNER_CONTACT_NAME, 'contact_name', 50, 255, $partnerObj->contact_name('e'));
     $contact_name_text->setDescription(_CO_SPARTNER_CONTACT_NAME_DSC);
     $sform->addElement($contact_name_text, false);
 
     // CONTACT_EMAIL
-    $contact_email_text = new XoopsFormText(_CO_SPARTNER_CONTACT_EMAIL, 'contact_email', 50, 255, $partnerObj->contact_email('e'));
+    $contact_email_text = new \XoopsFormText(_CO_SPARTNER_CONTACT_EMAIL, 'contact_email', 50, 255, $partnerObj->contact_email('e'));
     $contact_email_text->setDescription(_CO_SPARTNER_CONTACT_EMAIL_DSC);
     $sform->addElement($contact_email_text, false);
 
     // EMAIL_PRIV
-    $email_priv_radio = new XoopsFormRadioYN(_CO_SPARTNER_CONTACT_EMAILPRIV, 'email_priv', $partnerObj->email_priv('e'));
+    $email_priv_radio = new \XoopsFormRadioYN(_CO_SPARTNER_CONTACT_EMAILPRIV, 'email_priv', $partnerObj->email_priv('e'));
     $email_priv_radio->setDescription(_CO_SPARTNER_CONTACT_EMAILPRIV_DSC);
     $sform->addElement($email_priv_radio);
 
     // CONTACT_PHONE
-    $contact_phone_text = new XoopsFormText(_CO_SPARTNER_CONTACT_PHONE, 'contact_phone', 50, 255, $partnerObj->contact_phone('e'));
+    $contact_phone_text = new \XoopsFormText(_CO_SPARTNER_CONTACT_PHONE, 'contact_phone', 50, 255, $partnerObj->contact_phone('e'));
     $contact_phone_text->setDescription(_CO_SPARTNER_CONTACT_PHONE_DSC);
     $sform->addElement($contact_phone_text, false);
 
     // PHONE_PRIV
-    $phone_priv_radio = new XoopsFormRadioYN(_CO_SPARTNER_CONTACT_PHONEPRIV, 'phone_priv', $partnerObj->phone_priv('e'));
+    $phone_priv_radio = new \XoopsFormRadioYN(_CO_SPARTNER_CONTACT_PHONEPRIV, 'phone_priv', $partnerObj->phone_priv('e'));
     $phone_priv_radio->setDescription(_CO_SPARTNER_CONTACT_PHONEPRIV_DSC);
     $sform->addElement($phone_priv_radio);
 
     // ADRESS
-    //$adress_text = new XoopsFormText(_CO_SPARTNER_ADRESS, 'adress', 50, 255, $partnerObj->adress('e'));
-    $adress_text = new XoopsFormTextArea(_CO_SPARTNER_ADRESS, 'adress', $partnerObj->adress('e'));
+    //$adress_text = new \XoopsFormText(_CO_SPARTNER_ADRESS, 'adress', 50, 255, $partnerObj->adress('e'));
+    $adress_text = new \XoopsFormTextArea(_CO_SPARTNER_ADRESS, 'adress', $partnerObj->adress('e'));
     $adress_text->setDescription(_CO_SPARTNER_ADRESS_DSC);
     $sform->addElement($adress_text, false);
 
     // ADRESS_PRIV
-    $adress_priv_radio = new XoopsFormRadioYN(_CO_SPARTNER_CONTACT_ADRESSPRIV, 'adress_priv', $partnerObj->adress_priv('e'));
+    $adress_priv_radio = new \XoopsFormRadioYN(_CO_SPARTNER_CONTACT_ADRESSPRIV, 'adress_priv', $partnerObj->adress_priv('e'));
     $adress_priv_radio->setDescription(_CO_SPARTNER_CONTACT_ADRESSPRIV_DSC);
     $sform->addElement($adress_priv_radio);
 
     // STATUS
     $options       = $partnerObj->getAvailableStatus();
-    $status_select = new XoopsFormSelect(_AM_SPARTNER_STATUS, 'status', $new_status);
+    $status_select = new \XoopsFormSelect(_AM_SPARTNER_STATUS, 'status', $new_status);
     $status_select->addOptionArray($options);
     $status_select->setDescription(_AM_SPARTNER_STATUS_DSC);
     $sform->addElement($status_select);
 
     // WEIGHT
-    $weight_text = new XoopsFormText(_AM_SPARTNER_WEIGHT, 'weight', 4, 4, $partnerObj->weight());
+    $weight_text = new \XoopsFormText(_AM_SPARTNER_WEIGHT, 'weight', 4, 4, $partnerObj->weight());
     $weight_text->setDescription(_AM_SPARTNER_WEIGHT_DSC);
     $sform->addElement($weight_text);
 
     //perms
     global $smartPermissionsHandler;
-    require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
-    $smartPermissionsHandler = new SmartobjectPermissionHandler($smartPartnerPartnerHandler);
+//    require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
+    $smartPermissionsHandler = new Smartobject\PermissionHandler($smartPartnerPartnerHandler);
 
     if (0 != $partnerObj->id()) {
         $grantedGroups = $smartPermissionsHandler->getGrantedGroups('full_view', $partnerObj->id());
     } else {
         $grantedGroups = $xoopsModuleConfig['default_full_view'];
     }
-    $full_view_select = new XoopsFormSelectGroup(_CO_SPARTNER_FULL_PERM_READ, 'full_view', true, $grantedGroups, 5, true);
+    $full_view_select = new \XoopsFormSelectGroup(_CO_SPARTNER_FULL_PERM_READ, 'full_view', true, $grantedGroups, 5, true);
     $full_view_select->setDescription(_CO_SPARTNER_FULL_PERM_READ_DSC);
     $sform->addElement($full_view_select);
 
@@ -260,40 +265,40 @@ function editpartner($showmenu = false, $id = 0)
     } else {
         $partGrantedGroups = $xoopsModuleConfig['default_part_view'];
     }
-    $part_view_select = new XoopsFormSelectGroup(_CO_SPARTNER_PART_PERM_READ, 'partial_view', true, $partGrantedGroups, 5, true);
+    $part_view_select = new \XoopsFormSelectGroup(_CO_SPARTNER_PART_PERM_READ, 'partial_view', true, $partGrantedGroups, 5, true);
     $part_view_select->setDescription(_CO_SPARTNER_PART_PERM_READ_DSC);
     $sform->addElement($part_view_select);
 
     // Partner id
-    $sform->addElement(new XoopsFormHidden('id', $partnerObj->id()));
+    $sform->addElement(new \XoopsFormHidden('id', $partnerObj->id()));
 
-    $button_tray = new XoopsFormElementTray('', '');
-    $hidden      = new XoopsFormHidden('op', 'addpartner');
+    $button_tray = new \XoopsFormElementTray('', '');
+    $hidden      = new \XoopsFormHidden('op', 'addpartner');
     $button_tray->addElement($hidden);
 
-    $sform->addElement(new XoopsFormHidden('original_status', $partnerObj->status()));
+    $sform->addElement(new \XoopsFormHidden('original_status', $partnerObj->status()));
 
     if (!$id) {
         // there's no id? Then it's a new partner
-        // $button_tray -> addElement( new XoopsFormButton( '', 'mod', _AM_SPARTNER_CREATE, 'submit' ) );
-        $butt_create = new XoopsFormButton('', '', _AM_SPARTNER_CREATE, 'submit');
+        // $button_tray -> addElement( new \XoopsFormButton( '', 'mod', _AM_SPARTNER_CREATE, 'submit' ) );
+        $butt_create = new \XoopsFormButton('', '', _AM_SPARTNER_CREATE, 'submit');
         $butt_create->setExtra('onclick="this.form.elements.op.value=\'addpartner\'"');
         $button_tray->addElement($butt_create);
 
-        $butt_clear = new XoopsFormButton('', '', _AM_SPARTNER_CLEAR, 'reset');
+        $butt_clear = new \XoopsFormButton('', '', _AM_SPARTNER_CLEAR, 'reset');
         $button_tray->addElement($butt_clear);
 
-        $butt_cancel = new XoopsFormButton('', '', _AM_SPARTNER_CANCEL, 'button');
+        $butt_cancel = new \XoopsFormButton('', '', _AM_SPARTNER_CANCEL, 'button');
         $butt_cancel->setExtra('onclick="history.go(-1)"');
         $button_tray->addElement($butt_cancel);
     } else {
         // else, we're editing an existing partner
-        // $button_tray -> addElement( new XoopsFormButton( '', 'mod', _AM_SPARTNER_MODIFY, 'submit' ) );
-        $butt_create = new XoopsFormButton('', '', $button_caption, 'submit');
+        // $button_tray -> addElement( new \XoopsFormButton( '', 'mod', _AM_SPARTNER_MODIFY, 'submit' ) );
+        $butt_create = new \XoopsFormButton('', '', $button_caption, 'submit');
         $butt_create->setExtra('onclick="this.form.elements.op.value=\'addpartner\'"');
         $button_tray->addElement($butt_create);
 
-        $butt_cancel = new XoopsFormButton('', '', _AM_SPARTNER_CANCEL, 'button');
+        $butt_cancel = new \XoopsFormButton('', '', _AM_SPARTNER_CANCEL, 'button');
         $butt_cancel->setExtra('onclick="history.go(-1)"');
         $button_tray->addElement($butt_cancel);
     }
@@ -364,7 +369,7 @@ switch ($op) {
 
         // Creating the partner object
         if (0 != $id) {
-            $partnerObj = new SmartpartnerPartner($id);
+            $partnerObj = new Smartpartner\Partner($id);
         } else {
             $partnerObj = $smartPartnerPartnerHandler->create();
         }
@@ -387,7 +392,7 @@ switch ($op) {
                     redirect_header('javascript:history.go(-1)', 2, _CO_SPARTNER_FILE_UPLOAD_ERROR);
                 }
 
-                $uploader = new XoopsMediaUploader(smartpartner_getImageDir(), $allowed_mimetypes, $max_size, $max_imgwidth, $max_imgheight);
+                $uploader = new \XoopsMediaUploader(smartpartner_getImageDir(), $allowed_mimetypes, $max_size, $max_imgwidth, $max_imgheight);
 
                 // TODO: prefix the image file with the partnerid, but for that we need to first save the partner to get partnerid...
                 // $uploader->setTargetFileName($partnerObj->partnerid() . "_" . $_FILES['logo_file']['name']);
@@ -447,7 +452,7 @@ switch ($op) {
         $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
         $id = isset($_GET['id']) ? (int)$_GET['id'] : $id;
 
-        $partnerObj = new SmartpartnerPartner($id);
+        $partnerObj = new Smartpartner\Partner($id);
 
         $confirm = isset($_POST['confirm']) ? $_POST['confirm'] : 0;
         $title   = isset($_POST['title']) ? $_POST['title'] : '';
@@ -526,7 +531,7 @@ switch ($op) {
         echo "</table>\n";
         echo "<br>\n";
 
-        $pagenav = new XoopsPageNav($totalpartners, $xoopsModuleConfig['perpage_admin'], $startpartner, 'startpartner');
+        $pagenav = new \XoopsPageNav($totalpartners, $xoopsModuleConfig['perpage_admin'], $startpartner, 'startpartner');
         echo '<div style="text-align:right;">' . $pagenav->renderNav() . '</div>';
 
         smartpartner_close_collapsable('partners', 'partnersicon');

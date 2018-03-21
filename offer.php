@@ -1,5 +1,7 @@
 <?php
 
+use XoopsModules\Smartpartner;
+
 require_once __DIR__ . '/header.php';
 $GLOBALS['xoopsOption']['template_main'] = 'smartpartner_offer.tpl';
 include XOOPS_ROOT_PATH . '/header.php';

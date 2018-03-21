@@ -1,4 +1,5 @@
-<?php
+<?php namespace XoopsModules\Smartpartner;
+
 //
 // ------------------------------------------------------------------------ //
 //               XOOPS - PHP Content Management System                      //
@@ -27,36 +28,22 @@
 // Project: XOOPS Project                                               //
 // -------------------------------------------------------------------------//
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
-require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobject.php';
-require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjecthandler.php';
+use XoopsModules\Smartpartner;
+
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
+//require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobject.php';
+//require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjecthandler.php';
 
 /**
- * Class SmartpartnerPartnerCatLink
+ * Class Smartpartner\PartnerCatLinkHandler
  */
-class SmartpartnerPartner_cat_link extends SmartObject
+class PartnerCatLinkHandler extends Smartpartner\PersistableObjectHandler
 {
     /**
-     * SmartpartnerPartnerCatLink constructor.
+     * Smartpartner\PartnerCatLinkHandler constructor.
+     * @param null|\XoopsDatabase $db
      */
-    public function __construct()
-    {
-        $this->initVar('partner_cat_linkid', XOBJ_DTYPE_INT, '', true);
-        $this->initVar('partnerid', XOBJ_DTYPE_INT, '', true);
-        $this->initVar('categoryid', XOBJ_DTYPE_INT, '', true);
-    }
-}
-
-/**
- * Class SmartpartnerPartnerCatLinkHandler
- */
-class SmartpartnerPartner_cat_linkHandler extends SmartPersistableObjectHandler
-{
-    /**
-     * SmartpartnerPartnerCatLinkHandler constructor.
-     * @param null|XoopsDatabase $db
-     */
-    public function __construct(XoopsDatabase $db)
+    public function __construct(\XoopsDatabase $db)
     {
         parent::__construct($db, 'partner_cat_link', ['partnerid', 'categoryid'], '', false, 'smartpartner');
     }
@@ -67,9 +54,9 @@ class SmartpartnerPartner_cat_linkHandler extends SmartPersistableObjectHandler
      */
     public function getParentIds($partnerid)
     {
-        $criteria = new CriteriaCompo();
-        $criteria->add(new Criteria('partnerid', $partnerid));
-        $links        = $this->getObjects($criteria);
+        $criteria = new \CriteriaCompo();
+        $criteria->add(new \Criteria('partnerid', $partnerid));
+        $links        =& $this->getObjects($criteria);
         $parent_array = [];
         foreach ($links as $link) {
             $parent_array[] = $link->getVar('categoryid');

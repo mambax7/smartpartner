@@ -6,6 +6,8 @@
  * Licence: GNU
  */
 
+use XoopsModules\Smartpartner;
+
 if (empty($seoOp)) {
     // SEO mode is path-info
     /*

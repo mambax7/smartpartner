@@ -1,11 +1,13 @@
-<?php
+<?php namespace XoopsModules\Smartpartner;
+
+use XoopsModules\Smartpartner;
 
 /**
  * A wrapper around PHP's session functions
  * @package smartpartner
  * @author  Harry Fuecks (PHP Anthology Volume II)
  */
-class SmartpartnerSession
+class Session
 {
     /**
      * Session constructor<br>
@@ -69,7 +71,7 @@ class SmartpartnerSession
     }
 
     /**
-     * @return SmartpartnerSession
+     * @return Session
      */
     public static function getInstance()
     {

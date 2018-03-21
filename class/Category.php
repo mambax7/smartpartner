@@ -1,4 +1,5 @@
-<?php
+<?php namespace XoopsModules\Smartpartner;
+
 //
 // ------------------------------------------------------------------------ //
 //               XOOPS - PHP Content Management System                      //
@@ -26,17 +27,21 @@
 // URL: https://xoops.org/                                               //
 // Project: XOOPS Project                                               //
 // -------------------------------------------------------------------------//
-if (!class_exists('smartpartner_PersistableObjectHandler')) {
-    require_once XOOPS_ROOT_PATH . '/modules/smartpartner/class/object.php';
-}
+
+use XoopsModules\Smartpartner;
+
+//if (!class_exists('PersistableObjectHandler')) {
+//    require_once XOOPS_ROOT_PATH . '/modules/smartpartner/class/object.php';
+//}
+
 
 /**
- * Class SmartpartnerCategory
+ * Class Category
  */
-class SmartpartnerCategory extends XoopsObject
+class Category extends \XoopsObject
 {
     /**
-     * SmartpartnerCategory constructor.
+     * Category constructor.
      */
     public function __construct()
     {
@@ -238,124 +243,5 @@ class SmartpartnerCategory extends XoopsObject
         }
 
         return $category;
-    }
-}
-
-/**
- * Class SmartpartnerCategoryHandler
- */
-class SmartpartnerCategoryHandler extends smartpartner_PersistableObjectHandler
-{
-    /**
-     * SmartpartnerCategoryHandler constructor.
-     * @param null|XoopsDatabase $db
-     */
-    public function __construct(XoopsDatabase $db)
-    {
-        parent::__construct($db, 'smartpartner_categories', 'SmartpartnerCategory', 'categoryid', 'name');
-    }
-
-    /**
-     * @param  XoopsObject $category
-     * @param  bool        $force
-     * @return bool
-     */
-    public function delete(XoopsObject $category, $force = false)
-    {
-        /*if (parent::delete($object, $force)) {
-            global $xoopsModule;
-
-            // TODO: Delete partners in this category
-            return true;
-        }
-
-        return false;*/
-
-        if ('smartpartnercategory' !== strtolower(get_class($category))) {
-            return false;
-        }
-
-        // Deleting the partners
-        global $smartPartnerPartnerHandler;
-        if (!isset($smartPartnerPartnerHandler)) {
-            $smartPartnerPartnerHandler = smartpartner_gethandler('partner');
-        }
-        $criteria = new Criteria('category', $category->categoryid());
-        $partners = $smartPartnerPartnerHandler->getObjects($criteria);
-        if ($partners) {
-            foreach ($partners as $partner) {
-                $smartPartnerPartnerHandler->delete($partner);
-            }
-        }
-
-        // Deleteing the sub categories
-        $subcats = $this->getCategories(0, 0, $category->categoryid());
-        foreach ($subcats as $subcat) {
-            $this->delete($subcat);
-        }
-
-        $sql = sprintf('DELETE FROM %s WHERE categoryid = %u ', $this->db->prefix('smartpartner_categories'), $category->getVar('categoryid'));
-
-        if (false != $force) {
-            $result = $this->db->queryF($sql);
-        } else {
-            $result = $this->db->query($sql);
-        }
-
-        if (!$result) {
-            return false;
-        }
-
-        return true;
-    }
-
-    /**
-     * @param  int    $limit
-     * @param  int    $start
-     * @param  int    $parentid
-     * @param  string $sort
-     * @param  string $order
-     * @param  bool   $id_as_key
-     * @return array
-     */
-    public function getCategories(
-        $limit = 0,
-        $start = 0,
-        $parentid = 0,
-        $sort = 'weight',
-        $order = 'ASC',
-        $id_as_key = true
-    ) {
-        $criteria = new CriteriaCompo();
-
-        $criteria->setSort($sort);
-        $criteria->setOrder($order);
-
-        if ($parentid != -1) {
-            $criteria->add(new Criteria('parentid', $parentid));
-        }
-
-        $criteria->setStart($start);
-        $criteria->setLimit($limit);
-        $ret = $this->getObjects($criteria, $id_as_key);
-
-        return $ret;
-    }
-
-    /**
-     * @param  int $parentid
-     * @return int
-     */
-    public function getCategoriesCount($parentid = 0)
-    {
-        if ($parentid == -1) {
-            return $this->getCount();
-        }
-        $criteria = new CriteriaCompo();
-        if (isset($parentid) && ($parentid != -1)) {
-            $criteria->add(new criteria('parentid', $parentid));
-        }
-
-        return $this->getCount($criteria);
     }
 }

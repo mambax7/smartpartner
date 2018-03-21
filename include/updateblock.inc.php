@@ -1,7 +1,10 @@
 <?php
 //
 
-// defined('XOOPS_ROOT_PATH') || exit('Restricted access.');
+use XoopsModules\Smartpartner;
+
+
+// defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 // Keep Block option values when update (by nobunobu)
 global $xoopsDB;
@@ -14,7 +17,7 @@ if ($record) {
     /* $sql = "SELECT * FROM ".$xoopsDB->prefix('newblocks')." WHERE mid=".$mid." AND block_type ='D'";
          $fresult = $xoopsDB->query($sql);
          $n_funcnum = $count;
-         while ($fblock = $xoopsDB->fetchArray($fresult)) {
+         while (false !== ($fblock = $xoopsDB->fetchArray($fresult))) {
              $bnum = 0;
              for ($i = 1 ; $i <= $count ; ++$i) {
                  if (($modversion['blocks'][$i]['file'] == $fblock['func_file']) and ($modversion['blocks'][$i]['show_func'] == $fblock['show_func'])) {
@@ -57,7 +60,7 @@ if ($record) {
 
     $sql     = 'SELECT * FROM ' . $xoopsDB->prefix('newblocks') . ' WHERE mid=' . $mid . " AND block_type <>'D' AND func_num > $count";
     $fresult = $xoopsDB->query($sql);
-    while ($fblock = $xoopsDB->fetchArray($fresult)) {
+    while (false !== ($fblock = $xoopsDB->fetchArray($fresult))) {
         $local_msgs[] = 'Non Defined Block <b>' . $fblock['name'] . '</b> will be deleted';
         $sql          = 'DELETE FROM ' . $xoopsDB->prefix('newblocks') . " WHERE bid='" . $fblock['bid'] . "'";
         $iret         = $xoopsDB->query($sql);
