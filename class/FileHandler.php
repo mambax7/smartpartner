@@ -125,7 +125,7 @@ class FileHandler extends \XoopsObjectHandler
 
         //echo "<br>$sql<br>";
 
-        if (false != $force) {
+        if (false !== $force) {
             $result = $this->db->queryF($sql);
         } else {
             $result = $this->db->query($sql);
@@ -165,7 +165,7 @@ class FileHandler extends \XoopsObjectHandler
         // Delete the record in the table
         $sql = sprintf('DELETE FROM %s WHERE fileid = %u', $this->db->prefix('smartpartner_files'), $file->getVar('fileid'));
 
-        if (false != $force) {
+        if (false !== $force) {
             $result = $this->db->queryF($sql);
         } else {
             $result = $this->db->query($sql);

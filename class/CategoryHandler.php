@@ -90,7 +90,7 @@ class CategoryHandler extends Smartpartner\PersistableObjectHandler
 
         $sql = sprintf('DELETE FROM %s WHERE categoryid = %u ', $this->db->prefix('smartpartner_categories'), $category->getVar('categoryid'));
 
-        if (false != $force) {
+        if (false !== $force) {
             $result = $this->db->queryF($sql);
         } else {
             $result = $this->db->query($sql);

@@ -194,7 +194,7 @@ class PersistableObjectHandler extends \XoopsObjectHandler
     public function getList(CriteriaElement $criteria = null, $limit = 0, $start = 0)
     {
         $ret = [];
-        if (null == $criteria) {
+        if (null === $criteria) {
             $criteria = new \CriteriaCompo();
         }
 
@@ -289,7 +289,7 @@ class PersistableObjectHandler extends \XoopsObjectHandler
             $whereclause = $this->keyName . ' = ' . $obj->getVar($this->keyName);
         }
         $sql = 'DELETE FROM ' . $this->table . ' WHERE ' . $whereclause;
-        if (false != $force) {
+        if (false !== $force) {
             $result = $this->db->queryF($sql);
         } else {
             $result = $this->db->query($sql);
@@ -378,7 +378,7 @@ class PersistableObjectHandler extends \XoopsObjectHandler
             }
             $sql .= ' WHERE ' . $whereclause;
         }
-        if (false != $force) {
+        if (false !== $force) {
             $result = $this->db->queryF($sql);
         } else {
             $result = $this->db->query($sql);
@@ -417,7 +417,7 @@ class PersistableObjectHandler extends \XoopsObjectHandler
         if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
-        if (false != $force) {
+        if (false !== $force) {
             $result = $this->db->queryF($sql);
         } else {
             $result = $this->db->query($sql);

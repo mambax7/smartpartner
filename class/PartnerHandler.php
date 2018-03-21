@@ -191,7 +191,7 @@ class PartnerHandler extends Smartpartner\PersistableObjectHandler
 
         //echo "<br>" . $sql . "<br>";exit;
 
-        if (false != $force) {
+        if (false !== $force) {
             $result = $this->db->queryF($sql);
         } else {
             $result = $this->db->query($sql);
@@ -251,7 +251,7 @@ class PartnerHandler extends Smartpartner\PersistableObjectHandler
 
         $sql = sprintf('DELETE FROM %s WHERE id = %u', $this->table, $partner->getVar('id'));
 
-        if (false != $force) {
+        if (false !== $force) {
             $result = $this->db->queryF($sql);
         } else {
             $result = $this->db->query($sql);
