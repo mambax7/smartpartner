@@ -27,7 +27,7 @@ function b_recent_offers_show($options)
     $partnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
 
 //    require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
-    $smartPermissionsHandler = new Smartobject\SmartobjectPermissionHandler($partnerHandler);
+    $smartPermissionsHandler = new Smartobject\PermissionHandler($partnerHandler);
     $grantedItems            = $smartPermissionsHandler->getGrantedItems('full_view');
 
     if (!empty($grantedItems)) {

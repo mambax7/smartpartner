@@ -695,7 +695,7 @@ class Partner extends Smartobject\BaseSmartObject
         if (!$smartPartnerPartnerHandler) {
             $smartPartnerPartnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
         }
-        $smartPermissionsHandler = new Smartobject\SmartobjectPermissionHandler($smartPartnerPartnerHandler);
+        $smartPermissionsHandler = new Smartobject\PermissionHandler($smartPartnerPartnerHandler);
         $grantedGroups           = $smartPermissionsHandler->getGrantedGroups('full_view', $this->id());
         $partGrantedGroups       = $smartPermissionsHandler->getGrantedGroups('partial_view', $this->id());
 

@@ -59,14 +59,14 @@ $smartModule = $helper->getModule();
 
 // Find if the user is admin of the module
 //$smartPartnerIsAdmin = Smartpartner\Utility::userIsAdmin();
-$smartPartnerIsAdmin = $helper->isUserAdmin();
+//$smartPartnerIsAdmin = $helper->isUserAdmin();
 
 $myts                   = \MyTextSanitizer::getInstance();
-$smartPartnerModuleName = $smartModule->getVar('name');
+//$smartPartnerModuleName = $helper->getConfig('name');
 
 // Creating the SmartModule config Object
 //$smartConfig = Smartpartner\Utility::getModuleConfig();
-$smartConfig = $helper->getConfig();
+//$smartConfig = $helper->getConfig();
 
 // Creating the partner handler object
 $smartPartnerPartnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');

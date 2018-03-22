@@ -33,14 +33,14 @@ function getConfig()
         ],
         'uploadFolders'  => [
             constant($moduleDirNameUpper . '_UPLOAD_PATH'),
-            constant($moduleDirNameUpper . '_UPLOAD_PATH') . '/category',
-            constant($moduleDirNameUpper . '_UPLOAD_PATH') . '/screenshots',
+            constant($moduleDirNameUpper . '_UPLOAD_PATH') . '/images',
+            constant($moduleDirNameUpper . '_UPLOAD_PATH') . '/images/category',
             //XOOPS_UPLOAD_PATH . '/flags'
         ],
         'copyBlankFiles' => [
             constant($moduleDirNameUpper . '_UPLOAD_PATH'),
-            constant($moduleDirNameUpper . '_UPLOAD_PATH') . '/category',
-            constant($moduleDirNameUpper . '_UPLOAD_PATH') . '/screenshots',
+            constant($moduleDirNameUpper . '_UPLOAD_PATH') . '/images',
+            constant($moduleDirNameUpper . '_UPLOAD_PATH') . '/images/category',
             //XOOPS_UPLOAD_PATH . '/flags'
         ],
 

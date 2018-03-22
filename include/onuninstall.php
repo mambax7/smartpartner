@@ -33,17 +33,17 @@ function xoops_module_pre_uninstall_smartpartner(\XoopsModule $module)
  */
 function xoops_module_uninstall_smartpartner(\XoopsModule $module)
 {
-//    return true;
-
-    $moduleDirName = basename(dirname(__DIR__));
-    $xsitemapHelper      = \Xmf\Module\Helper::getHelper($moduleDirName);
-
-    /** @var Smartpartner\Utility $utility */
-    $utility     = new Smartpartner\Utility();
-
+    include __DIR__ . '/common.php';
+    $moduleDirName      = basename(dirname(__DIR__));
+    $moduleDirNameUpper = strtoupper($moduleDirName);
+    /** @var Smartpartner\Helper $helper */
+    $helper  = Smartpartner\Helper::getInstance();
+    $utility = new Smartpartner\Utility();
+    //    $configurator = new Smartpartner\Common\Configurator();
+    // Load language files
+    $helper->loadLanguage('admin');
+    $helper->loadLanguage('common');
     $success = true;
-    $xsitemapHelper->loadLanguage('admin');
-
 
     //------------------------------------------------------------------
     // Remove uploads folder (and all subfolders) if they exist
@@ -51,7 +51,7 @@ function xoops_module_uninstall_smartpartner(\XoopsModule $module)
 
     $old_directories = [$GLOBALS['xoops']->path("uploads/{$moduleDirName}")];
     foreach ($old_directories as $old_dir) {
-        $dirInfo = new \SplFileInfo($old_dir);
+        $dirInfo = new SplFileInfo($old_dir);
         if ($dirInfo->isDir()) {
             // The directory exists so delete it
             if (false === $utility::rrmdir($old_dir)) {
@@ -69,12 +69,12 @@ function xoops_module_uninstall_smartpartner(\XoopsModule $module)
     $xmlfile = $GLOBALS['xoops']->path('xsitemap.xml');
     if (is_file($xmlfile)) {
         if (false === ($delOk = unlink($xmlfile))) {
-            $module->setErrors(sprintf(_AM_XXXXX_ERROR_BAD_REMOVE, $xmlfile));
+            $module->setErrors(sprintf(constant('CO_' . $moduleDirNameUpper . '_ERROR_BAD_REMOVE'), $xmlfile));
         }
     }
 //    return $success && $delOk; // use this if you're using this routine
 */
 
     return $success;
-    //------------ END  ----------------
+    //------------ END  ----------------}
 }

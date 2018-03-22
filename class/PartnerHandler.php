@@ -225,7 +225,7 @@ class PartnerHandler extends Smartpartner\PersistableObjectHandler
             }
         }
         if (isset($_POST['partial_view']) || isset($_POST['full_view'])) {
-            $smartPermissionsHandler = new Smartobject\SmartobjectPermissionHandler($this);
+            $smartPermissionsHandler = new Smartobject\PermissionHandler($this);
             $smartPermissionsHandler->storeAllPermissionsForId($partner->id());
         }
 

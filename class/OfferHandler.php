@@ -39,7 +39,7 @@ use XoopsModules\Smartobject;
 /**
  * Class OfferHandler
  */
-class OfferHandler extends Smartobject\SmartPersistableObjectHandler
+class OfferHandler extends Smartobject\PersistableObjectHandler
 {
     /**
      * OfferHandler constructor.
@@ -47,7 +47,7 @@ class OfferHandler extends Smartobject\SmartPersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, 'offer', Offer::class, 'title', false, 'smartpartner');
+        parent::__construct($db, Offer::class, 'offer', 'title', false, 'smartpartner');
     }
 
     /**
@@ -81,7 +81,7 @@ class OfferHandler extends Smartobject\SmartPersistableObjectHandler
         $partnersObj = $smartPartnerPartnerHandler->getObjects(null, true);
 
 //        require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
-        $smartPermissionsHandler = new Smartobject\SmartobjectPermissionHandler($smartPartnerPartnerHandler);
+        $smartPermissionsHandler = new Smartobject\PermissionHandler($smartPartnerPartnerHandler);
         $userGroups              = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
         $grantedItems            = $smartPermissionsHandler->getGrantedItems('full_view');
         $relevantCat             = [];

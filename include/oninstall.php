@@ -18,6 +18,7 @@
  */
 
 use XoopsModules\Smartpartner;
+use XoopsModules\Smartpartner\Common;
 
 //require_once __DIR__ . '/setup.php';
 
@@ -30,9 +31,11 @@ use XoopsModules\Smartpartner;
  */
 function xoops_module_pre_install_smartpartner(\XoopsModule $module)
 {
-    include __DIR__ . '/../preloads/autoloader.php';
+//    include __DIR__ . '/../preloads/autoloader.php';
+    include __DIR__ . '/common.php';
     /** @var Smartpartner\Utility $utility */
     $utility = new Smartpartner\Utility();
+
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);
 
@@ -83,7 +86,7 @@ function xoops_module_install_smartpartner(\XoopsModule $module)
     if (count($configurator->uploadFolders) > 0) {
         //    foreach (array_keys($GLOBALS['uploadFolders']) as $i) {
         foreach (array_keys($configurator->uploadFolders) as $i) {
-            $utilityClass::createFolder($configurator->uploadFolders[$i]);
+            $utility::createFolder($configurator->uploadFolders[$i]);
         }
     }
 
@@ -92,33 +95,13 @@ function xoops_module_install_smartpartner(\XoopsModule $module)
         $file = __DIR__ . '/../assets/images/blank.png';
         foreach (array_keys($configurator->copyBlankFiles) as $i) {
             $dest = $configurator->copyBlankFiles[$i] . '/blank.png';
-            $utilityClass::copyFile($file, $dest);
+            $utility::copyFile($file, $dest);
         }
     }
     //delete .html entries from the tpl table
-    $sql = 'DELETE FROM ' . $xoopsDB->prefix('tplfile') . " WHERE `tpl_module` = '" . $xoopsModule->getVar('dirname', 'n') . "' AND `tpl_file` LIKE '%.html%'";
-    $xoopsDB->queryF($sql);
+    $sql = 'DELETE FROM ' . $GLOBALS['xoopsDB']->prefix('tplfile') . " WHERE `tpl_module` = '" . $module->getVar('dirname', 'n') . "' AND `tpl_file` LIKE '%.html%'";
+    $GLOBALS['xoopsDB']->queryF($sql);
+
 
     return true;
 }
-
-//======================================================
-
-$indexFile = 'index.html';
-$blankFile = $GLOBALS['xoops']->path('modules/randomquote/assets/images/icons/blank.gif');
-
-//Creation du dossier "uploads" pour le module à la racine du site
-$module_uploads = $GLOBALS['xoops']->path('uploads/randomquote');
-if (!is_dir($module_uploads)) {
-    mkdir($module_uploads, 0777);
-}
-chmod($module_uploads, 0777);
-copy($indexFile, $GLOBALS['xoops']->path('uploads/randomquote/index.html'));
-
-//Creation du fichier citas dans uploads
-$module_uploads = $GLOBALS['xoops']->path('uploads/randomquote/citas');
-if (!is_dir($module_uploads)) {
-    mkdir($module_uploads, 0777);
-}
-chmod($module_uploads, 0777);
-copy($indexFile, $GLOBALS['xoops']->path('uploads/randomquote/citas/index.html'));

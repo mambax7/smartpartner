@@ -79,7 +79,7 @@ switch ($op) {
     case 'addoffer':
 //        require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectcontroller.php';
 
-        $controller = new Smartobject\SmartObjectController($smartPartnerOfferHandler);
+        $controller = new Smartobject\ObjectController($smartPartnerOfferHandler);
         $offerObj   = $controller->storeSmartObject();
         $fct        = isset($_POST['fct']) ? $_POST['fct'] : '';
 
@@ -99,7 +99,7 @@ switch ($op) {
 
     case 'del':
 //        require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectcontroller.php';
-        $controller = new Smartobject\SmartObjectController($smartPartnerOfferHandler);
+        $controller = new Smartobject\ObjectController($smartPartnerOfferHandler);
         $controller->handleObjectDeletion();
         break;
 
@@ -126,12 +126,12 @@ switch ($op) {
         Smartobject\Utility::getCollapsableBar('createdoffers', _AM_SPARTNER_OFFERS, _AM_SPARTNER_OFFERS_DSC);
 
 //        require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjecttable.php';
-        $objectTable = new Smartobject\SmartObjectTable($smartPartnerOfferHandler);
+        $objectTable = new Smartobject\Table($smartPartnerOfferHandler);
         $objectTable->addFilter('partnerid', 'getPartnerList');
         $objectTable->addFilter('status', 'getStatusList');
-        $objectTable->addColumn(new Smartobject\SmartObjectColumn('title', 'left'));
-        $objectTable->addColumn(new Smartobject\SmartObjectColumn('partnerid', 'center', 100));
-        $objectTable->addColumn(new Smartobject\SmartObjectColumn('status', 'center', 100));
+        $objectTable->addColumn(new Smartobject\ObjectColumn('title', 'left'));
+        $objectTable->addColumn(new Smartobject\ObjectColumn('partnerid', 'center', 100));
+        $objectTable->addColumn(new Smartobject\ObjectColumn('status', 'center', 100));
         $objectTable->render();
 
         echo '<br>';

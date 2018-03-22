@@ -596,8 +596,10 @@ class Utility
     public static function formatErrors($errors = [])
     {
         $ret = '';
-        foreach ($errors as $key => $value) {
-            $ret .= '<br> - ' . $value;
+        if (\is_array($errors) && count($errors) > 0) {
+            foreach ($errors as $key => $value) {
+                $ret .= '<br> - ' . $value;
+            }
         }
 
         return $ret;

@@ -10,9 +10,9 @@
 use XoopsModules\Smartpartner;
 
 // This must contain the name of the folder in which reside SmartPartner
-if (!defined('SMARTPARTNER_DIRNAME')) {
-    define('SMARTPARTNER_DIRNAME', 'smartpartner');
-}
+//if (!defined('SMARTPARTNER_DIRNAME')) {
+//    define('SMARTPARTNER_DIRNAME', 'smartpartner');
+//}
 
 require_once __DIR__ . '/preloads/autoloader.php';
 
@@ -100,8 +100,9 @@ $modversion['system_menu'] = 1;
 $modversion['adminindex']  = 'admin/index.php';
 $modversion['adminmenu']   = 'admin/menu.php';
 
-$modversion['onInstall'] = 'include/onupdate.inc.php';
-$modversion['onUpdate']  = 'include/onupdate.inc.php';
+$modversion['onInstall']   = 'include/oninstall.php';
+$modversion['onUpdate']    = 'include/onupdate.php';
+$modversion['onUninstall'] = 'include/onuninstall.php';
 
 // ------------------- Help files ------------------- //
 $modversion['helpsection'] = [
@@ -110,7 +111,6 @@ $modversion['helpsection'] = [
     ['name' => _MI_SPARTNER_LICENSE, 'link' => 'page=license'],
     ['name' => _MI_SPARTNER_SUPPORT, 'link' => 'page=support'],
 ];
-
 
 // Blocks
 $modversion['blocks'][1]['file']        = 'partners_list.php';
