@@ -36,7 +36,7 @@ switch ($op) {
                 $max_size          = 10000000;
                 $max_imgwidth      = $xoopsModuleConfig['img_max_width'];
                 $max_imgheight     = $xoopsModuleConfig['img_max_height'];
-                $allowed_mimetypes = smartpartner_getAllowedImagesTypes();
+                $allowed_mimetypes = Smartpartner\Utility::getAllowedImagesTypes();
 
                 require_once XOOPS_ROOT_PATH . '/class/uploader.php';
 
@@ -44,7 +44,7 @@ switch ($op) {
                     redirect_header('javascript:history.go(-1)', 2, _CO_SPARTNER_FILE_UPLOAD_ERROR);
                 }
 
-                $uploader = new \XoopsMediaUploader(smartpartner_getImageDir(), $allowed_mimetypes, $max_size, $max_imgwidth, $max_imgheight);
+                $uploader = new \XoopsMediaUploader(Smartpartner\Utility::getImageDir(), $allowed_mimetypes, $max_size, $max_imgwidth, $max_imgheight);
 
                 if ($uploader->fetchMedia($filename) && $uploader->upload()) {
                     $partnerObj->setVar('image', $uploader->getSavedFileName());
@@ -79,7 +79,7 @@ switch ($op) {
 
         // Storing the partner
         if (!$partnerObj->store()) {
-            redirect_header('javascript:history.go(-1)', 3, _MD_SPARTNER_SUBMIT_ERROR . smartpartner_formatErrors($partnerObj->getErrors()));
+            redirect_header('javascript:history.go(-1)', 3, _MD_SPARTNER_SUBMIT_ERROR . Smartpartner\Utility::formatErrors($partnerObj->getErrors()));
         }
 
         if (isset($_POST['notifypub']) && 1 === $_POST['notifypub']) {

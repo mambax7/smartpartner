@@ -24,7 +24,7 @@ require_once __DIR__ . '/../../../include/cp_header.php';
 
 // require_once __DIR__ . '/../class/Utility.php';
 require_once __DIR__ . '/../include/common.php';
-require_once __DIR__ . '/../include/functions.php';
+//require_once __DIR__ . '/../include/functions.php';
 
 $moduleDirName = basename(dirname(__DIR__));
 $helper = Smartpartner\Helper::getInstance();

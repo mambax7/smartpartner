@@ -92,7 +92,7 @@ class Offer extends Smartobject\BaseSmartObject
     {
         global $smartPartnerPartnerHandler;
         if (!$smartPartnerPartnerHandler) {
-            $smartPartnerPartnerHandler = smartpartner_gethandler('partner');
+            $smartPartnerPartnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
         }
         $ret        = $this->getVar('partnerid', 'e');
         $partnerObj = $smartPartnerPartnerHandler->get($ret);
@@ -118,7 +118,7 @@ class Offer extends Smartobject\BaseSmartObject
     {
         global $smartPartnerPartnerHandler;
         $partnerObj  = $smartPartnerPartnerHandler->get($this->getVar('partnerid', 'e'));
-        $smartModule = smartpartner_getModuleInfo();
+        $smartModule = Smartpartner\Utility::getModuleInfo();
         $module_id   = $smartModule->getVar('mid');
 
         $myts                = \MyTextSanitizer::getInstance();

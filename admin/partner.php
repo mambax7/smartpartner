@@ -11,7 +11,7 @@
 
 use XoopsModules\Smartpartner;
 use XoopsModules\Smartobject;
-
+use XoopsModules\Smartpartner\Constants;
 /**
  * @param $partnerObj
  */
@@ -21,7 +21,7 @@ function showfiles($partnerObj)
     //require_once XOOPS_ROOT_PATH . '/modules/smartpartner/include/functions.php';
     global $xoopsModule, $smartPartnerFileHandler;
     $pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
-    smartpartner_collapsableBar('filetable', 'filetableicon', _AM_SPARTNER_FILES_LINKED);
+    Smartpartner\Utility::collapsableBar('filetable', 'filetableicon', _AM_SPARTNER_FILES_LINKED);
     $filesObj = $smartPartnerFileHandler->getAllFiles($partnerObj->id());
     if (count($filesObj) > 0) {
         echo "<table width='100%' cellspacing=1 cellpadding=3 border=0 class = outer>";
@@ -61,7 +61,7 @@ function showfiles($partnerObj)
     echo "<input type='button' name='button' onclick=\"location='file.php?op=mod&id=" . $partnerObj->id() . "'\" value='" . _AM_SPARTNER_UPLOAD_FILE_NEW . "'>&nbsp;&nbsp;";
     echo '</div></form>';
 
-    smartpartner_close_collapsable('filetable', 'filetableicon');
+    Smartpartner\Utility::closeCollapsable('filetable', 'filetableicon');
 }
 
 /**
@@ -72,7 +72,7 @@ function editpartner($showmenu = false, $id = 0)
 {
     global $xoopsDB, $smartPartnerPartnerHandler, $xoopsUser, $xoopsConfig, $xoopsModuleConfig, $xoopsModule;
     if (!isset($smartPartnerPartnerHandler)) {
-        $smartPartnerPartnerHandler = smartpartner_gethandler('partner');
+        $smartPartnerPartnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
     }
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     // If there is a parameter, and the id exists, retrieve data: we're editing a partner
@@ -86,40 +86,40 @@ function editpartner($showmenu = false, $id = 0)
 
         switch ($partnerObj->status()) {
 
-            case _SPARTNER_STATUS_SUBMITTED:
+            case Constants::_SPARTNER_STATUS_SUBMITTED:
                 $breadcrumb_action1 = _AM_SPARTNER_SUBMITTED_PARTNERS;
                 $breadcrumb_action2 = _AM_SPARTNER_APPROVING;
                 $page_title         = _AM_SPARTNER_SUBMITTED_TITLE;
                 $page_info          = _AM_SPARTNER_SUBMITTED_INFO;
                 $button_caption     = _AM_SPARTNER_APPROVE;
-                $new_status         = _SPARTNER_STATUS_ACTIVE;
+                $new_status         = Constants::_SPARTNER_STATUS_ACTIVE;
                 break;
 
-            case _SPARTNER_STATUS_ACTIVE:
+            case Constants::_SPARTNER_STATUS_ACTIVE:
                 $breadcrumb_action1 = _AM_SPARTNER_ACTIVE_PARTNERS;
                 $breadcrumb_action2 = _AM_SPARTNER_EDITING;
                 $page_title         = _AM_SPARTNER_ACTIVE_EDITING;
                 $page_info          = _AM_SPARTNER_ACTIVE_EDITING_INFO;
                 $button_caption     = _AM_SPARTNER_MODIFY;
-                $new_status         = _SPARTNER_STATUS_ACTIVE;
+                $new_status         = Constants::_SPARTNER_STATUS_ACTIVE;
                 break;
 
-            case _SPARTNER_STATUS_INACTIVE:
+            case Constants::_SPARTNER_STATUS_INACTIVE:
                 $breadcrumb_action1 = _AM_SPARTNER_INACTIVE_PARTNERS;
                 $breadcrumb_action2 = _AM_SPARTNER_EDITING;
                 $page_title         = _AM_SPARTNER_INACTIVE_EDITING;
                 $page_info          = _AM_SPARTNER_INACTIVE_EDITING_INFO;
                 $button_caption     = _AM_SPARTNER_MODIFY;
-                $new_status         = _SPARTNER_STATUS_INACTIVE;
+                $new_status         = Constants::_SPARTNER_STATUS_INACTIVE;
                 break;
 
-            case _SPARTNER_STATUS_REJECTED:
+            case Constants::_SPARTNER_STATUS_REJECTED:
                 $breadcrumb_action1 = _AM_SPARTNER_REJECTED_PARTNERS;
                 $breadcrumb_action2 = _AM_SPARTNER_EDITING;
                 $page_title         = _AM_SPARTNER_REJECTED_EDITING;
                 $page_info          = _AM_SPARTNER_REJECTED_EDITING_INFO;
                 $button_caption     = _AM_SPARTNER_MODIFY;
-                $new_status         = _SPARTNER_STATUS_REJECTED;
+                $new_status         = Constants::_SPARTNER_STATUS_REJECTED;
                 break;
 
             case 'default':
@@ -128,15 +128,15 @@ function editpartner($showmenu = false, $id = 0)
         }
 
         echo "<br>\n";
-        smartpartner_collapsableBar('editpartner', 'editpartmericon', $page_title, $page_info);
+        Smartpartner\Utility::collapsableBar('editpartner', 'editpartmericon', $page_title, $page_info);
     } else {
         // there's no parameter, so we're adding a partner
         $partnerObj         = $smartPartnerPartnerHandler->create();
         $breadcrumb_action1 = _AM_SPARTNER_PARTNERS;
         $breadcrumb_action2 = _AM_SPARTNER_CREATE;
         $button_caption     = _AM_SPARTNER_CREATE;
-        $new_status         = _SPARTNER_STATUS_ACTIVE;
-        smartpartner_collapsableBar('addpartner', 'addpartnericon', _AM_SPARTNER_PARTNER_CREATING, _AM_SPARTNER_PARTNER_CREATING_DSC);
+        $new_status         = Constants::_SPARTNER_STATUS_ACTIVE;
+        Smartpartner\Utility::collapsableBar('addpartner', 'addpartnericon', _AM_SPARTNER_PARTNER_CREATING, _AM_SPARTNER_PARTNER_CREATING_DSC);
     }
 
     // PARTNER FORM
@@ -158,14 +158,14 @@ function editpartner($showmenu = false, $id = 0)
     ob_end_clean();
 
     // LOGO
-    $logo_array  = XoopsLists:: getImgListAsArray(smartpartner_getImageDir());
+    $logo_array  = XoopsLists::getImgListAsArray(Smartpartner\Utility::getImageDir());
     $logo_select = new \XoopsFormSelect('', 'image', $partnerObj->image());
     $logo_select->addOption('-1', '---------------');
     $logo_select->addOptionArray($logo_array);
     $logo_select->setExtra("onchange='showImgSelected(\"image3\", \"image\", \"" . 'uploads/' . SMARTPARTNER_DIRNAME . '/images' . '", "", "' . XOOPS_URL . "\")'");
     $logo_tray = new \XoopsFormElementTray(_AM_SPARTNER_LOGO, '&nbsp;');
     $logo_tray->addElement($logo_select);
-    $logo_tray->addElement(new \XoopsFormLabel('', "<br><br><img src='" . smartpartner_getImageDir('', false) . $partnerObj->image() . "' name='image3' id='image3' alt=''>"));
+    $logo_tray->addElement(new \XoopsFormLabel('', "<br><br><img src='" . Smartpartner\Utility::getImageDir('', false) . $partnerObj->image() . "' name='image3' id='image3' alt=''>"));
     $logo_tray->setDescription(_AM_SPARTNER_LOGO_DSC);
     $sform->addElement($logo_tray);
 
@@ -310,9 +310,9 @@ function editpartner($showmenu = false, $id = 0)
     $sform->display();
     unset($hidden);
     if (!$id) {
-        smartpartner_close_collapsable('addpartner', 'addpartnericon');
+        Smartpartner\Utility::closeCollapsable('addpartner', 'addpartnericon');
     } else {
-        smartpartner_close_collapsable('editpartner', 'editpartnericon');
+        Smartpartner\Utility::closeCollapsable('editpartner', 'editpartnericon');
     }
     if (0 != $id) {
         showfiles($partnerObj);
@@ -334,7 +334,7 @@ if (isset($_POST['op'])) {
 $startpartner = isset($_GET['startpartner']) ? (int)$_GET['startpartner'] : 0;
 
 if (!isset($smartPartnerPartnerHandler)) {
-    $smartPartnerPartnerHandler = smartpartner_gethandler('partner');
+    $smartPartnerPartnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
 }
 /* -- Available operations -- */
 switch ($op) {
@@ -395,7 +395,7 @@ switch ($op) {
                     redirect_header('javascript:history.go(-1)', 2, _CO_SPARTNER_FILE_UPLOAD_ERROR);
                 }
 
-                $uploader = new \XoopsMediaUploader(smartpartner_getImageDir(), $allowed_mimetypes, $max_size, $max_imgwidth, $max_imgheight);
+                $uploader = new \XoopsMediaUploader(Smartpartner\Utility::getImageDir(), $allowed_mimetypes, $max_size, $max_imgwidth, $max_imgheight);
 
                 // TODO: prefix the image file with the partnerid, but for that we need to first save the partner to get partnerid...
                 // $uploader->setTargetFileName($partnerObj->partnerid() . "_" . $_FILES['logo_file']['name']);
@@ -433,7 +433,7 @@ switch ($op) {
 
         // Storing the partner
         if (!$partnerObj->store()) {
-            redirect_header('javascript:history.go(-1)', 3, $redirect_msgs['error'] . smartpartner_formatErrors($partnerObj->getErrors()));
+            redirect_header('javascript:history.go(-1)', 3, $redirect_msgs['error'] . Smartpartner\Utility::formatErrors($partnerObj->getErrors()));
         }
 
         if ((_SPARTNER_STATUS_SUBMITTED == $_POST['original_status']) || (_SPARTNER_STATUS_ACTIVE == $_POST['status'])) {
@@ -479,7 +479,7 @@ switch ($op) {
 
     case 'default':
     default:
-        smartpartner_xoops_cp_header();
+        Smartpartner\Utility::getXoopsCpHeader();
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
 
@@ -496,10 +496,10 @@ switch ($op) {
 
         global $xoopsUser, $xoopsUser, $xoopsConfig, $xoopsDB, $xoopsModuleConfig, $xoopsModule;
 
-        smartpartner_collapsableBar('partners', 'partnersicon', _AM_SPARTNER_ACTIVE_PARTNERS, _AM_SPARTNER_ACTIVE_PARTNERS_DSC);
+        Smartpartner\Utility::collapsableBar('partners', 'partnersicon', _AM_SPARTNER_ACTIVE_PARTNERS, _AM_SPARTNER_ACTIVE_PARTNERS_DSC);
 
         // Get the total number of published PARTNER
-        $totalpartners = $smartPartnerPartnerHandler->getPartnerCount(_SPARTNER_STATUS_ACTIVE);
+        $totalpartners = $smartPartnerPartnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_ACTIVE);
         // creating the partner objects that are published
         $partnersObj         = $smartPartnerPartnerHandler->getPartners($xoopsModuleConfig['perpage_admin'], $startpartner);
         $totalPartnersOnPage = count($partnersObj);
@@ -537,10 +537,10 @@ switch ($op) {
         $pagenav = new \XoopsPageNav($totalpartners, $xoopsModuleConfig['perpage_admin'], $startpartner, 'startpartner');
         echo '<div style="text-align:right;">' . $pagenav->renderNav() . '</div>';
 
-        smartpartner_close_collapsable('partners', 'partnersicon');
+        Smartpartner\Utility::closeCollapsable('partners', 'partnersicon');
 
         break;
 }
-//smart_modFooter();
+//Smartobject\Utility::getModFooter();
 //xoops_cp_footer();
 require_once __DIR__ . '/admin_footer.php';

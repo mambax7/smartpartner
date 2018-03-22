@@ -15,8 +15,8 @@ function b_scrolling_partner_show($options)
     require_once XOOPS_ROOT_PATH . '/modules/smartpartner/include/common.php';
 
     // Creating the partner handler object
-    $smartPartnerPartnerHandler = smartpartner_gethandler('partner');
-    //$smartPartnerCategoryHandler = smartpartner_gethandler('category');
+    $smartPartnerPartnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
+    //$smartPartnerCategoryHandler = Smartpartner\Helper::getInstance()->getHandler('Category');
 
     // Randomize
     $partnersObj = $smartPartnerPartnerHandler->getPartners(0, 0, _SPARTNER_STATUS_ACTIVE);
@@ -46,8 +46,8 @@ function b_scrolling_partner_show($options)
                 $partner['urllink']  = $partnersObj[$i]->getUrlLink('block');
                 $partner['image']    = $partnersObj[$i]->getImageUrl();
                 $partner['title']    = $partnersObj[$i]->title();
-                $smartConfig         = smartpartner_getModuleConfig();
-                $image_info          = smartpartner_imageResize($partnersObj[$i]->getImagePath(), $smartConfig['img_max_width'], $smartConfig['img_max_height']);
+                $smartConfig         = Smartpartner\Utility::getModuleConfig();
+                $image_info          = Smartpartner\Utility::imageResize($partnersObj[$i]->getImagePath(), $smartConfig['img_max_width'], $smartConfig['img_max_height']);
                 $block['partners'][] = $partner;
             }
         }

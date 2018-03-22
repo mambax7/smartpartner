@@ -323,9 +323,9 @@ class Partner extends Smartobject\BaseSmartObject
     {
         if (('' !== $this->getVar('image')) && ('blank.png' !== $this->getVar('image'))
             && ('-1' !== $this->getVar('image'))) {
-            return smartpartner_getImageDir('', false) . $this->image();
+            return Smartpartner\Utility::getImageDir('', false) . $this->image();
         } elseif (!$this->getVar('image_url')) {
-            return smartpartner_getImageDir('', false) . 'blank.png';
+            return Smartpartner\Utility::getImageDir('', false) . 'blank.png';
         } else {
             return $this->getVar('image_url');
         }
@@ -337,7 +337,7 @@ class Partner extends Smartobject\BaseSmartObject
     public function getImagePath()
     {
         if (('' !== $this->getVar('image')) && ('blank.png' !== $this->getVar('image'))) {
-            return smartpartner_getImageDir() . $this->image();
+            return Smartpartner\Utility::getImageDir() . $this->image();
         } else {
             return false;
         }
@@ -456,7 +456,7 @@ class Partner extends Smartobject\BaseSmartObject
      */
     public function sendNotifications($notifications = [])
     {
-        $smartModule = smartpartner_getModuleInfo();
+        $smartModule = Smartpartner\Utility::getModuleInfo();
         $module_id   = $smartModule->getVar('mid');
 
         $myts                = \MyTextSanitizer::getInstance();
@@ -655,7 +655,7 @@ class Partner extends Smartobject\BaseSmartObject
      */
     public function toArray($url_link_type = 'partner')
     {
-        $smartConfig = smartpartner_getModuleConfig();
+        $smartConfig = Smartpartner\Utility::getModuleConfig();
 
         $partner['id']         = $this->id();
         $partner['categoryid'] = $this->categoryid();
@@ -678,7 +678,7 @@ class Partner extends Smartobject\BaseSmartObject
         $partner['phone_priv']    = $this->phone_priv();
         $partner['adress_priv']   = $this->adress_priv();
 
-        $image_info          = smartpartner_imageResize($this->getImagePath(), $smartConfig['img_max_width'], $smartConfig['img_max_height']);
+        $image_info          = Smartpartner\Utility::imageResize($this->getImagePath(), $smartConfig['img_max_width'], $smartConfig['img_max_height']);
         $partner['img_attr'] = $image_info[3];
 
         $partner['readmore'] = $this->extentedInfo();
@@ -691,9 +691,9 @@ class Partner extends Smartobject\BaseSmartObject
         }
         //--------------
         global $smartPermissionsHandler, $smartPartnerPartnerHandler, $xoopsUser;
-        require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
+//        require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
         if (!$smartPartnerPartnerHandler) {
-            $smartPartnerPartnerHandler = smartpartner_gethandler('partner');
+            $smartPartnerPartnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
         }
         $smartPermissionsHandler = new Smartobject\SmartobjectPermissionHandler($smartPartnerPartnerHandler);
         $grantedGroups           = $smartPermissionsHandler->getGrantedGroups('full_view', $this->id());
@@ -722,7 +722,7 @@ class Partner extends Smartobject\BaseSmartObject
         if ($highlight && isset($_GET['keywords'])) {
             $myts                     = \MyTextSanitizer::getInstance();
             $keywords                 = $myts->htmlSpecialChars(trim(urldecode($_GET['keywords'])));
-            $h                        = new Smartpartner\Keyhighlighter($keywords, true, 'smartpartner_highlighter');
+            $h                        = new Smartpartner\Keyhighlighter($keywords, true, 'Smartpartner\Utility::getHighlighter');
             $partner['title']         = $h->highlight($partner['title']);
             $partner['summary']       = $h->highlight($partner['summary']);
             $partner['description']   = $h->highlight($partner['description']);

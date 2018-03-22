@@ -44,17 +44,17 @@ function editoffer($showmenu = false, $offerid = 0, $fct = '')
     $menuTab = 3;
 
     if ($showmenu) {
-        //smart_adminMenu($menuTab, $breadcrumb);
+        //Smartobject\Utility::getAdminMenu($menuTab, $breadcrumb);
     }
     echo "<br>\n";
-    smart_collapsableBar($collaps_name, $title, $info);
+    Smartobject\Utility::getCollapsableBar($collaps_name, $title, $info);
 
     $sform = $offerObj->getForm($form_name, 'addoffer', false, $submit_button_caption);
     if ('app' === $fct) {
         $sform->addElement(new \XoopsFormHidden('fct', 'app'));
     }
     $sform->display();
-    smart_close_collapsable($collaps_name);
+    Smartobject\Utility::closeCollapsable($collaps_name);
 }
 
 require_once __DIR__ . '/admin_header.php';
@@ -71,13 +71,13 @@ switch ($op) {
     case 'mod':
         $offerid = isset($_GET['offerid']) ? (int)$_GET['offerid'] : 0;
         $fct     = isset($_GET['fct']) ? $_GET['fct'] : '';
-        smart_xoops_cp_header();
+        Smartobject\Utility::getXoopsCpHeader();
 
         editoffer(true, $offerid, $fct);
         break;
 
     case 'addoffer':
-        require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectcontroller.php';
+//        require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectcontroller.php';
 
         $controller = new Smartobject\SmartObjectController($smartPartnerOfferHandler);
         $offerObj   = $controller->storeSmartObject();
@@ -92,7 +92,7 @@ switch ($op) {
                 $offerObj->sendNotifications([_SPARTNER_NOT_OFFER_NEW]);
             }
 
-            redirect_header(smart_get_page_before_form(), 3, _CO_SOBJECT_SAVE_SUCCESS);
+            redirect_header(Smartobject\Utility::getPageBeforeForm(), 3, _CO_SOBJECT_SAVE_SUCCESS);
         }
         exit;
         break;
@@ -105,8 +105,8 @@ switch ($op) {
 
     case 'default':
     default:
-        require_once XOOPS_ROOT_PATH . '/modules/smartobject/include/functions.php';
-        smart_xoops_cp_header();
+//        require_once XOOPS_ROOT_PATH . '/modules/smartobject/include/functions.php';
+        Smartobject\Utility::getXoopsCpHeader();
 
         //add navigation icon
         $adminObject = \Xmf\Module\Admin::getInstance();
@@ -116,17 +116,17 @@ switch ($op) {
         $adminObject->addItemButton(_AM_SPARTNER_OFFER_CREATE, 'offer.php?op=mod', 'add', '');
         $adminObject->displayButton('left', '');
 
-        //smart_adminMenu(3, _AM_SPARTNER_OFFERS);
+        //Smartobject\Utility::getAdminMenu(3, _AM_SPARTNER_OFFERS);
 
         //        echo "<br>\n";
         //        echo "<form><div style=\"margin-bottom: 12px;\">";
         //        echo "<input type='button' name='button' onclick=\"location='offer.php?op=mod'\" value='" . _AM_SPARTNER_OFFER_CREATE . "'>&nbsp;&nbsp;";
         //        echo "</div></form>";
 
-        smart_collapsableBar('createdoffers', _AM_SPARTNER_OFFERS, _AM_SPARTNER_OFFERS_DSC);
+        Smartobject\Utility::getCollapsableBar('createdoffers', _AM_SPARTNER_OFFERS, _AM_SPARTNER_OFFERS_DSC);
 
 //        require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjecttable.php';
-        $objectTable = new Smartpartner\Table($smartPartnerOfferHandler);
+        $objectTable = new Smartobject\SmartObjectTable($smartPartnerOfferHandler);
         $objectTable->addFilter('partnerid', 'getPartnerList');
         $objectTable->addFilter('status', 'getStatusList');
         $objectTable->addColumn(new Smartobject\SmartObjectColumn('title', 'left'));
@@ -135,12 +135,12 @@ switch ($op) {
         $objectTable->render();
 
         echo '<br>';
-        smart_close_collapsable('createdoffers');
+        Smartobject\Utility::closeCollapsable('createdoffers');
         echo '<br>';
 
         break;
 }
 
-//smart_modFooter();
+//Smartobject\Utility::getModFooter();
 //xoops_cp_footer();
 require_once __DIR__ . '/admin_footer.php';

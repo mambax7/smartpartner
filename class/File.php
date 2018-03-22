@@ -55,7 +55,7 @@ class File extends \XoopsObject
     public function checkUpload($post_field, &$allowed_mimetypes, &$errors)
     {
         require_once SMARTPARTNER_ROOT_PATH . 'class/uploader.php';
-        $config = smartpartner_getModuleConfig();
+        $config = Smartpartner\Utility::getModuleConfig();
 
         $maxfilesize   = $config['maximum_filesize'];
         $maxfilewidth  = 100000; //$config['maximum_image_width'];
@@ -72,7 +72,7 @@ class File extends \XoopsObject
                 return false;
             }
         }
-        $uploader = new \XoopsMediaUploader(smartpartner_getUploadDir(), $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
+        $uploader = new \XoopsMediaUploader(Smartpartner\Utility::getUploadDir(), $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
 
         if ($uploader->fetchMedia($post_field)) {
             return true;
@@ -141,7 +141,7 @@ class File extends \XoopsObject
         global $xoopsUser, $xoopsDB, $xoopsModule;
         require_once SMARTPARTNER_ROOT_PATH . 'class/uploader.php';
 
-        $config = smartpartner_getModuleConfig();
+        $config = Smartpartner\Utility::getModuleConfig();
 
         $id = $this->getVar('id');
 
@@ -161,14 +161,14 @@ class File extends \XoopsObject
         $maxfilewidth  = 100000; //$config['maximum_image_width'];
         $maxfileheight = 100000; //$config['maximum_image_height'];
 
-        if (!is_dir(smartpartner_getUploadDir())) {
-            //            mkdir(smartpartner_getUploadDir(), 0757);
-            if (!@mkdir(smartpartner_getUploadDir(), 0757) && !is_dir(smartpartner_getUploadDir())) {
-                throw new \RuntimeException("Couldn't create this directory: " . smartpartner_getUploadDir());
+        if (!is_dir(Smartpartner\Utility::getUploadDir())) {
+            //            mkdir(Smartpartner\Utility::getUploadDir(), 0757);
+            if (!@mkdir(getUploadDir(), 0757) && !is_dir(Smartpartner\Utility::getUploadDir())) {
+                throw new \RuntimeException("Couldn't create this directory: " . Smartpartner\Utility::getUploadDir());
             }
         }
 
-        $uploader = new \XoopsMediaUploader(smartpartner_getUploadDir() . '/', $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
+        $uploader = new \XoopsMediaUploader(Smartpartner\Utility::getUploadDir() . '/', $allowed_mimetypes, $maxfilesize, $maxfilewidth, $maxfileheight);
         if ($uploader->fetchMedia($post_field)) {
             $file_title = $this->purifyText($uploader->getMediaName());
             $uploader->setTargetFileName($id . '_' . $file_title);
@@ -334,7 +334,7 @@ class File extends \XoopsObject
         $smartPartnerModule =& $hModule->getByDirname('smartpartner');
         $smartPartnerConfig =& $hModConfig->getConfigsByCat(0, $smartPartnerModule->getVar('mid'));
 
-        return smartpartner_getUploadDir(false) . $this->filename();
+        return Smartpartner\Utility::getUploadDir(false) . $this->filename();
     }
 
     /**
@@ -347,7 +347,7 @@ class File extends \XoopsObject
         $smartPartnerModule =& $hModule->getByDirname('smartpartner');
         $smartPartnerConfig =& $hModConfig->getConfigsByCat(0, $smartPartnerModule->getVar('mid'));
 
-        return smartpartner_getUploadDir() . $this->filename();
+        return Smartpartner\Utility::getUploadDir() . $this->filename();
     }
 
     /**

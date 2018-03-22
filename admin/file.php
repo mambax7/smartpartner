@@ -44,7 +44,7 @@ function editfile($showmenu = false, $fileid = 0, $id = 0)
         echo "<br>\n";
         echo "<span style='color: #2F5376; font-weight: bold; font-size: 16px; margin: 6px 6px 0 0; '>" . _AM_SPARTNER_FILE_EDITING . '</span>';
         echo '<span style="color: #567; margin: 3px 0 12px 0; font-size: small; display: block; ">' . _AM_SPARTNER_FILE_EDITING_DSC . '</span>';
-        smartpartner_collapsableBar('editfile', 'editfileicon', _AM_SPARTNER_FILE_INFORMATIONS);
+        Smartpartner\Utility::collapsableBar('editfile', 'editfileicon', _AM_SPARTNER_FILE_INFORMATIONS);
     } else {
         // there's no parameter, so we're adding an item
         $fileObj = $smartPartnerFileHandler->create();
@@ -52,7 +52,7 @@ function editfile($showmenu = false, $fileid = 0, $id = 0)
 
         echo "<span style='color: #2F5376; font-weight: bold; font-size: 16px; margin: 6px 6px 0 0; '>" . _AM_SPARTNER_FILE_ADDING . '</span>';
         echo '<span style="color: #567; margin: 3px 0 12px 0; font-size: small; display: block; ">' . _AM_SPARTNER_FILE_ADDING_DSC . '</span>';
-        smartpartner_collapsableBar('addfile', 'addfileicon', _AM_SPARTNER_FILE_INFORMATIONS);
+        Smartpartner\Utility::collapsableBar('addfile', 'addfileicon', _AM_SPARTNER_FILE_INFORMATIONS);
     }
 
     // FILES UPLOAD FORM
@@ -116,9 +116,9 @@ function editfile($showmenu = false, $fileid = 0, $id = 0)
     $files_form->display();
 
     if (0 != $fileid) {
-        smartpartner_close_collapsable('editfile', 'editfileicon');
+        Smartpartner\Utility::closeCollapsable('editfile', 'editfileicon');
     } else {
-        smartpartner_close_collapsable('addfile', 'addfileicon');
+        Smartpartner\Utility::closeCollapsable('addfile', 'addfileicon');
     }
 }
 
@@ -126,12 +126,12 @@ $false = false;
 /* -- Available operations -- */
 switch ($op) {
     case 'uploadfile':
-        smartpartner_upload_file(false, true, $false);
+        Smartpartner\Utility::uploadFile(false, true, $false);
         exit;
         break;
 
     case 'uploadanother':
-        smartpartner_upload_file(true, true, $false);
+        Smartpartner\Utility::uploadFile(true, true, $false);
         exit;
         break;
 
@@ -143,7 +143,7 @@ switch ($op) {
             redirect_header('javascript:history.go(-1)', 3, _AM_SPARTNER_NOITEMSELECTED);
         }
 
-        smartpartner_xoops_cp_header();
+        Smartpartner\Utility::getXoopsCpHeader();
         require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
         editfile(true, $fileid, $id);
@@ -168,7 +168,7 @@ switch ($op) {
 
         // Storing the file
         if (!$fileObj->store()) {
-            redirect_header('partner.php?op=mod&id=' . $fileObj->id(), 3, _AM_SPARTNER_FILE_EDITING_ERROR . smartpartner_formatErrors($fileObj->getErrors()));
+            redirect_header('partner.php?op=mod&id=' . $fileObj->id(), 3, _AM_SPARTNER_FILE_EDITING_ERROR . Smartpartner\Utility::formatErrors($fileObj->getErrors()));
         }
 
         redirect_header('partner.php?op=mod&id=' . $fileObj->id(), 2, _AM_SPARTNER_FILE_EDITING_SUCCESS);
@@ -198,7 +198,7 @@ switch ($op) {
             // no confirm: show deletion condition
             $fileid = isset($_GET['fileid']) ? (int)$_GET['fileid'] : 0;
 
-            smartpartner_xoops_cp_header();
+            Smartpartner\Utility::getXoopsCpHeader();
             xoops_confirm([
                               'op'      => 'del',
                               'fileid'  => $fileObj->fileid(),
@@ -213,7 +213,7 @@ switch ($op) {
 
     case 'default':
     default:
-        smartpartner_xoops_cp_header();
+        Smartpartner\Utility::getXoopsCpHeader();
 
         exit;
         require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
@@ -223,7 +223,7 @@ switch ($op) {
 
         echo "<br>\n";
 
-        smartpartner_collapsableBar('toptable', 'toptableicon', _AM_SPARTNER_PUBLISHEDITEMS, _AM_SPARTNER_PUBLISHED_DSC);
+        Smartpartner\Utility::collapsableBar('toptable', 'toptableicon', _AM_SPARTNER_PUBLISHEDITEMS, _AM_SPARTNER_PUBLISHED_DSC);
 
         // Get the total number of published ITEM
         $totalitems = $smartPartnerItemHandler->getItemsCount(-1, [_SPARTNER_STATUS_PUBLISHED]);
@@ -275,6 +275,6 @@ switch ($op) {
 
         break;
 }
-//smart_modFooter();
+//Smartobject\Utility::getModFooter();
 //xoops_cp_footer();
 require_once __DIR__ . '/admin_footer.php';

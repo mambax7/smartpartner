@@ -54,18 +54,18 @@ require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartloader.php';
 //require_once SMARTOBJECT_ROOT_PATH . 'class/smartobjectcategory.php';
 
 // Creating the SmartModule object
-//$smartModule = smartpartner_getModuleInfo();
+//$smartModule = Smartpartner\Utility::getModuleInfo();
 $smartModule = $helper->getModule();
 
 // Find if the user is admin of the module
-//$smartPartnerIsAdmin = smartpartner_userIsAdmin();
+//$smartPartnerIsAdmin = Smartpartner\Utility::userIsAdmin();
 $smartPartnerIsAdmin = $helper->isUserAdmin();
 
 $myts                   = \MyTextSanitizer::getInstance();
 $smartPartnerModuleName = $smartModule->getVar('name');
 
 // Creating the SmartModule config Object
-//$smartConfig = smartpartner_getModuleConfig();
+//$smartConfig = Smartpartner\Utility::getModuleConfig();
 $smartConfig = $helper->getConfig();
 
 // Creating the partner handler object

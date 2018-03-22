@@ -159,7 +159,7 @@ class FileHandler extends \XoopsObjectHandler
             return false;
         }
         // Delete the actual file
-        if (!smartpartner_deleteFile($file->getFilePath())) {
+        if (!Smartpartner\Utility::deleteFile($file->getFilePath())) {
             return false;
         }
         // Delete the record in the table

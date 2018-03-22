@@ -22,15 +22,15 @@ switch ($op) {
             if ('root' === $path) {
                 $path = '';
             }
-            $thePath = smartpartner_getUploadDir(true, $path);
+            $thePath = Smartpartner\Utility::getUploadDir(true, $path);
 
-            $res = smartpartner_admin_mkdir($thePath);
+            $res = Smartpartner\Utility::mkdirAsAdmin($thePath);
             if ($res) {
                 $source = SMARTPARTNER_ROOT_PATH . 'assets/images/blank.png';
                 $dest   = $thePath . 'blank.png';
 
                 try {
-                    smartpartner_copyr($source, $dest);
+                    Smartpartner\Utility::copyr($source, $dest);
                 }
                 catch (Exception $e) {
                 }
@@ -62,7 +62,7 @@ function pathConfiguration()
 {
     global $xoopsModule;
     // Upload and Images Folders
-    smartpartner_collapsableBar('configtable', 'configtableicon', _AM_SPARTNER_PATHCONFIGURATION);
+    Smartpartner\Utility::collapsableBar('configtable', 'configtableicon', _AM_SPARTNER_PATHCONFIGURATION);
     echo '<br>';
     echo "<table width='100%' class='outer' cellspacing='1' cellpadding='3' border='0' ><tr>";
     echo "<td class='bg3'><b>" . _AM_SPARTNER_PATH_ITEM . '</b></td>';
@@ -70,19 +70,19 @@ function pathConfiguration()
     echo "<td class='bg3' align='center'><b>" . _AM_SPARTNER_STATUS . '</b></td></tr>';
 
     echo "<tr><td class='odd'>" . _AM_SPARTNER_PATH_IMAGES . '</td>';
-    $image_path = smartpartner_getImageDir();
+    $image_path = Smartpartner\Utility::getImageDir();
     echo "<td class='odd'>" . $image_path . '</td>';
-    echo "<td class='even' style='text-align: center;'>" . smartpartner_admin_getPathStatus('images') . '</td></tr>';
+    echo "<td class='even' style='text-align: center;'>" . Smartpartner\Utility::getPathStatusAsAdmin('images') . '</td></tr>';
 
     echo "<tr><td class='odd'>" . _AM_SPARTNER_PATH_CATEGORY_IMAGES . '</td>';
-    $image_path = smartpartner_getImageDir('category');
+    $image_path = Smartpartner\Utility::getImageDir('category');
     echo "<td class='odd'>" . $image_path . '</td>';
-    echo "<td class='even' style='text-align: center;'>" . smartpartner_admin_getPathStatus('images/category') . '</td></tr>';
+    echo "<td class='even' style='text-align: center;'>" . Smartpartner\Utility::getPathStatusAsAdmin('images/category') . '</td></tr>';
 
     echo '</table>';
     echo '<br>';
 
-    smartpartner_close_collapsable('configtable', 'configtableicon');
+    Smartpartner\Utility::closeCollapsable('configtable', 'configtableicon');
 }
 
 function buildTable()
@@ -103,11 +103,11 @@ require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
 require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 
 // Creating the Partner handler object
-//$smartPartnerPartnerHandler = smartpartner_gethandler('partner');
+//$smartPartnerPartnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
 
 $startentry = isset($_GET['startentry']) ? (int)$_GET['startentry'] : 0;
 
-smartpartner_xoops_cp_header();
+Smartpartner\Utility::getXoopsCpHeader();
 $adminObject = \Xmf\Module\Admin::getInstance();
 //xoops_cp_header();
 $adminObject->displayNavigation(basename(__FILE__));
@@ -130,7 +130,7 @@ $totalinactive = $smartPartnerPartnerHandler->getPartnerCount(Constants::_SPARTN
 $totalrejected = $smartPartnerPartnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_REJECTED);
 
 // Check Path Configuration
-//if ((smartpartner_admin_getPathStatus('images', true) < 0) || (smartpartner_admin_getPathStatus('images/category', true) < 0)) {
+//if ((Smartpartner\Utility::getPathStatusAsAdmin('images', true) < 0) || (Smartpartner\Utility::getPathStatusAsAdmin('images/category', true) < 0)) {
 //    pathConfiguration();
 //}
 
@@ -139,7 +139,7 @@ $adminObject->addItemButton(_AM_SPARTNER_PARTNER_CREATE, 'partner.php?op=add', '
 $adminObject->displayButton('left', '');
 
 // -- //
-//smartpartner_collapsableBar('index', 'indexicon', _AM_SPARTNER_INVENTORY);
+//Smartpartner\Utility::collapsableBar('index', 'indexicon', _AM_SPARTNER_INVENTORY);
 //echo "<br>";
 //echo "<table width='100%' class='outer' cellspacing='1' cellpadding='3' border='0' ><tr>";
 //echo "<td class='head'>" . _AM_SPARTNER_TOTAL_SUBMITTED . "</td><td align='center' class='even'>" . $totalsubmitted . "</td>";
@@ -153,10 +153,10 @@ $adminObject->displayButton('left', '');
 //echo "<input type='button' name='button' onclick=\"location='category.php?op=mod'\" value='" . _AM_SPARTNER_CATEGORY_CREATE . "'>&nbsp;&nbsp;";
 //echo "<input type='button' name='button' onclick=\"location='partner.php?op=add'\" value='" . _AM_SPARTNER_PARTNER_CREATE . "'>&nbsp;&nbsp;";
 //echo "</div></form>";
-//smartpartner_close_collapsable('index', 'indexicon');
+//Smartpartner\Utility::closeCollapsable('index', 'indexicon');
 
 // Construction of lower table
-smartpartner_collapsableBar('allitems', 'allitemsicon', _AM_SPARTNER_ALLITEMS, _AM_SPARTNER_ALLITEMSMSG);
+Smartpartner\Utility::collapsableBar('allitems', 'allitemsicon', _AM_SPARTNER_ALLITEMS, _AM_SPARTNER_ALLITEMSMSG);
 
 $showingtxt   = '';
 $selectedtxt  = '';
@@ -341,15 +341,15 @@ if (1 == $xoopsModuleConfig['useimagenavpage']) {
     echo '<div style="text-align:right; background-color: white; margin: 10px 0;">' . $pagenav->renderNav() . '</div>';
 }
 // ENDs code to show active entries
-smartpartner_close_collapsable('allitems', 'allitemsicon');
+Smartpartner\Utility::closeCollapsable('allitems', 'allitemsicon');
 // Close the collapsable div
 // Check Path Configuration
-if ((smartpartner_admin_getPathStatus('images', true) > 0) && (smartpartner_admin_getPathStatus('images/category', true) > 0)) {
+if ((Smartpartner\Utility::getPathStatusAsAdmin('images', true) > 0) && (Smartpartner\Utility::getPathStatusAsAdmin('images/category', true) > 0)) {
     pathConfiguration();
 }
 echo '</div>';
 echo '</div>';
 
-//smart_modFooter();
+//Smartobject\Utility::getModFooter();
 //xoops_cp_footer();
 require_once __DIR__ . '/admin_footer.php';

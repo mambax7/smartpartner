@@ -23,8 +23,8 @@ function b_recent_offers_show($options)
     require_once XOOPS_ROOT_PATH . '/modules/smartpartner/include/common.php';
 
     // Creating the partner handler object
-    $offerHandler   = smartpartner_gethandler('offer');
-    $partnerHandler = smartpartner_gethandler('partner');
+    $offerHandler   = Smartpartner\Helper::getInstance()->getHandler('Offer');
+    $partnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
 
 //    require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
     $smartPermissionsHandler = new Smartobject\SmartobjectPermissionHandler($partnerHandler);
@@ -46,8 +46,8 @@ function b_recent_offers_show($options)
             foreach ($offersObj as $offerObj) {
                 $block['offers'][] = $offerObj->toArray('e');
             }
-            $smartConfig = smartpartner_getModuleConfig();
-            //$image_info = smartpartner_imageResize($partnerObj->getImagePath(), $smartConfig['img_max_width'], $smartConfig['img_max_height']);
+            $smartConfig = Smartpartner\Utility::getModuleConfig();
+            //$image_info = Smartpartner\Utility::imageResize($partnerObj->getImagePath(), $smartConfig['img_max_width'], $smartConfig['img_max_height']);
 
             if (1 == $options[0]) {
                 $block['fadeImage'] = 'style="filter:alpha(opacity=20);" onmouseover="nereidFade(this,100,30,5)" onmouseout="nereidFade(this,50,30,5)"';

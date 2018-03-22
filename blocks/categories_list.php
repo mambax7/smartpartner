@@ -10,6 +10,9 @@
  * @param $displaysubs
  * @return array
  */
+
+use XoopsModules\Smartpartner;
+
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 function get_content($cat_id, $catsObj, $displaysubs)
 {
@@ -35,7 +38,7 @@ function b_categories_list_show($options)
 {
     require_once XOOPS_ROOT_PATH . '/modules/smartpartner/include/common.php';
 
-    $smartPartnerCategoryHandler = smartpartner_gethandler('category');
+    $smartPartnerCategoryHandler = Smartpartner\Helper::getInstance()->getHandler('Category');
     $criteria                    = new \CriteriaCompo();
 
     $criteria->setSort(isset($options[0]) ? $options[0] : 'name');
@@ -51,7 +54,7 @@ function b_categories_list_show($options)
         $current_id       = $_GET['view_category_id'];
         $block['current'] = 0 == $catsObj[$current_id]->getVar('parentid') ? $current_id : $catsObj[$current_id]->getVar('parentid');
     } elseif (isset($_GET['id'])) {
-        $smartPartnerPartnerHandler = smartpartner_gethandler('partner');
+        $smartPartnerPartnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
         $partnerObj                 = $smartPartnerPartnerHandler->get($_GET['id']);
         if (is_object($partnerObj)) {
             $parent           = $partnerObj->getVar('categoryid');

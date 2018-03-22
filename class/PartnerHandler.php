@@ -96,7 +96,7 @@ class PartnerHandler extends Smartpartner\PersistableObjectHandler
                 $partner->assignVars($this->db->fetchArray($result));
                 global $smartpartnerPartnerCatLinkHandler;
                 if (!$smartpartnerPartnerCatLinkHandler) {
-                    $smartpartnerPartnerCatLinkHandler = smartpartner_gethandler('partner_cat_link');
+                    $smartpartnerPartnerCatLinkHandler = Smartpartner\Helper::getInstance()->getHandler('PartnerCatLink');
                 }
                 $partner->setVar('categoryid', $smartpartnerPartnerCatLinkHandler->getParentIds($partner->getVar('id')));
 
@@ -242,7 +242,7 @@ class PartnerHandler extends Smartpartner\PersistableObjectHandler
     public function delete(\XoopsObject $partner, $force = false)
     {
         global $smartPartnerOfferHandler, $smartpartnerPartnerCatLinkHandler;
-        $partnerModule = smartpartner_getModuleInfo();
+        $partnerModule = Smartpartner\Utility::getModuleInfo();
         $module_id     = $partnerModule->getVar('mid');
 
         if (strtolower(get_class($partner)) != strtolower($this->className)) {
@@ -321,7 +321,7 @@ class PartnerHandler extends Smartpartner\PersistableObjectHandler
         }
         global $smartpartnerPartnerCatLinkHandler;
         if (!isset($smartpartnerPartnerCatLinkHandler)) {
-            $smartpartnerPartnerCatLinkHandler = smartpartner_gethandler('partner_cat_link');
+            $smartpartnerPartnerCatLinkHandler = Smartpartner\Helper::getInstance()->getHandler('partner_cat_link');
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $partner = new Smartpartner\Partner();

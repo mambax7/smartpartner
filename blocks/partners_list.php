@@ -15,8 +15,8 @@ function b_partners_list_show($options)
     require_once XOOPS_ROOT_PATH . '/modules/smartpartner/include/common.php';
 
     // Creating the partner handler object
-    $smartPartnerPartnerHandler  = smartpartner_gethandler('partner');
-    $smartPartnerCategoryHandler = smartpartner_gethandler('category');
+    $smartPartnerPartnerHandler  = Smartpartner\Helper::getInstance()->getHandler('Partner');
+    $smartPartnerCategoryHandler = Smartpartner\Helper::getInstance()->getHandler('Category');
 
     // Randomize
     $partnersObj = $smartPartnerPartnerHandler->getPartners(0, 0, _SPARTNER_STATUS_ACTIVE);
@@ -61,8 +61,8 @@ function b_partners_list_show($options)
                     } else {
                         $partner['title'] = '';
                     }
-                    $smartConfig                                    = smartpartner_getModuleConfig();
-                    $image_info                                     = smartpartner_imageResize($partnersObj[$i]->getImagePath(), $smartConfig['img_max_width'], $smartConfig['img_max_height']);
+                    $smartConfig                                    = Smartpartner\Utility::getModuleConfig();
+                    $image_info                                     = Smartpartner\Utility::imageResize($partnersObj[$i]->getImagePath(), $smartConfig['img_max_width'], $smartConfig['img_max_height']);
                     $partner['img_attr']                            = $image_info[3];
                     $partner['extendedInfo']                        = $partnersObj[$i]->extentedInfo();
                     $block['categories'][$cat_id[$j]]['partners'][] = $partner;

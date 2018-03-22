@@ -24,20 +24,20 @@ if (!empty($_POST['fct']) && !empty($_POST['op']) && 'modulesadmin' === $_POST['
  */
 function xoops_module_update_smartpartner(\XoopsModule $module)
 {
-    require_once XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname') . '/include/functions.php';
-    require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartdbupdater.php';
+//    require_once XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname') . '/include/functions.php';
+//    require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartdbupdater.php';
 
     $dbupdater = new Smartpartner\Dbupdater();
 
     ob_start();
 
-    $dbVersion = smartpartner_GetMeta('version');
+    $dbVersion = Smartpartner\Utility::getMeta('version');
 
     $dbupdater = new Smartpartner\Dbupdater();
 
     echo '<code>' . _SDU_UPDATE_UPDATING_DATABASE . '<br>';
 
-    //smartpartner_create_upload_folders();
+    //Smartpartner\Utility::createUploadFolders();
 
     // db migrate version = 3
     $newDbVersion = 3;
@@ -194,7 +194,7 @@ function xoops_module_update_smartpartner(\XoopsModule $module)
     } else {
         echo $feedback;
     }
-    smartpartner_SetMeta('version', isset($newDbVersion) ? $newDbVersion : 0); //Set meta version to current
+    Smartpartner\Utility::setMeta('version', isset($newDbVersion) ? $newDbVersion : 0); //Set meta version to current
 
     return true;
 }
@@ -207,9 +207,9 @@ function xoops_module_install_smartpartner(\XoopsModule $module)
 {
     ob_start();
 
-    require_once XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname') . '/include/functions.php';
+//    require_once XOOPS_ROOT_PATH . '/modules/' . $module->getVar('dirname') . '/include/functions.php';
 
-    smartpartner_create_upload_folders();
+    Smartpartner\Utility::createUploadFolders();
 
     $feedback = ob_get_clean();
     if (method_exists($module, 'setMessage')) {

@@ -69,14 +69,14 @@ function editcat($showmenu = false, $categoryid = 0, $nb_subcats = 4, $categoryO
         if ($categoryObj->notLoaded()) {
             redirect_header('category.php', 1, _AM_SPARTNER_NOCOLTOEDIT);
         }
-        smartpartner_collapsableBar('edittable', 'edittableicon', _AM_SPARTNER_CATEGORY_EDIT, _AM_SPARTNER_CATEGORY_EDIT_INFO);
+        Smartpartner\Utility::collapsableBar('edittable', 'edittableicon', _AM_SPARTNER_CATEGORY_EDIT, _AM_SPARTNER_CATEGORY_EDIT_INFO);
     } else {
         if (!$categoryObj) {
             $categoryObj = $smartPartnerCategoryHandler->create();
         }
 
         //echo "<br>\n";
-        smartpartner_collapsableBar('createtable', 'createtableicon', _AM_SPARTNER_CATEGORY_CREATE, _AM_SPARTNER_CATEGORY_CREATE_INFO);
+        Smartpartner\Utility::collapsableBar('createtable', 'createtableicon', _AM_SPARTNER_CATEGORY_CREATE, _AM_SPARTNER_CATEGORY_CREATE_INFO);
     }
     // Start category form
     $mytree = new \XoopsTree($xoopsDB->prefix('smartpartner_categories'), 'categoryid', 'parentid');
@@ -90,14 +90,14 @@ function editcat($showmenu = false, $categoryid = 0, $nb_subcats = 4, $categoryO
     $sform->addElement(new \XoopsFormTextArea(_AM_SPARTNER_CATEGORY_DSC, 'description', $categoryObj->description('e'), 7, 60));
 
     // IMAGE
-    $image_array  = XoopsLists:: getImgListAsArray(smartpartner_getUploadDir('category'));
+    $image_array  = XoopsLists:: getImgListAsArray(Smartpartner\Utility::getUploadDir('category'));
     $image_select = new \XoopsFormSelect('', 'image', $categoryObj->image());
     $image_select->addOption('-1', '---------------');
     $image_select->addOptionArray($image_array);
     $image_select->setExtra("onchange='showImgSelected(\"image3\", \"image\", \"" . 'uploads/smartpartner/assets/images/category/' . '", "", "' . XOOPS_URL . "\")'");
     $image_tray = new \XoopsFormElementTray(_AM_SPARTNER_CATEGORY_IMAGE, '&nbsp;');
     $image_tray->addElement($image_select);
-    $image_tray->addElement(new \XoopsFormLabel('', "<br><br><img src='" . smartpartner_getImageDir('category', false) . $categoryObj->image() . "' name='image3' id='image3' alt=''>"));
+    $image_tray->addElement(new \XoopsFormLabel('', "<br><br><img src='" . Smartpartner\Utility::getImageDir('category', false) . $categoryObj->image() . "' name='image3' id='image3' alt=''>"));
     $image_tray->setDescription(_AM_SPARTNER_CATEGORY_IMAGE_DSC);
     $sform->addElement($image_tray);
 
@@ -207,7 +207,7 @@ function editcat($showmenu = false, $categoryid = 0, $nb_subcats = 4, $categoryO
 
         $sform->addElement($button_tray);
         $sform->display();
-        smartpartner_close_collapsable('createtable', 'createtableicon');
+        Smartpartner\Utility::closeCollapsable('createtable', 'createtableicon');
     } else {
         // button says 'Update'
         $butt_create = new \XoopsFormButton('', '', _AM_SPARTNER_MODIFY, 'submit');
@@ -220,7 +220,7 @@ function editcat($showmenu = false, $categoryid = 0, $nb_subcats = 4, $categoryO
 
         $sform->addElement($button_tray);
         $sform->display();
-        smartpartner_close_collapsable('edittable', 'edittableicon');
+        Smartpartner\Utility::closeCollapsable('edittable', 'edittableicon');
     }
     /*
      //Added by fx2024
@@ -266,7 +266,7 @@ switch ($op) {
         }
         //end of fx2024 code
 
-        smartpartner_xoops_cp_header();
+        Smartpartner\Utility::getXoopsCpHeader();
 
         editcat(true, $categoryid, $nb_subcats);
         break;
@@ -295,7 +295,7 @@ switch ($op) {
                 $max_size          = $xoopsModuleConfig['maximum_imagesize'];
                 $max_imgwidth      = $xoopsModuleConfig['img_max_width'];
                 $max_imgheight     = $xoopsModuleConfig['img_max_height'];
-                $allowed_mimetypes = smartpartner_getAllowedImagesTypes();
+                $allowed_mimetypes = Smartpartner\Utility::getAllowedImagesTypes();
 
                 require_once XOOPS_ROOT_PATH . '/class/uploader.php';
 
@@ -303,7 +303,7 @@ switch ($op) {
                     redirect_header('javascript:history.go(-1)', 2, _AM_SPARTNER_FILEUPLOAD_ERROR);
                 }
 
-                $uploader = new \XoopsMediaUploader(smartpartner_getImageDir('category'), $allowed_mimetypes, $max_size, $max_imgwidth, $max_imgheight);
+                $uploader = new \XoopsMediaUploader(Smartpartner\Utility::getImageDir('category'), $allowed_mimetypes, $max_size, $max_imgwidth, $max_imgheight);
 
                 if ($uploader->fetchMedia($filename) && $uploader->upload()) {
                     $categoryObj->setVar('image', $uploader->getSavedFileName());
@@ -334,7 +334,7 @@ switch ($op) {
         }
 
         if (!$categoryObj->store()) {
-            redirect_header('javascript:history.go(-1)', 3, _AM_SPARTNER_CATEGORY_SAVE_ERROR . smartpartner_formatErrors($categoryObj->getErrors()));
+            redirect_header('javascript:history.go(-1)', 3, _AM_SPARTNER_CATEGORY_SAVE_ERROR . Smartpartner\Utility::formatErrors($categoryObj->getErrors()));
         }
         //Added by fx2024
         $parentCat = $categoryObj->categoryid();
@@ -346,7 +346,7 @@ switch ($op) {
                 $categoryObj->setVar('parentid', $parentCat);
 
                 if (!$categoryObj->store()) {
-                    redirect_header('javascript:history.go(-1)', 3, _AM_SPARTNER_CATEGORY_SUBCAT_SAVE_ERROR . smartpartner_formatErrors($categoryObj->getErrors()));
+                    redirect_header('javascript:history.go(-1)', 3, _AM_SPARTNER_CATEGORY_SUBCAT_SAVE_ERROR . Smartpartner\Utility::formatErrors($categoryObj->getErrors()));
                 }
             }
         }
@@ -362,7 +362,7 @@ switch ($op) {
         $categoryid = 0;
         $nb_subcats = (int)$_POST['nb_subcats'] + $_POST['nb_sub_yet'];
 
-        smartpartner_xoops_cp_header();
+        Smartpartner\Utility::getXoopsCpHeader();
 
         $categoryObj = $smartPartnerCategoryHandler->create();
         $categoryObj->setVar('name', $_POST['name']);
@@ -421,7 +421,7 @@ switch ($op) {
     case 'default':
     default:
 
-        smartpartner_xoops_cp_header();
+        Smartpartner\Utility::getXoopsCpHeader();
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
 
@@ -438,7 +438,7 @@ switch ($op) {
         // Creating the objects for top categories
         $categoriesObj = $smartPartnerCategoryHandler->getCategories($xoopsModuleConfig['perpage_admin'], $startcategory, 0);
 
-        smartpartner_collapsableBar('createdcategories', 'createdcategoriesicon', _AM_SPARTNER_CATEGORIES_TITLE, _AM_SPARTNER_CATEGORIES_DSC);
+        Smartpartner\Utility::collapsableBar('createdcategories', 'createdcategoriesicon', _AM_SPARTNER_CATEGORIES_TITLE, _AM_SPARTNER_CATEGORIES_DSC);
 
         echo "<table width='100%' cellspacing=1 cellpadding=3 border=0 class = outer>";
         echo '<tr>';
@@ -462,12 +462,12 @@ switch ($op) {
         $pagenav = new \XoopsPageNav($totalCategories, $xoopsModuleConfig['perpage_admin'], $startcategory, 'startcategory');
         echo '<div style="text-align:right;">' . $pagenav->renderNav() . '</div>';
         echo '<br>';
-        smartpartner_close_collapsable('createdcategories', 'createdcategoriesicon');
+        Smartpartner\Utility::closeCollapsable('createdcategories', 'createdcategoriesicon');
         echo '<br>';
         //editcat(false);
         break;
 }
 
-//smart_modFooter();
+//Smartobject\Utility::getModFooter();
 //xoops_cp_footer();
 require_once __DIR__ . '/admin_footer.php';

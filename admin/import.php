@@ -54,11 +54,11 @@ switch ($op) {
 
         $importfile = 'none';
 
-        smartpartner_xoops_cp_header();
+        Smartpartner\Utility::getXoopsCpHeader();
         $adminObject = \Xmf\Module\Admin::getInstance();
         $adminObject->displayNavigation(basename(__FILE__));
 
-        smartpartner_collapsableBar('bottomtable', 'bottomtableicon', _AM_SPARTNER_IMPORT_TITLE, _AM_SPARTNER_IMPORT_INFO);
+        Smartpartner\Utility::collapsableBar('bottomtable', 'bottomtableicon', _AM_SPARTNER_IMPORT_TITLE, _AM_SPARTNER_IMPORT_INFO);
 
         global $xoopsUser, $xoopsUser, $xoopsConfig, $xoopsDB, $modify, $xoopsModuleConfig, $xoopsModule, $XOOPS_URL, $myts;
 
@@ -103,11 +103,11 @@ switch ($op) {
         }
 
         // End of collapsable bar
-        smartpartner_close_collapsable('bottomtable', 'bottomtableicon');
+        Smartpartner\Utility::closeCollapsable('bottomtable', 'bottomtableicon');
 
         break;
 }
 
-//smart_modFooter();
+//Smartobject\Utility::getModFooter();
 //xoops_cp_footer();
 require_once __DIR__ . '/admin_footer.php';

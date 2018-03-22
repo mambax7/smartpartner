@@ -72,7 +72,7 @@ class CategoryHandler extends Smartpartner\PersistableObjectHandler
         // Deleting the partners
         global $smartPartnerPartnerHandler;
         if (!isset($smartPartnerPartnerHandler)) {
-            $smartPartnerPartnerHandler = smartpartner_gethandler('partner');
+            $smartPartnerPartnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
         }
         $criteria = new \Criteria('category', $category->categoryid());
         $partners = $smartPartnerPartnerHandler->getObjects($criteria);

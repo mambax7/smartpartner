@@ -14,7 +14,7 @@ function b_random_partner_show($options)
     require_once XOOPS_ROOT_PATH . '/modules/smartpartner/include/common.php';
 
     // Creating the partner handler object
-    $partnerHandler = smartpartner_gethandler('partner');
+    $partnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
 
     // Randomize
     $partnersObj =& $partnerHandler->getPartners(0, 0, _SPARTNER_STATUS_ACTIVE);
@@ -36,8 +36,8 @@ function b_random_partner_show($options)
         } else {
             $partner['title'] = '';
         }
-        $smartConfig             = smartpartner_getModuleConfig();
-        $image_info              = smartpartner_imageResize($partnerObj->getImagePath(), $smartConfig['img_max_width'], $smartConfig['img_max_height']);
+        $smartConfig             = Smartpartner\Utility::getModuleConfig();
+        $image_info              = Smartpartner\Utility::imageResize($partnerObj->getImagePath(), $smartConfig['img_max_width'], $smartConfig['img_max_height']);
         $partner['img_attr']     = $image_info[3];
         $partner['extendedInfo'] = $partnerObj->extentedInfo();
 

@@ -18,7 +18,7 @@ $items_title = _AM_SPARTNER_CAT_ITEMS;
 $items_info  = _AM_SPARTNER_CAT_ITEMS_DSC;
 $sel_cat     = $categoryid;
 
-smartpartner_collapsableBar('bottomtable', 'bottomtableicon', $items_title, $items_info);
+Smartpartner\Utility::collapsableBar('bottomtable', 'bottomtableicon', $items_title, $items_info);
 
 // Get the total number of published ITEMS
 $totalitems = $smartPartnerItemHandler->getItemsCount($sel_cat, [_SPARTNER_STATUS_PUBLISHED]);

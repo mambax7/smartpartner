@@ -30,7 +30,7 @@ $partnerObj = new Smartpartner\Partner($id);
 if ($partnerObj->notLoaded()) {
     redirect_header('javascript:history.go(-1)', 2, _MD_SPARTNER_NOPARTNERSELECTED);
 }
-require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
+//require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
 $smartPermissionsHandler = new Smartobject\SmartobjectPermissionHandler($smartPartnerPartnerHandler);
 $grantedItems            = $smartPermissionsHandler->getGrantedItems('full_view');
 $grantedItems            = array_merge($grantedItems, $smartPermissionsHandler->getGrantedItems('partial_view'));

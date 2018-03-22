@@ -35,7 +35,7 @@ $folder = [
 //---------------------
 
 // Creating the Partner handler object
-//$smartPartnerPartnerHandler = smartpartner_gethandler('partner');
+//$smartPartnerPartnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
 
 // Total Partners -- includes everything on the table
 $totalpartners = $smartPartnerPartnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_ALL);

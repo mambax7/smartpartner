@@ -11,4 +11,4 @@ require_once __DIR__ . '/../../../include/cp_header.php';
 error_reporting(E_ALL);
 
 include __DIR__ . '/../include/common.php';
-smart_loadCommonLanguageFile();
+Smartobject\Utility::loadCommonLanguageFile();

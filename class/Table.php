@@ -157,6 +157,7 @@ class Table
         return $ret;
     }
 
+
     /**
      * Add a field to be added
      *

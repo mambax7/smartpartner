@@ -32,7 +32,7 @@ $modversion['image']         = 'assets/images/logoModule.png';
 $modversion['dirname'] = basename(__DIR__);
 
 // Added by marcan for the About page in admin section
-$modversion['modFooter']              = 'smartpartner_modFooter';
+$modversion['modFooter']              = 'Smartpartner\Utility::modFooter';
 $modversion['developer_lead']         = 'marcan [Marc-Andre Lanciault]';
 $modversion['developer_contributor']  = 'Andy Cleff, Raul Recio, chapi, Marco, Mariuss, outch, M0nty, Christian, Philou, M4d3L, solo, GiJOE, Predator, phppp, AmiCalmant, hsalazar, Aidan Lister, fx2024, Zabou';
 $modversion['developer_website_url']  = 'http://www.smartfactory.ca';

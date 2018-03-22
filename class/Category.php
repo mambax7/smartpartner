@@ -34,6 +34,8 @@ use XoopsModules\Smartpartner;
 //    require_once XOOPS_ROOT_PATH . '/modules/smartpartner/class/object.php';
 //}
 
+require_once __DIR__ . '/../include/seo_functions.php';
+
 
 /**
  * Class Category
@@ -116,11 +118,11 @@ class Category extends \XoopsObject
     {
         if (('' !== $this->getVar('image')) && ('blank.png' !== $this->getVar('image'))
             && ('-1' !== $this->getVar('image'))) {
-            return smartpartner_getImageDir('category', false) . $this->image();
+            return Smartpartner\Utility::getImageDir('category', false) . $this->image();
         } elseif ($falseIfNoImage) {
             return false;
         } elseif (!$this->getVar('image_url')) {
-            return smartpartner_getImageDir('category', false) . 'blank.png';
+            return Smartpartner\Utility::getImageDir('category', false) . 'blank.png';
         } else {
             return $this->getVar('image_url');
         }
@@ -209,7 +211,7 @@ class Category extends \XoopsObject
     public function sendNotifications()
     {
         $hModule     = xoops_getHandler('module');
-        $smartModule =& $hModule->getByDirname('smartpartner');
+        $smartModule = $hModule->getByDirname('smartpartner');
         $module_id   = $smartModule->getVar('mid');
 
         $myts                = \MyTextSanitizer::getInstance();
@@ -237,7 +239,7 @@ class Category extends \XoopsObject
         $category['description']  = $this->description();
 
         if ('blank.png' !== $this->image()) {
-            $category['image_path'] = smartpartner_getImageDir('category', false) . $this->image();
+            $category['image_path'] = Smartpartner\Utility::getImageDir('category', false) . $this->image();
         } else {
             $category['image_path'] = '';
         }

@@ -16,7 +16,7 @@ use XoopsModules\Smartpartner;
  * @param $table
  * @return bool
  */
-function smart_TableExists($table)
+function Smartobject\Utility::isTable($table)
 {
     $bRetVal = false;
     //Verifies that a MySQL table exists
@@ -149,7 +149,7 @@ class DbTable
      */
     public function exists()
     {
-        return smart_TableExists($this->_name);
+        return Smartobject\Utility::isTable($this->_name);
     }
 
     /**

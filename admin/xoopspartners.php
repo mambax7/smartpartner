@@ -27,12 +27,12 @@ if (isset($_POST['op']) && ('go' === $_POST['op'])) {
 }
 
 if ('start' === $op) {
-    smartpartner_xoops_cp_header();
+    Smartpartner\Utility::getXoopsCpHeader();
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     $result = $xoopsDB->query('SELECT count(*) FROM ' . $xoopsDB->prefix('partners'));
     list($totalpartners) = $xoopsDB->fetchRow($result);
-    smartpartner_collapsableBar('bottomtable', 'bottomtableicon', sprintf(_AM_SPARTNER_IMPORT_FROM, $importFromModuleName), sprintf(_AM_SPARTNER_IMPORT_MODULE_FOUND, $importFromModuleName, $totalpartners));
+    Smartpartner\Utility::collapsableBar('bottomtable', 'bottomtableicon', sprintf(_AM_SPARTNER_IMPORT_FROM, $importFromModuleName), sprintf(_AM_SPARTNER_IMPORT_MODULE_FOUND, $importFromModuleName, $totalpartners));
 
     $form = new \XoopsThemeForm(_AM_SPARTNER_IMPORT_SETTINGS, 'import_form', XOOPS_URL . '/modules/' . $xoopsModule->getVar('dirname') . '/admin/' . $scriptname);
 
@@ -49,11 +49,11 @@ if ('start' === $op) {
 if ('go' === $op) {
     require_once __DIR__ . '/admin_header.php';
 
-    smartpartner_xoops_cp_header();
-    smartpartner_collapsableBar('bottomtable', 'bottomtableicon', sprintf(_AM_SPARTNER_IMPORT_FROM, $importFromModuleName), _AM_SPARTNER_IMPORT_RESULT);
+    Smartpartner\Utility::getXoopsCpHeader();
+    Smartpartner\Utility::collapsableBar('bottomtable', 'bottomtableicon', sprintf(_AM_SPARTNER_IMPORT_FROM, $importFromModuleName), _AM_SPARTNER_IMPORT_RESULT);
     $cnt_imported_partner = 0;
 
-    $smartPartnerPartnerHandler = smartpartner_gethandler('partner');
+    $smartPartnerPartnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
 
     $resultPartners = $xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('partners') . ' ');
     while (false !== ($arrPartners = $xoopsDB->fetchArray($resultPartners))) {
@@ -93,7 +93,7 @@ if ('go' === $op) {
     //exit ();
 }
 echo '</div>';
-//smart_modFooter();
+//Smartobject\Utility::getModFooter();
 //xoops_cp_footer();
 require_once __DIR__ . '/admin_footer.php';
 exit();

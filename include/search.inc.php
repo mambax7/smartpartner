@@ -33,7 +33,7 @@ function smartpartner_search($queryarray, $andor, $limit, $offset, $userid)
     $ret = [];
 
     if (!isset($smartPartnerPartnerHandler)) {
-        $smartPartnerPartnerHandler = smartpartner_gethandler('partner');
+        $smartPartnerPartnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
     }
 
     // Searching the partners
