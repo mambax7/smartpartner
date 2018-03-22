@@ -12,6 +12,9 @@
 use XoopsModules\Smartpartner;
 use XoopsModules\Smartobject;
 
+/**
+ * @param $partnerObj
+ */
 function showfiles($partnerObj)
 {
     // UPLOAD FILES
@@ -249,7 +252,7 @@ function editpartner($showmenu = false, $id = 0)
     //perms
     global $smartPermissionsHandler;
 //    require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
-    $smartPermissionsHandler = new Smartobject\PermissionHandler($smartPartnerPartnerHandler);
+    $smartPermissionsHandler = new Smartobject\SmartobjectPermissionHandler($smartPartnerPartnerHandler);
 
     if (0 != $partnerObj->id()) {
         $grantedGroups = $smartPermissionsHandler->getGrantedGroups('full_view', $partnerObj->id());

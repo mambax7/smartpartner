@@ -12,6 +12,10 @@
 use XoopsModules\Smartpartner;
 use XoopsModules\Smartobject;
 
+/**
+ * @param $options
+ * @return array
+ */
 function b_random_offer_show($options)
 {
     require_once XOOPS_ROOT_PATH . '/modules/smartpartner/include/common.php';
@@ -21,7 +25,7 @@ function b_random_offer_show($options)
     $smartPartnerPartnerHandler = smartpartner_gethandler('partner');
 
 //    require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
-    $smartPermissionsHandler = new Smartobject\PermissionHandler($smartPartnerPartnerHandler);
+    $smartPermissionsHandler = new Smartobject\SmartobjectPermissionHandler($smartPartnerPartnerHandler);
     //var_dump($smartPermissionsHandler->handler);exit;
     $grantedItems = $smartPermissionsHandler->getGrantedItems('full_view');
 

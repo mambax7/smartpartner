@@ -14,6 +14,10 @@ use XoopsModules\Smartobject;
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
+/**
+ * @param $options
+ * @return array
+ */
 function b_recent_offers_show($options)
 {
     require_once XOOPS_ROOT_PATH . '/modules/smartpartner/include/common.php';
@@ -23,7 +27,7 @@ function b_recent_offers_show($options)
     $partnerHandler = smartpartner_gethandler('partner');
 
 //    require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
-    $smartPermissionsHandler = new Smartobject\PermissionHandler($partnerHandler);
+    $smartPermissionsHandler = new Smartobject\SmartobjectPermissionHandler($partnerHandler);
     $grantedItems            = $smartPermissionsHandler->getGrantedItems('full_view');
 
     if (!empty($grantedItems)) {

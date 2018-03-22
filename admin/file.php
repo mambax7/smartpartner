@@ -241,17 +241,17 @@ switch ($op) {
         echo "<td width='60' class='bg3' align='center'><b>" . _AM_SPARTNER_ACTION . '</b></td>';
         echo '</tr>';
         if ($totalitems > 0) {
-            for ($i = 0; $i < $totalItemsOnPage; ++$i) {
-                $categoryObj = $itemsObj[$i]->category();
+            foreach ($itemsObj as $iValue) {
+                $categoryObj = $iValue->category();
 
-                $modify = "<a href='partner.php?op=mod&id=" . $itemsObj[$i]->id() . "'><img src='" . $pathIcon16 . '/edit.png' . "' title='" . _AM_SPARTNER_EDITITEM . "' alt='" . _AM_SPARTNER_EDITITEM . "'></a>";
-                $delete = "<a href='partner.php?op=del&id=" . $itemsObj[$i]->id() . "'><img src='" . $pathIcon16 . '/delete.png' . "' title='" . _AM_SPARTNER_EDITITEM . "' alt='" . _AM_SPARTNER_DELETEITEM . "'></a>";
+                $modify = "<a href='partner.php?op=mod&id=" . $iValue->id() . "'><img src='" . $pathIcon16 . '/edit.png' . "' title='" . _AM_SPARTNER_EDITITEM . "' alt='" . _AM_SPARTNER_EDITITEM . "'></a>";
+                $delete = "<a href='partner.php?op=del&id=" . $iValue->id() . "'><img src='" . $pathIcon16 . '/delete.png' . "' title='" . _AM_SPARTNER_EDITITEM . "' alt='" . _AM_SPARTNER_DELETEITEM . "'></a>";
 
                 echo '<tr>';
-                echo "<td class='head' align='center'>" . $itemsObj[$i]->id() . '</td>';
+                echo "<td class='head' align='center'>" . $iValue->id() . '</td>';
                 echo "<td class='even' align='left'>" . $categoryObj->name() . '</td>';
-                echo "<td class='even' align='left'><a href='" . XOOPS_URL . '/modules/' . $xoopsModule->dirname() . '/partner.php?id=' . $itemsObj[$i]->id() . "'>" . $itemsObj[$i]->title() . '</a></td>';
-                echo "<td class='even' align='center'>" . $itemsObj[$i]->datesub() . '</td>';
+                echo "<td class='even' align='left'><a href='" . XOOPS_URL . '/modules/' . $xoopsModule->dirname() . '/partner.php?id=' . $iValue->id() . "'>" . $iValue->title() . '</a></td>';
+                echo "<td class='even' align='center'>" . $iValue->datesub() . '</td>';
                 echo "<td class='even' align='center'> $modify $delete </td>";
                 echo '</tr>';
             }

@@ -12,6 +12,11 @@
 use XoopsModules\Smartpartner;
 use XoopsModules\Smartobject;
 
+/**
+ * @param bool   $showmenu
+ * @param int    $offerid
+ * @param string $fct
+ */
 function editoffer($showmenu = false, $offerid = 0, $fct = '')
 {
     global $smartPartnerOfferHandler, $smartPartnerCategoryHandler, $smartPartnerPartnerHandler;
@@ -74,7 +79,7 @@ switch ($op) {
     case 'addoffer':
         require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectcontroller.php';
 
-        $controller = new Smartobject\Controller($smartPartnerOfferHandler);
+        $controller = new Smartobject\SmartObjectController($smartPartnerOfferHandler);
         $offerObj   = $controller->storeSmartObject();
         $fct        = isset($_POST['fct']) ? $_POST['fct'] : '';
 
@@ -94,7 +99,7 @@ switch ($op) {
 
     case 'del':
 //        require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectcontroller.php';
-        $controller = new Smartobject\Controller($smartPartnerOfferHandler);
+        $controller = new Smartobject\SmartObjectController($smartPartnerOfferHandler);
         $controller->handleObjectDeletion();
         break;
 
@@ -124,9 +129,9 @@ switch ($op) {
         $objectTable = new Smartpartner\Table($smartPartnerOfferHandler);
         $objectTable->addFilter('partnerid', 'getPartnerList');
         $objectTable->addFilter('status', 'getStatusList');
-        $objectTable->addColumn(new SmartObjectColumn('title', 'left'));
-        $objectTable->addColumn(new SmartObjectColumn('partnerid', 'center', 100));
-        $objectTable->addColumn(new SmartObjectColumn('status', 'center', 100));
+        $objectTable->addColumn(new Smartobject\SmartObjectColumn('title', 'left'));
+        $objectTable->addColumn(new Smartobject\SmartObjectColumn('partnerid', 'center', 100));
+        $objectTable->addColumn(new Smartobject\SmartObjectColumn('status', 'center', 100));
         $objectTable->render();
 
         echo '<br>';

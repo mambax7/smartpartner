@@ -29,6 +29,7 @@
 // -------------------------------------------------------------------------//
 
 use XoopsModules\Smartpartner;
+use XoopsModules\Smartobject;
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 //require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobject.php';
@@ -42,7 +43,7 @@ class OfferHandler extends Smartpartner\PersistableObjectHandler
 {
     /**
      * OfferHandler constructor.
-     * @param XoopsDatabase $db
+     * @param \XoopsDatabase $db
      */
     public function __construct(\XoopsDatabase $db)
     {
@@ -80,7 +81,7 @@ class OfferHandler extends Smartpartner\PersistableObjectHandler
         $partnersObj = $smartPartnerPartnerHandler->getObjects(null, true);
 
         require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
-        $smartPermissionsHandler = new SmartobjectPermissionHandler($smartPartnerPartnerHandler);
+        $smartPermissionsHandler = new Smartobject\SmartobjectPermissionHandler($smartPartnerPartnerHandler);
         $userGroups              = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
         $grantedItems            = $smartPermissionsHandler->getGrantedItems('full_view');
         $relevantCat             = [];

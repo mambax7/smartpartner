@@ -139,7 +139,7 @@ class Category extends \XoopsObject
      */
     public function notLoaded()
     {
-        return ($this->getVar('categoryid') == -1);
+        return (-1 == $this->getVar('categoryid'));
     }
 
     /**

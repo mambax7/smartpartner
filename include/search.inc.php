@@ -17,6 +17,14 @@ use XoopsModules\Smartpartner;
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
+/**
+ * @param $queryarray
+ * @param $andor
+ * @param $limit
+ * @param $offset
+ * @param $userid
+ * @return array
+ */
 function smartpartner_search($queryarray, $andor, $limit, $offset, $userid)
 {
     // This must contain the name of the folder in which reside SmartPartner

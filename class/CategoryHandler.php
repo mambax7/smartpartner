@@ -125,7 +125,7 @@ class CategoryHandler extends Smartpartner\PersistableObjectHandler
         $criteria->setSort($sort);
         $criteria->setOrder($order);
 
-        if ($parentid != -1) {
+        if (-1 != $parentid) {
             $criteria->add(new \Criteria('parentid', $parentid));
         }
 
@@ -142,11 +142,11 @@ class CategoryHandler extends Smartpartner\PersistableObjectHandler
      */
     public function getCategoriesCount($parentid = 0)
     {
-        if ($parentid == -1) {
+        if (-1 == $parentid) {
             return $this->getCount();
         }
         $criteria = new \CriteriaCompo();
-        if (isset($parentid) && ($parentid != -1)) {
+        if (isset($parentid) && (-1 != $parentid)) {
             $criteria->add(new \Criteria('parentid', $parentid));
         }
 

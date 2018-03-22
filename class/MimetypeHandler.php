@@ -48,7 +48,7 @@ class MimetypeHandler extends Smartpartner\BaseObjectHandler
     /**
      * Constructor
      *
-     * @param object|XoopsDatabase $db reference to a xoopsDB object
+     * @param \XoopsDatabase $db reference to a xoopsDB object
      */
     public function __construct(\XoopsDatabase $db)
     {
@@ -58,7 +58,7 @@ class MimetypeHandler extends Smartpartner\BaseObjectHandler
     /**
      * retrieve a mimetype object from the database
      * @param  int $id ID of mimetype
-     * @return object {@link Mimetype}
+     * @return bool <a href='psi_element://Mimetype'>Mimetype</a>
      * @access    public
      */
     public function &get($id)
@@ -83,16 +83,16 @@ class MimetypeHandler extends Smartpartner\BaseObjectHandler
     /**
      * retrieve objects from the database
      *
-     * @param  object $criteria {@link CriteriaElement} conditions to be met
+     * @param  \CriteriaElement $criteria {@link CriteriaElement} conditions to be met
      * @return array  array of {@link Mimetype} objects
      * @access    public
      */
-    public function &getObjects($criteria = null)
+    public function getObjects(\CriteriaElement $criteria = null, $id_as_key = false)
     {
         $ret   = [];
         $limit = $start = 0;
         $sql   = $this->_selectQuery($criteria);
-        if (isset($criteria)) {
+        if (null !== $criteria) {
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
         }
@@ -202,7 +202,7 @@ class MimetypeHandler extends Smartpartner\BaseObjectHandler
             echo 'no need for join...';
             exit;
         }
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
             if ('' != $criteria->getSort()) {
                 $sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();

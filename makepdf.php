@@ -81,40 +81,40 @@ $pdf->AddPage();
 $pdf->SetXY(24, 25);
 $pdf->SetTextColor(10, 60, 160);
 $pdf->SetFont($pdf_config['font']['slogan']['family'], $pdf_config['font']['slogan']['style'], $pdf_config['font']['slogan']['size']);
-$pdf->WriteHTML($pdf_config['slogan'], $pdf_config['scale']);
+$pdf->writeHTML($pdf_config['slogan'], $pdf_config['scale']);
 //$pdf->Image($pdf_config['logo']['path'],$pdf_config['logo']['left'],$pdf_config['logo']['top'],$pdf_config['logo']['width'],$pdf_config['logo']['height'],'',$pdf_config['url']);
 $pdf->Line(25, 30, 190, 30);
 $pdf->SetXY(25, 35);
 $pdf->SetFont($pdf_config['font']['title']['family'], $pdf_config['font']['title']['style'], $pdf_config['font']['title']['size']);
-$pdf->WriteHTML($pdf_data['title'], $pdf_config['scale']);
+$pdf->writeHTML($pdf_data['title'], $pdf_config['scale']);
 
 if ('' <> $pdf_data['subtitle']) {
-    $pdf->WriteHTML($puff, $pdf_config['scale']);
+    $pdf->writeHTML($puff, $pdf_config['scale']);
     $pdf->SetFont($pdf_config['font']['subtitle']['family'], $pdf_config['font']['subtitle']['style'], $pdf_config['font']['subtitle']['size']);
-    $pdf->WriteHTML($pdf_data['subtitle'], $pdf_config['scale']);
+    $pdf->writeHTML($pdf_data['subtitle'], $pdf_config['scale']);
 }
 if ('' <> $pdf_data['subsubtitle']) {
-    $pdf->WriteHTML($puff, $pdf_config['scale']);
+    $pdf->writeHTML($puff, $pdf_config['scale']);
     $pdf->SetFont($pdf_config['font']['subsubtitle']['family'], $pdf_config['font']['subsubtitle']['style'], $pdf_config['font']['subsubtitle']['size']);
-    $pdf->WriteHTML($pdf_data['subsubtitle'], $pdf_config['scale']);
+    $pdf->writeHTML($pdf_data['subsubtitle'], $pdf_config['scale']);
 }
 
-$pdf->WriteHTML($puff, $pdf_config['scale']);
+$pdf->writeHTML($puff, $pdf_config['scale']);
 $pdf->SetFont($pdf_config['font']['author']['family'], $pdf_config['font']['author']['style'], $pdf_config['font']['author']['size']);
 $out = NEWS_PDF_AUTHOR . ': ';
 $out .= $pdf_data['author'];
-$pdf->WriteHTML($out, $pdf_config['scale']);
-$pdf->WriteHTML($puff, $pdf_config['scale']);
+$pdf->writeHTML($out, $pdf_config['scale']);
+$pdf->writeHTML($puff, $pdf_config['scale']);
 $out = NEWS_PDF_DATE;
 $out .= $pdf_data['date'];
-$pdf->WriteHTML($out, $pdf_config['scale']);
-$pdf->WriteHTML($puff, $pdf_config['scale']);
+$pdf->writeHTML($out, $pdf_config['scale']);
+$pdf->writeHTML($puff, $pdf_config['scale']);
 
 $pdf->SetTextColor(0, 0, 0);
-$pdf->WriteHTML($puffer, $pdf_config['scale']);
+$pdf->writeHTML($puffer, $pdf_config['scale']);
 
 $pdf->SetFont($pdf_config['font']['content']['family'], $pdf_config['font']['content']['style'], $pdf_config['font']['content']['size']);
-$pdf->WriteHTML($pdf_data['content'], $pdf_config['scale']);
+$pdf->writeHTML($pdf_data['content'], $pdf_config['scale']);
 
 //$pdf->Output($pdf_data['filename'],'');
 $pdf->Output();

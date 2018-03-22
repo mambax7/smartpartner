@@ -8,6 +8,7 @@
  */
 
 use XoopsModules\Smartpartner;
+use XoopsModules\Smartobject;
 
 require_once __DIR__ . '/header.php';
 $GLOBALS['xoopsOption']['template_main'] = 'smartpartner_partner.tpl';
@@ -30,7 +31,7 @@ if ($partnerObj->notLoaded()) {
     redirect_header('javascript:history.go(-1)', 2, _MD_SPARTNER_NOPARTNERSELECTED);
 }
 require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
-$smartPermissionsHandler = new SmartobjectPermissionHandler($smartPartnerPartnerHandler);
+$smartPermissionsHandler = new Smartobject\SmartobjectPermissionHandler($smartPartnerPartnerHandler);
 $grantedItems            = $smartPermissionsHandler->getGrantedItems('full_view');
 $grantedItems            = array_merge($grantedItems, $smartPermissionsHandler->getGrantedItems('partial_view'));
 

@@ -133,6 +133,7 @@ class File extends \XoopsObject
      * @param  null $allowed_mimetypes
      * @param       $errors
      * @return bool
+     * @throws \Exception
      * @throws
      */
     public function storeUpload($post_field, $allowed_mimetypes = null, &$errors)
@@ -163,7 +164,7 @@ class File extends \XoopsObject
         if (!is_dir(smartpartner_getUploadDir())) {
             //            mkdir(smartpartner_getUploadDir(), 0757);
             if (!@mkdir(smartpartner_getUploadDir(), 0757) && !is_dir(smartpartner_getUploadDir())) {
-                throw new \Exception("Couldn't create this directory: " . smartpartner_getUploadDir());
+                throw new \RuntimeException("Couldn't create this directory: " . smartpartner_getUploadDir());
             }
         }
 
@@ -196,6 +197,7 @@ class File extends \XoopsObject
      * @param  bool $force
      * @param  bool $doupload
      * @return bool
+     * @throws \Exception
      */
     public function store(&$allowed_mimetypes, $force = true, $doupload = true)
     {

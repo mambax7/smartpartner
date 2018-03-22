@@ -11,6 +11,10 @@
 
 use XoopsModules\Smartpartner;
 
+/**
+ * @param $document
+ * @return null|string|string[]
+ */
 function smartpartner_metagen_html2text($document)
 {
     // PHP Manual:: function preg_replace
@@ -148,7 +152,7 @@ function smartpartner_createMetaTags($title, $categoryPath = '', $description = 
         }
 
         $keywordsCount = count($keywords);
-        for ($i = 0; $i < $keywordsCount; ++$i) {
+        foreach ($keywords as $i => $iValue) {
             $ret .= $keywords[$i];
             if ($i < $keywordsCount - 1) {
                 $ret .= ', ';

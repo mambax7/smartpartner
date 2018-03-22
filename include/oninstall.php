@@ -31,8 +31,8 @@ use XoopsModules\Smartpartner;
 function xoops_module_pre_install_smartpartner(\XoopsModule $module)
 {
     include __DIR__ . '/../preloads/autoloader.php';
-    /** @var \Utility $utility */
-    $utility = new \XoopsModules\Smartpartner\Utility();
+    /** @var Smartpartner\Utility $utility */
+    $utility = new Smartpartner\Utility();
     $xoopsSuccess = $utility::checkVerXoops($module);
     $phpSuccess   = $utility::checkVerPhp($module);
 
@@ -62,7 +62,7 @@ function xoops_module_install_smartpartner(\XoopsModule $module)
 
     $helper       = Smartpartner\Helper::getInstance();
     $utility      = new Smartpartner\Utility();
-    $configurator = new Smartpartner\Configurator();
+    $configurator = new Smartpartner\Common\Configurator();
     // Load language files
     $helper->loadLanguage('admin');
     $helper->loadLanguage('modinfo');

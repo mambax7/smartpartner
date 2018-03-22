@@ -73,25 +73,12 @@ function xoops_module_update_smartpartner(\XoopsModule $module, $previousVersion
 
     /** @var Smartpartner\Helper $helper */
     /** @var Smartpartner\Utility $utility */
-    /** @var Smartpartner\Configurator $configurator */
+    /** @var Smartpartner\Common\Configurator $configurator */
     $helper  = Smartpartner\Helper::getInstance();
     $utility = new Smartpartner\Utility();
-    $configurator = new Smartpartner\Configurator();
+    $configurator = new Smartpartner\Common\Configurator();
 
     if ($previousVersion < 240) {
-
-        //rename column EXAMPLE
-        $tables     = new Tables();
-        $table      = 'smartpartnerx_categories';
-        $column     = 'ordre';
-        $newName    = 'order';
-        $attributes = "INT(5) NOT NULL DEFAULT '0'";
-        if ($tables->useTable($table)) {
-            $tables->alterColumn($table, $column, $attributes, $newName);
-            if (!$tables->executeQueue()) {
-                echo '<br>' . _AM_XXXXX_UPGRADEFAILED0 . ' ' . $migrate->getLastError();
-            }
-        }
 
         //delete old HTML templates
         if (count($configurator->templateFolders) > 0) {

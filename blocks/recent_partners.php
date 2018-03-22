@@ -8,6 +8,9 @@
  * @param $options
  * @return array
  */
+
+use XoopsModules\Smartobject;
+
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 
 function b_recent_partners_show($options)
@@ -22,7 +25,7 @@ function b_recent_partners_show($options)
     $partnersObj = $smartPartnerPartnerHandler->getPartners($options[2], 0, _SPARTNER_STATUS_ACTIVE, 'datesub', 'DESC');
 
     require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
-    $smartPermissionsHandler = new SmartobjectPermissionHandler($smartPartnerPartnerHandler);
+    $smartPermissionsHandler = new Smartobject\SmartobjectPermissionHandler($smartPartnerPartnerHandler);
     $grantedItems            = $smartPermissionsHandler->getGrantedItems('full_view');
 
     if ($partnersObj) {

@@ -12,6 +12,10 @@
 
 use XoopsModules\Smartpartner;
 
+/**
+ * @param $table
+ * @return bool
+ */
 function smart_TableExists($table)
 {
     $bRetVal = false;

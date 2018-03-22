@@ -53,7 +53,7 @@ class Mimetype extends \XoopsObject
         $this->initVar('mime_admin', XOBJ_DTYPE_INT, null, false);
         $this->initVar('mime_user', XOBJ_DTYPE_INT, null, false);
 
-        if (isset($id)) {
+        if (null !== $id) {
             if (is_array($id)) {
                 $this->assignVars($id);
             }

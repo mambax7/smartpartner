@@ -29,7 +29,11 @@ switch ($op) {
                 $source = SMARTPARTNER_ROOT_PATH . 'assets/images/blank.png';
                 $dest   = $thePath . 'blank.png';
 
-                smartpartner_copyr($source, $dest);
+                try {
+                    smartpartner_copyr($source, $dest);
+                }
+                catch (Exception $e) {
+                }
             }
             $msg = $res ? _AM_SPARTNER_DIRCREATED : _AM_SPARTNER_DIRNOTCREATED;
         } else {

@@ -44,13 +44,13 @@ class PersistableObjectHandler extends \XoopsObjectHandler
 
     /**
      * Constructor - called from child classes
-     * @param null|XoopsDatabase $db          {@link XoopsDatabase}
+     * @param \XoopsDatabase $db              {@link XoopsDatabase}
      *                                        object
-     * @param string             $tablename   Name of database table
-     * @param string             $classname   Name of Class, this handler is managing
-     * @param string             $keyname     Name of the property, holding the key
+     * @param string         $tablename       Name of database table
+     * @param string         $classname       Name of Class, this handler is managing
+     * @param string         $keyname         Name of the property, holding the key
      *
-     * @param bool               $idenfierName
+     * @param bool           $idenfierName
      */
     public function __construct(\XoopsDatabase $db, $tablename, $classname, $keyname, $idenfierName = false)
     {
@@ -122,7 +122,7 @@ class PersistableObjectHandler extends \XoopsObjectHandler
         $ret   = [];
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->table;
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
             if ('' != $criteria->getSort()) {
                 $sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
@@ -185,13 +185,13 @@ class PersistableObjectHandler extends \XoopsObjectHandler
     /**
      * Retrieve a list of objects as arrays - DON'T USE WITH JOINT KEYS
      *
-     * @param CriteriaElement $criteria {@link CriteriaElement} conditions to be met
+     * @param \CriteriaElement $criteria {@link CriteriaElement} conditions to be met
      * @param int             $limit    Max number of objects to fetch
      * @param int             $start    Which record to start at
      *
      * @return array
      */
-    public function getList(CriteriaElement $criteria = null, $limit = 0, $start = 0)
+    public function getList(\CriteriaElement $criteria = null, $limit = 0, $start = 0)
     {
         $ret = [];
         if (null === $criteria) {
@@ -207,7 +207,7 @@ class PersistableObjectHandler extends \XoopsObjectHandler
             $sql .= ', ' . $this->identifierName;
         }
         $sql .= ' FROM ' . $this->table;
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
             if ('' != $criteria->getSort()) {
                 $sql .= ' ORDER BY ' . $criteria->getSort() . ' ' . $criteria->getOrder();
@@ -239,14 +239,14 @@ class PersistableObjectHandler extends \XoopsObjectHandler
     {
         $field   = '';
         $groupby = false;
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
             if ('' != $criteria->groupby) {
                 $groupby = true;
                 $field   = $criteria->groupby . ', '; //Not entirely secure unless you KNOW that no criteria's groupby clause is going to be mis-used
             }
         }
         $sql = 'SELECT ' . $field . 'COUNT(*) FROM ' . $this->table;
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
             if ('' != $criteria->groupby) {
                 $sql .= $criteria->getGroupby();
@@ -273,7 +273,7 @@ class PersistableObjectHandler extends \XoopsObjectHandler
     /**
      * delete an object from the database
      *
-     * @param  XoopsObject $obj reference to the object to delete
+     * @param \XoopsObject $obj reference to the object to delete
      * @param  bool        $force
      * @return bool        FALSE if failed.
      */
@@ -304,7 +304,7 @@ class PersistableObjectHandler extends \XoopsObjectHandler
     /**
      * insert a new object in the database
      *
-     * @param  XoopsObject $obj         reference to the object
+     * @param \XoopsObject $obj         reference to the object
      * @param  bool        $force       whether to force the query execution despite security settings
      * @param  bool        $checkObject check if the object is dirty and clean the attributes
      * @return bool        FALSE if failed, TRUE if already present and unchanged or successful
@@ -414,7 +414,7 @@ class PersistableObjectHandler extends \XoopsObjectHandler
             $set_clause .= $this->db->quoteString($fieldvalue);
         }
         $sql = 'UPDATE ' . $this->table . ' SET ' . $set_clause;
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (false !== $force) {
@@ -438,7 +438,7 @@ class PersistableObjectHandler extends \XoopsObjectHandler
 
     public function deleteAll(\CriteriaElement $criteria = null)
     {
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql = 'DELETE FROM ' . $this->table;
             $sql .= ' ' . $criteria->renderWhere();
             if (!$this->db->query($sql)) {

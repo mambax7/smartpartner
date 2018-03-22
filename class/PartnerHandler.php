@@ -7,7 +7,7 @@
  * Licence: GNU
  */
 
-use XoopsModules\Smartfaq;
+use XoopsModules\Smartobject;
 use XoopsModules\Smartpartner;
 use XoopsModules\Smartpartner\Constants;
 
@@ -30,7 +30,7 @@ class PartnerHandler extends Smartpartner\PersistableObjectHandler
     /**
      * Constructor
      *
-     * @param XoopsDatabase $db reference to a xoops_db object
+     * @param \XoopsDatabase $db reference to a xoops_db object
      */
 
     public function __construct(\XoopsDatabase $db)
@@ -111,7 +111,7 @@ class PartnerHandler extends Smartpartner\PersistableObjectHandler
     /**
      * insert a new Partner in the database
      *
-     * @param  XoopsObject $partner
+     * @param \XoopsObject $partner
      * @param  bool        $force
      * @param  bool        $checkObject
      * @param  bool        $debug
@@ -225,7 +225,7 @@ class PartnerHandler extends Smartpartner\PersistableObjectHandler
             }
         }
         if (isset($_POST['partial_view']) || isset($_POST['full_view'])) {
-            $smartPermissionsHandler = new SmartobjectPermissionHandler($this);
+            $smartPermissionsHandler = new Smartobject\SmartobjectPermissionHandler($this);
             $smartPermissionsHandler->storeAllPermissionsForId($partner->id());
         }
 
@@ -235,7 +235,7 @@ class PartnerHandler extends Smartpartner\PersistableObjectHandler
     /**
      * delete a Partner from the database
      *
-     * @param  XoopsObject $partner reference to the Partner to delete
+     * @param \XoopsObject $partner reference to the Partner to delete
      * @param  bool        $force
      * @return bool        FALSE if failed.
      */
@@ -297,7 +297,7 @@ class PartnerHandler extends Smartpartner\PersistableObjectHandler
         $limit = $start = 0;
         $sql   = 'SELECT * FROM ' . $this->table;
 
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
             $whereClause = $criteria->renderWhere();
 
             if ('WHERE ()' !== $whereClause) {
@@ -348,7 +348,7 @@ class PartnerHandler extends Smartpartner\PersistableObjectHandler
     public function getCount(\CriteriaElement $criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->table;
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
             $whereClause = $criteria->renderWhere();
             if ('WHERE ()' !== $whereClause) {
                 $sql .= ' ' . $criteria->renderWhere();
@@ -402,15 +402,15 @@ class PartnerHandler extends Smartpartner\PersistableObjectHandler
                    ';
         if (!empty($queryarray)) {
             $criteriaKeywords = new \CriteriaCompo();
-            for ($i = 0, $iMax = count($queryarray); $i < $iMax; ++$i) {
+            foreach ($queryarray as $iValue) {
                 $criteriaKeyword = new \CriteriaCompo();
-                $criteriaKeyword->add(new \Criteria('title', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');
-                $criteriaKeyword->add(new \Criteria('summary', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');
-                $criteriaKeyword->add(new \Criteria('description', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');
-                $criteriaKeyword->add(new \Criteria('contact_name', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');
-                $criteriaKeyword->add(new \Criteria('contact_email', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');
-                $criteriaKeyword->add(new \Criteria('contact_phone', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');
-                $criteriaKeyword->add(new \Criteria('adress', '%' . $queryarray[$i] . '%', 'LIKE'), 'OR');
+                $criteriaKeyword->add(new \Criteria('title', '%' . $iValue . '%', 'LIKE'), 'OR');
+                $criteriaKeyword->add(new \Criteria('summary', '%' . $iValue . '%', 'LIKE'), 'OR');
+                $criteriaKeyword->add(new \Criteria('description', '%' . $iValue . '%', 'LIKE'), 'OR');
+                $criteriaKeyword->add(new \Criteria('contact_name', '%' . $iValue . '%', 'LIKE'), 'OR');
+                $criteriaKeyword->add(new \Criteria('contact_email', '%' . $iValue . '%', 'LIKE'), 'OR');
+                $criteriaKeyword->add(new \Criteria('contact_phone', '%' . $iValue . '%', 'LIKE'), 'OR');
+                $criteriaKeyword->add(new \Criteria('adress', '%' . $iValue . '%', 'LIKE'), 'OR');
                 $criteriaKeywords->add($criteriaKeyword, $andor);
                 unset($criteriaKeyword);
             }
@@ -431,7 +431,7 @@ class PartnerHandler extends Smartpartner\PersistableObjectHandler
         $criteria->setSort('datesub');
         $criteria->setOrder('DESC');
 
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
             if ('' != $criteria->getSort()) {
                 $sql .= ' ORDER BY ' . $criteria->getSort() . '
@@ -519,7 +519,7 @@ class PartnerHandler extends Smartpartner\PersistableObjectHandler
         if (isset($criteriaStatus)) {
             $criteria->add($criteriaStatus);
         }
-        if ($categoryid != -1) {
+        if (-1 != $categoryid) {
             $criteria->add(new \Criteria('categoryid', $categoryid));
         }
         $criteria->setSort($sort);
@@ -562,7 +562,7 @@ class PartnerHandler extends Smartpartner\PersistableObjectHandler
     public function deleteAll(\CriteriaElement $criteria = null)
     {
         $sql = 'DELETE FROM ' . $this->db->prefix('smartpartner_partner');
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->db->query($sql)) {
@@ -586,7 +586,7 @@ class PartnerHandler extends Smartpartner\PersistableObjectHandler
     {
         $set_clause = is_numeric($fieldvalue) ? $fieldname . ' = ' . $fieldvalue : $fieldname . ' = ' . $this->db->quoteString($fieldvalue);
         $sql        = 'UPDATE ' . $this->db->prefix('smartpartner_partner') . ' SET ' . $set_clause;
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->db->queryF($sql)) {
@@ -720,7 +720,7 @@ class PartnerHandler extends Smartpartner\PersistableObjectHandler
 
         $sql = 'SELECT faq.faqid FROM '.$this->db->prefix('smartfaq_faq') . ' as faq INNER JOIN '.$this->db->prefix('smartfaq_answers') . ' as answer ON faq.faqid = answer.faqid';
 
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
             $whereClause = $criteria->renderWhere();
 
             If ($whereClause != 'WHERE ()') {

@@ -8,6 +8,7 @@
  */
 
 use XoopsModules\Smartpartner;
+use XoopsModules\Smartobject;
 
 include __DIR__ . '/header.php';
 $GLOBALS['xoopsOption']['template_main'] = 'smartpartner_join.tpl';
@@ -174,8 +175,8 @@ switch ($op) {
             $notify_checkbox->addOption(1, _MD_SPARTNER_NOTIFY);
             $form->addElement($notify_checkbox);
         }
-        $form->addElement(new SmartFormHidden('partial_view', $xoopsModuleConfig['default_part_view']));
-        $form->addElement(new SmartFormHidden('full_view', $xoopsModuleConfig['default_full_view']));
+        $form->addElement(new Smartobject\Form\Elements\SmartFormHidden('partial_view', $xoopsModuleConfig['default_part_view']));
+        $form->addElement(new Smartobject\Form\Elements\SmartFormHidden('full_view', $xoopsModuleConfig['default_full_view']));
 
         // BUTTONS
         $button_tray = new \XoopsFormElementTray('', '');

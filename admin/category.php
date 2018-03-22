@@ -11,6 +11,10 @@
 
 use XoopsModules\Smartpartner;
 
+/**
+ * @param     $categoryObj
+ * @param int $level
+ */
 function displayCategory($categoryObj, $level = 0)
 {
     global $xoopsModule, $smartPartnerCategoryHandler, $pathIcon16;

@@ -75,19 +75,19 @@ class BaseObjectHandler extends \XoopsObjectHandler
     /**
      * retrieve objects from the database
      *
-     * @param  object $criteria  {@link CriteriaElement} conditions to be met
+     * @param  \CriteriaElement  $criteria  {@link CriteriaElement} conditions to be met
      * @param  bool   $id_as_key Should the department ID be used as array key
      * @return array  array of objects
      * @access  public
      */
-    public function &getObjects($criteria = null, $id_as_key = false)
+    public function getObjects(\CriteriaElement $criteria = null, $id_as_key = false)
     {
         $ret   = [];
         $limit = $start = 0;
         $sql   = $this->_selectQuery($criteria);
         $id    = $this->_idfield;
 
-        if (isset($criteria)) {
+        if (null !== $criteria) {
             $limit = $criteria->getLimit();
             $start = $criteria->getStart();
         }
@@ -113,7 +113,7 @@ class BaseObjectHandler extends \XoopsObjectHandler
     }
 
     /**
-     * @param  XoopsObject $obj
+     * @param \XoopsObject $obj
      * @param  bool        $force
      * @return bool
      */
@@ -174,7 +174,7 @@ class BaseObjectHandler extends \XoopsObjectHandler
     public function _selectQuery($criteria = null)
     {
         $sql = sprintf('SELECT * FROM %s', $this->_db->prefix($this->_dbtable));
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
             if ('' != $criteria->getSort()) {
                 $sql .= ' ORDER BY ' . $criteria->getSort() . '
@@ -195,7 +195,7 @@ class BaseObjectHandler extends \XoopsObjectHandler
     public function getCount($criteria = null)
     {
         $sql = 'SELECT COUNT(*) FROM ' . $this->_db->prefix($this->_dbtable);
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->_db->query($sql)) {
@@ -209,12 +209,12 @@ class BaseObjectHandler extends \XoopsObjectHandler
     /**
      * delete object based on id
      *
-     * @param  object $obj   {@link XoopsObject} to delete
+     * @param  \XoopsObject $obj   {@link XoopsObject} to delete
      * @param  bool   $force override XOOPS delete protection
      * @return bool   deletion successful?
      * @access public
      */
-    public function delete($obj, $force = false)
+    public function delete(\XoopsObject $obj, $force = false)
     {
         if (0 != strcasecmp($this->classname, get_class($obj))) {
             return false;
@@ -244,7 +244,7 @@ class BaseObjectHandler extends \XoopsObjectHandler
     public function deleteAll($criteria = null)
     {
         $sql = 'DELETE FROM ' . $this->_db->prefix($this->_dbtable);
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->_db->query($sql)) {
@@ -267,7 +267,7 @@ class BaseObjectHandler extends \XoopsObjectHandler
     {
         $set_clause = is_numeric($fieldvalue) ? $fieldname . ' = ' . $fieldvalue : $fieldname . ' = ' . $this->_db->quoteString($fieldvalue);
         $sql        = 'UPDATE ' . $this->_db->prefix($this->_dbtable) . ' SET ' . $set_clause;
-        if (isset($criteria) && is_subclass_of($criteria, 'CriteriaElement')) {
+        if (null !== $criteria && is_subclass_of($criteria, 'CriteriaElement')) {
             $sql .= ' ' . $criteria->renderWhere();
         }
         if (!$result = $this->_db->query($sql)) {
@@ -307,7 +307,7 @@ class BaseObjectHandler extends \XoopsObjectHandler
     /**
      * Singleton - prevent multiple instances of this class
      *
-     * @param  object|XoopsDatabase $db
+     * @param \XoopsDatabase $db
      * @return object               <a href='psi_element://pagesCategoryHandler'>pagesCategoryHandler</a>
      * @access public
      */

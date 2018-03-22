@@ -383,7 +383,7 @@ class Partner extends Smartobject\BaseSmartObject
             case Constants::_SPARTNER_STATUS_NOTSET:
             default:
 
-                return _COConstants::_SPARTNER_NOTSET;
+                return _CO_SPARTNER_NOTSET;
                 break;
         }
     }
@@ -695,7 +695,7 @@ class Partner extends Smartobject\BaseSmartObject
         if (!$smartPartnerPartnerHandler) {
             $smartPartnerPartnerHandler = smartpartner_gethandler('partner');
         }
-        $smartPermissionsHandler = new SmartobjectPermissionHandler($smartPartnerPartnerHandler);
+        $smartPermissionsHandler = new Smartobject\SmartobjectPermissionHandler($smartPartnerPartnerHandler);
         $grantedGroups           = $smartPermissionsHandler->getGrantedGroups('full_view', $this->id());
         $partGrantedGroups       = $smartPermissionsHandler->getGrantedGroups('partial_view', $this->id());
 

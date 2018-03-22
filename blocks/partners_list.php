@@ -44,13 +44,13 @@ function b_partners_list_show($options)
 
     $block = [];
     if ($partnersObj) {
-        for ($j = 0, $jMax = count($cat_id); $j < $jMax; ++$j) {
+        foreach ($cat_id as $j => $jValue) {
             $categoryObj                              = $smartPartnerCategoryHandler->get($cat_id[$j]);
-            $block['categories'][$cat_id[$j]]['link'] = (0 != $cat_id[$j]) ? $categoryObj->getCategoryLink() : false;
+            $block['categories'][$cat_id[$j]]['link'] = (0 != $jValue) ? $categoryObj->getCategoryLink() : false;
 
             for ($i = 0, $iMax = count($partnersObj); $i < $iMax; ++$i) {
                 //if (in_array($cat_id[$j], explode('|', $partnersObj[$i]->categoryid()))) {
-                if ($partnersObj[$i]->categoryid() == $cat_id[$j]) {
+                if ($partnersObj[$i]->categoryid() == $jValue) {
                     $partner['id']      = $partnersObj[$i]->id();
                     $partner['urllink'] = $partnersObj[$i]->getUrlLink('block');
                     if ($partnersObj[$i]->image() && ((1 == $options[3]) || (3 == $options[3]))) {

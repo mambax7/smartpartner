@@ -149,7 +149,7 @@ function smartpartner_copyr($source, $dest)
     if (!is_dir($dest)) {
         //        mkdir($dest);
         if (!@mkdir($dest) && !is_dir($dest)) {
-            throw new Exception("Couldn't create this directory: " . $dest);
+            throw new \RuntimeException("Couldn't create this directory: " . $dest);
         }
     }
 
@@ -163,7 +163,7 @@ function smartpartner_copyr($source, $dest)
 
         // Deep copy directories
         if (is_dir("$source/$entry") && ("$source/$entry" !== $dest)) {
-            copyr("$source/$entry", "$dest/$entry");
+            smartpartner_copyr("$source/$entry", "$dest/$entry");
         } else {
             copy("$source/$entry", "$dest/$entry");
         }
@@ -609,7 +609,7 @@ function smartpartner_upload_file($another = false, $withRedirect = true, $itemO
 
     $id      = isset($_POST['id']) ? (int)$_POST['id'] : 0;
     $uid     = is_object($xoopsUser) ? $xoopsUser->uid() : 0;
-    $session = Session::getInstance();
+    $session = \Session::getInstance();
     $session->set('smartpartner_file_filename', isset($_POST['name']) ? $_POST['name'] : '');
     $session->set('smartpartner_file_description', isset($_POST['description']) ? $_POST['description'] : '');
     $session->set('smartpartner_file_status', $_POST['file_status']);
