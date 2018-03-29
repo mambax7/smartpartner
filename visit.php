@@ -13,7 +13,7 @@ require_once __DIR__ . '/header.php';
 $fileid = isset($_GET['fileid']) ? (int)$_GET['fileid'] : 0;
 
 // Creating the item object for the selected item
-$fileObj = $smartPartnerFileHandler->get($fileid);
+$fileObj = $fileHandler->get($fileid);
 $fileObj->updateCounter();
 
 if (!preg_match("/^ed2k*:\/\//i", $fileObj->getFileUrl())) {

@@ -8,6 +8,8 @@
  */
 
 use XoopsModules\Smartpartner;
+/** @var Smartpartner\Helper $helper */
+$helper = Smartpartner\Helper::getInstance();
 
 include __DIR__ . '/header.php';
 
@@ -21,7 +23,7 @@ if ($partnerObj->notLoaded()) {
 
 if ($partnerObj->url()) {
     if (!isset($_COOKIE['partners'][$id])) {
-        setcookie("partners[$id]", $id, $xoopsModuleConfig['cookietime']);
+        setcookie("partners[$id]", $id, $helper->getConfig('cookietime'));
         $partnerObj->updateHits();
     }
     header('HTTP/1.1 301 Moved Permanently');

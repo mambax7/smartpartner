@@ -59,22 +59,22 @@ class Constants
     //---------------------------------
 
     // Partners status
-    const _SPARTNER_STATUS_NOTSET = -1;
-    const _SPARTNER_STATUS_ALL = 0;
-    const _SPARTNER_STATUS_SUBMITTED = 1;
-    const _SPARTNER_STATUS_ACTIVE = 2;
-    const _SPARTNER_STATUS_REJECTED = 3;
-    const _SPARTNER_STATUS_INACTIVE = 4;
+    const SPARTNER_STATUS_NOTSET = -1;
+    const SPARTNER_STATUS_ALL = 0;
+    const SPARTNER_STATUS_SUBMITTED = 1;
+    const SPARTNER_STATUS_ACTIVE = 2;
+    const SPARTNER_STATUS_REJECTED = 3;
+    const SPARTNER_STATUS_INACTIVE = 4;
 
-    const _SPARTNER_NOT_PARTNER_SUBMITTED = 1;
-    const _SPARTNER_NOT_PARTNER_APPROVED = 2;
-    const _SPARTNER_NOT_PARTNER_NEW = 3;
-    const _SPARTNER_NOT_OFFER_NEW = 4;
+    const SPARTNER_NOT_PARTNER_SUBMITTED = 1;
+    const SPARTNER_NOT_PARTNER_APPROVED = 2;
+    const SPARTNER_NOT_PARTNER_NEW = 3;
+    const SPARTNER_NOT_OFFER_NEW = 4;
 
     // File status
-    const _SPARTNER_STATUS_FILE_NOTSET = -1;
-    const _SPARTNER_STATUS_FILE_ACTIVE = 1;
-    const _SPARTNER_STATUS_FILE_INACTIVE = 2;
+    const SPARTNER_STATUS_FILE_NOTSET = -1;
+    const SPARTNER_STATUS_FILE_ACTIVE = 1;
+    const SPARTNER_STATUS_FILE_INACTIVE = 2;
 
     /**#@-*/
 }

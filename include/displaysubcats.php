@@ -18,12 +18,12 @@ $sel_cat  = $categoryid;
 Smartpartner\Utility::collapsableBar('subcatstable', 'subcatsicon', $sc_title, $sc_info);
 
 // Get the total number of sub-categories
-$categoriesObj = $smartPartnerCategoryHandler->get($sel_cat);
+$categoriesObj = $categoryHandler->get($sel_cat);
 
-$totalsubs = $smartPartnerCategoryHandler->getCategoriesCount($sel_cat);
+$totalsubs = $categoryHandler->getCategoriesCount($sel_cat);
 
 // creating the categories objects that are published
-$subcatsObj = $smartPartnerCategoryHandler->getCategories(0, 0, $categoriesObj->categoryid());
+$subcatsObj = $categoryHandler->getCategories(0, 0, $categoriesObj->categoryid());
 
 $totalSCOnPage = count($subcatsObj);
 echo "<table width='100%' cellspacing=1 cellpadding=3 border=0 class = outer>";

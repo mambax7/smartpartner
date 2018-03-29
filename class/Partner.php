@@ -47,7 +47,7 @@ class Partner extends Smartobject\BaseSmartObject
         $this->initVar('weight', XOBJ_DTYPE_INT, 0, false, 10);
         $this->initVar('hits', XOBJ_DTYPE_INT, 0, true, 10);
         $this->initVar('hits_page', XOBJ_DTYPE_INT, 0, true, 10);
-        $this->initVar('status', XOBJ_DTYPE_INT, Constants::_SPARTNER_STATUS_NOTSET, false, 10);
+        $this->initVar('status', XOBJ_DTYPE_INT, Constants::SPARTNER_STATUS_NOTSET, false, 10);
         $this->initVar('last_update', XOBJ_DTYPE_INT, 0, false);
         $this->initVar('email_priv', XOBJ_DTYPE_INT, 0, false);
         $this->initVar('phone_priv', XOBJ_DTYPE_INT, 0, false);
@@ -56,8 +56,8 @@ class Partner extends Smartobject\BaseSmartObject
         $this->initVar('dohtml', XOBJ_DTYPE_INT, 1, false);
 
         if (isset($id)) {
-            $smartPartnerPartnerHandler = new Smartpartner\PartnerHandler($this->db);
-            $partner                    = $smartPartnerPartnerHandler->get($id);
+            $partnerHandler = new Smartpartner\PartnerHandler($this->db);
+            $partner                    = $partnerHandler->get($id);
             foreach ($partner->vars as $k => $v) {
                 $this->assignVar($k, $v['value']);
             }
@@ -364,23 +364,23 @@ class Partner extends Smartobject\BaseSmartObject
     public function getStatusName()
     {
         switch ($this->status()) {
-            case Constants::_SPARTNER_STATUS_ACTIVE:
+            case Constants::SPARTNER_STATUS_ACTIVE:
                 return _CO_SPARTNER_ACTIVE;
                 break;
 
-            case Constants::_SPARTNER_STATUS_INACTIVE:
+            case Constants::SPARTNER_STATUS_INACTIVE:
                 return _CO_SPARTNER_INACTIVE;
                 break;
 
-            case Constants::_SPARTNER_STATUS_REJECTED:
+            case Constants::SPARTNER_STATUS_REJECTED:
                 return _CO_SPARTNER_REJECTED;
                 break;
 
-            case Constants::_SPARTNER_STATUS_SUBMITTED:
+            case Constants::SPARTNER_STATUS_SUBMITTED:
                 return _CO_SPARTNER_SUBMITTED;
                 break;
 
-            case Constants::_SPARTNER_STATUS_NOTSET:
+            case Constants::SPARTNER_STATUS_NOTSET:
             default:
 
                 return _CO_SPARTNER_NOTSET;
@@ -420,9 +420,9 @@ class Partner extends Smartobject\BaseSmartObject
      */
     public function store($force = true)
     {
-        $smartPartnerPartnerHandler = new Smartpartner\PartnerHandler($this->db);
+        $partnerHandler = new Smartpartner\PartnerHandler($this->db);
 
-        return $smartPartnerPartnerHandler->insert($this, $force);
+        return $partnerHandler->insert($this, $force);
     }
 
     /**
@@ -468,17 +468,17 @@ class Partner extends Smartobject\BaseSmartObject
         foreach ($notifications as $notification) {
             switch ($notification) {
 
-                case Constants::_SPARTNER_NOT_PARTNER_SUBMITTED:
+                case Constants::SPARTNER_NOT_PARTNER_SUBMITTED:
                     $tags['WAITINGFILES_URL'] = XOOPS_URL . '/modules/' . $smartModule->getVar('dirname') . '/admin/partner.php?op=mod&id=' . $this->id();
                     $notificationHandler->triggerEvent('global_partner', 0, 'submitted', $tags);
                     break;
 
-                case Constants::_SPARTNER_NOT_PARTNER_APPROVED:
+                case Constants::SPARTNER_NOT_PARTNER_APPROVED:
                     $tags['PARTNER_URL'] = XOOPS_URL . '/modules/' . $smartModule->getVar('dirname') . '/partner.php?id=' . $this->id();
                     $notificationHandler->triggerEvent('partner', $this->id(), 'approved', $tags);
                     break;
 
-                case Constants::_SPARTNER_NOT_PARTNER_NEW:
+                case Constants::SPARTNER_NOT_PARTNER_NEW:
                     $tags['PARTNER_URL'] = XOOPS_URL . '/modules/' . $smartModule->getVar('dirname') . '/partner.php?id=' . $this->id();
                     $notificationHandler->triggerEvent('global_partner', 0, 'new_partner', $tags);
                     break;
@@ -501,47 +501,47 @@ class Partner extends Smartobject\BaseSmartObject
 
         switch ($original_status) {
 
-            case Constants::_SPARTNER_STATUS_NOTSET:
+            case Constants::SPARTNER_STATUS_NOTSET:
                 switch ($new_status) {
-                    case Constants::_SPARTNER_STATUS_ACTIVE:
+                    case Constants::SPARTNER_STATUS_ACTIVE:
                         $redirect_msgs['success'] = _AM_SPARTNER_NOTSET_ACTIVE_SUCCESS;
                         $redirect_msgs['error']   = _AM_SPARTNER_PARTNER_NOT_UPDATED;
                         break;
 
-                    case Constants::_SPARTNER_STATUS_INACTIVE:
+                    case Constants::SPARTNER_STATUS_INACTIVE:
                         $redirect_msgs['success'] = _AM_SPARTNER_NOTSET_INACTIVE_SUCCESS;
                         $redirect_msgs['error']   = _AM_SPARTNER_PARTNER_NOT_UPDATED;
                         break;
                 }
                 break;
 
-            case Constants::_SPARTNER_STATUS_SUBMITTED:
+            case Constants::SPARTNER_STATUS_SUBMITTED:
                 switch ($new_status) {
-                    case Constants::_SPARTNER_STATUS_ACTIVE:
+                    case Constants::SPARTNER_STATUS_ACTIVE:
                         $redirect_msgs['success'] = _AM_SPARTNER_SUBMITTED_ACTIVE_SUCCESS;
                         $redirect_msgs['error']   = _AM_SPARTNER_PARTNER_NOT_UPDATED;
                         break;
 
-                    case Constants::_SPARTNER_STATUS_INACTIVE:
+                    case Constants::SPARTNER_STATUS_INACTIVE:
                         $redirect_msgs['success'] = _AM_SPARTNER_SUBMITTED_INACTIVE_SUCCESS;
                         $redirect_msgs['error']   = _AM_SPARTNER_PARTNER_NOT_UPDATED;
                         break;
 
-                    case Constants::_SPARTNER_STATUS_REJECTED:
+                    case Constants::SPARTNER_STATUS_REJECTED:
                         $redirect_msgs['success'] = _AM_SPARTNER_SUBMITTED_REJECTED_SUCCESS;
                         $redirect_msgs['error']   = _AM_SPARTNER_PARTNER_NOT_UPDATED;
                         break;
                 }
                 break;
 
-            case Constants::_SPARTNER_STATUS_ACTIVE:
+            case Constants::SPARTNER_STATUS_ACTIVE:
                 switch ($new_status) {
-                    case Constants::_SPARTNER_STATUS_ACTIVE:
+                    case Constants::SPARTNER_STATUS_ACTIVE:
                         $redirect_msgs['success'] = _AM_SPARTNER_ACTIVE_ACTIVE_SUCCESS;
                         $redirect_msgs['error']   = _AM_SPARTNER_PARTNER_NOT_UPDATED;
                         break;
 
-                    case Constants::_SPARTNER_STATUS_INACTIVE:
+                    case Constants::SPARTNER_STATUS_INACTIVE:
                         $redirect_msgs['success'] = _AM_SPARTNER_ACTIVE_INACTIVE_SUCCESS;
                         $redirect_msgs['error']   = _AM_SPARTNER_PARTNER_NOT_UPDATED;
                         break;
@@ -549,14 +549,14 @@ class Partner extends Smartobject\BaseSmartObject
                 }
                 break;
 
-            case Constants::_SPARTNER_STATUS_INACTIVE:
+            case Constants::SPARTNER_STATUS_INACTIVE:
                 switch ($new_status) {
-                    case Constants::_SPARTNER_STATUS_ACTIVE:
+                    case Constants::SPARTNER_STATUS_ACTIVE:
                         $redirect_msgs['success'] = _AM_SPARTNER_INACTIVE_ACTIVE_SUCCESS;
                         $redirect_msgs['error']   = _AM_SPARTNER_PARTNER_NOT_UPDATED;
                         break;
 
-                    case Constants::_SPARTNER_STATUS_INACTIVE:
+                    case Constants::SPARTNER_STATUS_INACTIVE:
                         $redirect_msgs['success'] = _AM_SPARTNER_INACTIVE_INACTIVE_SUCCESS;
                         $redirect_msgs['error']   = _AM_SPARTNER_PARTNER_NOT_UPDATED;
                         break;
@@ -564,19 +564,19 @@ class Partner extends Smartobject\BaseSmartObject
                 }
                 break;
 
-            case Constants::_SPARTNER_STATUS_REJECTED:
+            case Constants::SPARTNER_STATUS_REJECTED:
                 switch ($new_status) {
-                    case Constants::_SPARTNER_STATUS_ACTIVE:
+                    case Constants::SPARTNER_STATUS_ACTIVE:
                         $redirect_msgs['success'] = _AM_SPARTNER_REJECTED_ACTIVE_SUCCESS;
                         $redirect_msgs['error']   = _AM_SPARTNER_PARTNER_NOT_UPDATED;
                         break;
 
-                    case Constants::_SPARTNER_STATUS_INACTIVE:
+                    case Constants::SPARTNER_STATUS_INACTIVE:
                         $redirect_msgs['success'] = _AM_SPARTNER_REJECTED_INACTIVE_SUCCESS;
                         $redirect_msgs['error']   = _AM_SPARTNER_PARTNER_NOT_UPDATED;
                         break;
 
-                    case Constants::_SPARTNER_STATUS_REJECTED:
+                    case Constants::SPARTNER_STATUS_REJECTED:
                         $redirect_msgs['success'] = _AM_SPARTNER_REJECTED_REJECTED_SUCCESS;
                         $redirect_msgs['error']   = _AM_SPARTNER_PARTNER_NOT_UPDATED;
                         break;
@@ -593,16 +593,16 @@ class Partner extends Smartobject\BaseSmartObject
     public function getAvailableStatus()
     {
         switch ($this->status()) {
-            case Constants::_SPARTNER_STATUS_NOTSET:
+            case Constants::SPARTNER_STATUS_NOTSET:
                 $ret = [
-                    Constants::_SPARTNER_STATUS_ACTIVE   => _AM_SPARTNER_ACTIVE,
-                    Constants::_SPARTNER_STATUS_INACTIVE => _AM_SPARTNER_INACTIVE
+                    Constants::SPARTNER_STATUS_ACTIVE   => _AM_SPARTNER_ACTIVE,
+                    Constants::SPARTNER_STATUS_INACTIVE => _AM_SPARTNER_INACTIVE
                 ];
                 break;
-            case Constants::_SPARTNER_STATUS_SUBMITTED:
+            case Constants::SPARTNER_STATUS_SUBMITTED:
                 $ret = [
-                    Constants::_SPARTNER_STATUS_ACTIVE   => _AM_SPARTNER_ACTIVE,
-                    Constants::_SPARTNER_STATUS_REJECTED => _AM_SPARTNER_REJECTED,
+                    Constants::SPARTNER_STATUS_ACTIVE   => _AM_SPARTNER_ACTIVE,
+                    Constants::SPARTNER_STATUS_REJECTED => _AM_SPARTNER_REJECTED,
                     Constants::_SPARTNER_STATUS_INACTIVE => _AM_SPARTNER_INACTIVE
                 ];
                 break;
@@ -644,9 +644,9 @@ class Partner extends Smartobject\BaseSmartObject
      */
     public function getFiles()
     {
-        global $smartPartnerFileHandler;
+        global $fileHandler;
 
-        return $smartPartnerFileHandler->getAllFiles($this->id(), Constants::_SPARTNER_STATUS_FILE_ACTIVE);
+        return $fileHandler->getAllFiles($this->id(), Constants::_SPARTNER_STATUS_FILE_ACTIVE);
     }
 
     /**
@@ -690,12 +690,12 @@ class Partner extends Smartobject\BaseSmartObject
             $partner['update_status'] = 'none';
         }
         //--------------
-        global $smartPermissionsHandler, $smartPartnerPartnerHandler, $xoopsUser;
+        global $smartPermissionsHandler, $partnerHandler, $xoopsUser;
 //        require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
-        if (!$smartPartnerPartnerHandler) {
-            $smartPartnerPartnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
+        if (!$partnerHandler) {
+            $partnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
         }
-        $smartPermissionsHandler = new Smartobject\PermissionHandler($smartPartnerPartnerHandler);
+        $smartPermissionsHandler = new Smartobject\PermissionHandler($partnerHandler);
         $grantedGroups           = $smartPermissionsHandler->getGrantedGroups('full_view', $this->id());
         $partGrantedGroups       = $smartPermissionsHandler->getGrantedGroups('partial_view', $this->id());
 

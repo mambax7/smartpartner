@@ -10,6 +10,8 @@
  */
 
 use XoopsModules\Smartpartner;
+/** @var Smartpartner\Helper $helper */
+$helper = Smartpartner\Helper::getInstance();
 
 /**
  * @param     $categoryObj
@@ -17,7 +19,7 @@ use XoopsModules\Smartpartner;
  */
 function displayCategory($categoryObj, $level = 0)
 {
-    global $xoopsModule, $smartPartnerCategoryHandler, $pathIcon16;
+    global $xoopsModule, $categoryHandler, $pathIcon16;
     $description = $categoryObj->description();
     if (!XOOPS_USE_MULTIBYTES) {
         if (strlen($description) >= 100) {
@@ -37,7 +39,7 @@ function displayCategory($categoryObj, $level = 0)
     echo "<td class='even' align='center'>" . $categoryObj->weight() . '</td>';
     echo "<td class='even' align='center'> $modify $delete </td>";
     echo '</tr>';
-    $subCategoriesObj = $smartPartnerCategoryHandler->getCategories(0, 0, $categoryObj->categoryid());
+    $subCategoriesObj = $categoryHandler->getCategories(0, 0, $categoryObj->categoryid());
     if (count($subCategoriesObj) > 0) {
         ++$level;
         foreach ($subCategoriesObj as $key => $thiscat) {
@@ -55,7 +57,10 @@ function displayCategory($categoryObj, $level = 0)
  */
 function editcat($showmenu = false, $categoryid = 0, $nb_subcats = 4, $categoryObj = null)
 {
-    global $xoopsDB, $smartPartnerCategoryHandler, $xoopsUser, $myts, $xoopsConfig, $xoopsModuleConfig, $xoopsModule;
+    global $xoopsDB, $categoryHandler, $xoopsUser, $myts, $xoopsConfig,  $xoopsModule;
+    /** @var Smartpartner\Helper $helper */
+    $helper = Smartpartner\Helper::getInstance();
+
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
 
     // If there is a parameter, and the id exists, retrieve data: we're editing a category
@@ -63,7 +68,7 @@ function editcat($showmenu = false, $categoryid = 0, $nb_subcats = 4, $categoryO
 
         // Creating the category object for the selected category
         //$categoryObj = new Category($categoryid);
-        $categoryObj = $smartPartnerCategoryHandler->get($categoryid);
+        $categoryObj = $categoryHandler->get($categoryid);
 
         echo "<br>\n";
         if ($categoryObj->notLoaded()) {
@@ -72,7 +77,7 @@ function editcat($showmenu = false, $categoryid = 0, $nb_subcats = 4, $categoryO
         Smartpartner\Utility::collapsableBar('edittable', 'edittableicon', _AM_SPARTNER_CATEGORY_EDIT, _AM_SPARTNER_CATEGORY_EDIT_INFO);
     } else {
         if (!$categoryObj) {
-            $categoryObj = $smartPartnerCategoryHandler->create();
+            $categoryObj = $categoryHandler->create();
         }
 
         //echo "<br>\n";
@@ -239,7 +244,7 @@ function editcat($showmenu = false, $categoryid = 0, $nb_subcats = 4, $categoryO
 require_once __DIR__ . '/admin_header.php';
 include XOOPS_ROOT_PATH . '/class/xoopstree.php';
 
-global $smartPartnerCategoryHandler;
+global $categoryHandler;
 
 $op = '';
 
@@ -272,15 +277,15 @@ switch ($op) {
         break;
 
     case 'addcategory':
-        global $_POST, $xoopsUser, $xoopsUser, $xoopsConfig, $xoopsDB, $xoopsModule, $xoopsModuleConfig, $modify, $myts, $categoryid;
+        global $_POST, $xoopsUser, $xoopsUser, $xoopsConfig, $xoopsDB, $xoopsModule,  $modify, $myts, $categoryid;
 
         $categoryid = isset($_POST['categoryid']) ? (int)$_POST['categoryid'] : 0;
         $parentid   = isset($_POST['parentid']) ? (int)$_POST['parentid'] : 0;
 
         if (0 != $categoryid) {
-            $categoryObj = $smartPartnerCategoryHandler->get($categoryid);
+            $categoryObj = $categoryHandler->get($categoryid);
         } else {
-            $categoryObj = $smartPartnerCategoryHandler->create();
+            $categoryObj = $categoryHandler->create();
         }
 
         // Uploading the image, if any
@@ -288,13 +293,12 @@ switch ($op) {
         if (isset($_FILES['image_file']['name']) && '' != $_FILES['image_file']['name']) {
             $filename = $_POST['xoops_upload_file'][0];
             if (!empty($filename) || '' != $filename) {
-                global $xoopsModuleConfig;
 
                 // TODO: implement smartpartner mimetype management
 
-                $max_size          = $xoopsModuleConfig['maximum_imagesize'];
-                $max_imgwidth      = $xoopsModuleConfig['img_max_width'];
-                $max_imgheight     = $xoopsModuleConfig['img_max_height'];
+                $max_size          = $helper->getConfig('maximum_imagesize');
+                $max_imgwidth      = $helper->getConfig('img_max_width');
+                $max_imgheight     = $helper->getConfig('img_max_height');
                 $allowed_mimetypes = Smartpartner\Utility::getAllowedImagesTypes();
 
                 require_once XOOPS_ROOT_PATH . '/class/uploader.php';
@@ -341,7 +345,7 @@ switch ($op) {
 
         for ($i = 0, $iMax = count($_POST['scname']); $i < $iMax; ++$i) {
             if ('' != $_POST['scname'][$i]) {
-                $categoryObj = $smartPartnerCategoryHandler->create();
+                $categoryObj = $categoryHandler->create();
                 $categoryObj->setVar('name', $_POST['scname'][$i]);
                 $categoryObj->setVar('parentid', $parentCat);
 
@@ -364,7 +368,7 @@ switch ($op) {
 
         Smartpartner\Utility::getXoopsCpHeader();
 
-        $categoryObj = $smartPartnerCategoryHandler->create();
+        $categoryObj = $categoryHandler->create();
         $categoryObj->setVar('name', $_POST['name']);
         $categoryObj->setVar('description', $_POST['description']);
         $categoryObj->setVar('weight', $_POST['weight']);
@@ -388,13 +392,13 @@ switch ($op) {
         $categoryid = isset($_GET['categoryid']) ? (int)$_GET['categoryid'] : $categoryid;
 
         //$categoryObj = new Category($categoryid);
-        $categoryObj = $smartPartnerCategoryHandler->get($categoryid);
+        $categoryObj = $categoryHandler->get($categoryid);
 
         $confirm = isset($_POST['confirm']) ? $_POST['confirm'] : 0;
         $name    = isset($_POST['name']) ? $_POST['name'] : '';
 
         if ($confirm) {
-            if (!$smartPartnerCategoryHandler->delete($categoryObj)) {
+            if (!$categoryHandler->delete($categoryObj)) {
                 redirect_header('category.php', 1, _AM_SPARTNER_CATEGORY_DELETE_ERROR);
             }
 
@@ -436,7 +440,7 @@ switch ($op) {
                 echo "</div></form>";
         */
         // Creating the objects for top categories
-        $categoriesObj = $smartPartnerCategoryHandler->getCategories($xoopsModuleConfig['perpage_admin'], $startcategory, 0);
+        $categoriesObj = $categoryHandler->getCategories($helper->getConfig('perpage_admin'), $startcategory, 0);
 
         Smartpartner\Utility::collapsableBar('createdcategories', 'createdcategoriesicon', _AM_SPARTNER_CATEGORIES_TITLE, _AM_SPARTNER_CATEGORIES_DSC);
 
@@ -446,7 +450,7 @@ switch ($op) {
         echo "<td class='bg3' width='65' align='center'><b>" . _AM_SPARTNER_WEIGHT . '</b></td>';
         echo "<td width='60' class='bg3' align='center'><b>" . _AM_SPARTNER_ACTION . '</b></td>';
         echo '</tr>';
-        $totalCategories = $smartPartnerCategoryHandler->getCategoriesCount(0);
+        $totalCategories = $categoryHandler->getCategoriesCount(0);
         if (count($categoriesObj) > 0) {
             foreach ($categoriesObj as $key => $thiscat) {
                 displayCategory($thiscat);
@@ -459,7 +463,7 @@ switch ($op) {
         }
         echo "</table>\n";
         require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
-        $pagenav = new \XoopsPageNav($totalCategories, $xoopsModuleConfig['perpage_admin'], $startcategory, 'startcategory');
+        $pagenav = new \XoopsPageNav($totalCategories, $helper->getConfig('perpage_admin'), $startcategory, 'startcategory');
         echo '<div style="text-align:right;">' . $pagenav->renderNav() . '</div>';
         echo '<br>';
         Smartpartner\Utility::closeCollapsable('createdcategories', 'createdcategoriesicon');

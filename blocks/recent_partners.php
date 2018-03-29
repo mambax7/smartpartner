@@ -18,14 +18,14 @@ function b_recent_partners_show($options)
     require_once XOOPS_ROOT_PATH . '/modules/smartpartner/include/common.php';
 
     // Creating the partner handler object
-    $smartPartnerPartnerHandler  = Smartpartner\Helper::getInstance()->getHandler('Partner');
-    $smartPartnerCategoryHandler = Smartpartner\Helper::getInstance()->getHandler('Category');
+    $partnerHandler  = Smartpartner\Helper::getInstance()->getHandler('Partner');
+    $categoryHandler = Smartpartner\Helper::getInstance()->getHandler('Category');
 
     // Randomize
-    $partnersObj = $smartPartnerPartnerHandler->getPartners($options[2], 0, _SPARTNER_STATUS_ACTIVE, 'datesub', 'DESC');
+    $partnersObj = $partnerHandler->getPartners($options[2], 0, _SPARTNER_STATUS_ACTIVE, 'datesub', 'DESC');
 
 //    require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
-    $smartPermissionsHandler = new Smartobject\PermissionHandler($smartPartnerPartnerHandler);
+    $smartPermissionsHandler = new Smartobject\PermissionHandler($partnerHandler);
     $grantedItems            = $smartPermissionsHandler->getGrantedItems('full_view');
 
     if ($partnersObj) {

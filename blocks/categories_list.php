@@ -38,13 +38,13 @@ function b_categories_list_show($options)
 {
     require_once XOOPS_ROOT_PATH . '/modules/smartpartner/include/common.php';
 
-    $smartPartnerCategoryHandler = Smartpartner\Helper::getInstance()->getHandler('Category');
+    $categoryHandler = Smartpartner\Helper::getInstance()->getHandler('Category');
     $criteria                    = new \CriteriaCompo();
 
     $criteria->setSort(isset($options[0]) ? $options[0] : 'name');
     $criteria->setOrder(isset($options[1]) ? $options[1] : 'ASC');
 
-    $catsObj  = $smartPartnerCategoryHandler->getObjects($criteria, true);
+    $catsObj  = $categoryHandler->getObjects($criteria, true);
     $catArray = get_content(0, $catsObj, $options[2]);
 
     $block                = [];
@@ -54,8 +54,8 @@ function b_categories_list_show($options)
         $current_id       = $_GET['view_category_id'];
         $block['current'] = 0 == $catsObj[$current_id]->getVar('parentid') ? $current_id : $catsObj[$current_id]->getVar('parentid');
     } elseif (isset($_GET['id'])) {
-        $smartPartnerPartnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
-        $partnerObj                 = $smartPartnerPartnerHandler->get($_GET['id']);
+        $partnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
+        $partnerObj                 = $partnerHandler->get($_GET['id']);
         if (is_object($partnerObj)) {
             $parent           = $partnerObj->getVar('categoryid');
             $block['current'] = 0 == $catsObj[$parent]->getVar('parentid') ? $parent : $catsObj[$parent]->getVar('parentid');

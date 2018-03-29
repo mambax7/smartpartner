@@ -94,11 +94,11 @@ class PartnerHandler extends Smartpartner\PersistableObjectHandler
             if (1 == $numrows) {
                 $partner = new Smartpartner\Partner();
                 $partner->assignVars($this->db->fetchArray($result));
-                global $smartpartnerPartnerCatLinkHandler;
-                if (!$smartpartnerPartnerCatLinkHandler) {
-                    $smartpartnerPartnerCatLinkHandler = Smartpartner\Helper::getInstance()->getHandler('PartnerCatLink');
+                global $partnerCatLinkHandler;
+                if (!$partnerCatLinkHandler) {
+                    $partnerCatLinkHandler = Smartpartner\Helper::getInstance()->getHandler('PartnerCatLink');
                 }
-                $partner->setVar('categoryid', $smartpartnerPartnerCatLinkHandler->getParentIds($partner->getVar('id')));
+                $partner->setVar('categoryid', $partnerCatLinkHandler->getParentIds($partner->getVar('id')));
 
                 return $partner;
             }
@@ -203,25 +203,25 @@ class PartnerHandler extends Smartpartner\PersistableObjectHandler
         if ($partner->isNew()) {
             $partner->assignVar('id', $this->db->getInsertId());
         }
-        global $smartpartnerPartnerCatLinkHandler;
+        global $partnerCatLinkHandler;
         $criteria = new \CriteriaCompo();
         $criteria->add(new \Criteria('partnerid', $partner->getVar('id')));
-        $links        = $smartpartnerPartnerCatLinkHandler->getObjects($criteria);
+        $links        = $partnerCatLinkHandler->getObjects($criteria);
         $categoryid   = explode('|', $partner->getVar('categoryid'));
         $parent_array = [];
         foreach ($links as $link) {
             if (!in_array($link->getVar('categoryid'), $categoryid)) {
-                $smartpartnerPartnerCatLinkHandler->delete($link);
+                $partnerCatLinkHandler->delete($link);
             } else {
                 $parent_array[] = $link->getVar('categoryid');
             }
         }
         foreach ($categoryid as $cat) {
             if (!in_array($cat, $parent_array)) {
-                $linkObj = $smartpartnerPartnerCatLinkHandler->create();
+                $linkObj = $partnerCatLinkHandler->create();
                 $linkObj->setVar('partnerid', $partner->getVar('id'));
                 $linkObj->setVar('categoryid', $cat);
-                $smartpartnerPartnerCatLinkHandler->insert($linkObj);
+                $partnerCatLinkHandler->insert($linkObj);
             }
         }
         if (isset($_POST['partial_view']) || isset($_POST['full_view'])) {
@@ -241,7 +241,7 @@ class PartnerHandler extends Smartpartner\PersistableObjectHandler
      */
     public function delete(\XoopsObject $partner, $force = false)
     {
-        global $smartPartnerOfferHandler, $smartpartnerPartnerCatLinkHandler;
+        global $offerHandler, $partnerCatLinkHandler;
         $partnerModule = Smartpartner\Utility::getModuleInfo();
         $module_id     = $partnerModule->getVar('mid');
 
@@ -261,14 +261,14 @@ class PartnerHandler extends Smartpartner\PersistableObjectHandler
         }
         $criteria = new \CriteriaCompo();
         $criteria->add(new \Criteria('partnerid', $partner->getVar('id')));
-        $offersObj = $smartPartnerOfferHandler->getObjects($criteria);
+        $offersObj = $offerHandler->getObjects($criteria);
 
         foreach ($offersObj as $offerObj) {
-            $smartPartnerOfferHandler->delete($offerObj, 1);
+            $offerHandler->delete($offerObj, 1);
         }
-        $linksObj = $smartpartnerPartnerCatLinkHandler->getObjects($criteria);
+        $linksObj = $partnerCatLinkHandler->getObjects($criteria);
         foreach ($linksObj as $linkObj) {
-            $smartpartnerPartnerCatLinkHandler->delete($linkObj, 1);
+            $partnerCatLinkHandler->delete($linkObj, 1);
         }
 
         return true;
@@ -319,9 +319,9 @@ class PartnerHandler extends Smartpartner\PersistableObjectHandler
         if (0 == $GLOBALS['xoopsDB']->getRowsNum($result)) {
             return $ret;
         }
-        global $smartpartnerPartnerCatLinkHandler;
-        if (!isset($smartpartnerPartnerCatLinkHandler)) {
-            $smartpartnerPartnerCatLinkHandler = Smartpartner\Helper::getInstance()->getHandler('partner_cat_link');
+        global $partnerCatLinkHandler;
+        if (!isset($partnerCatLinkHandler)) {
+            $partnerCatLinkHandler = Smartpartner\Helper::getInstance()->getHandler('partner_cat_link');
         }
         while (false !== ($myrow = $this->db->fetchArray($result))) {
             $partner = new Smartpartner\Partner();
@@ -332,7 +332,7 @@ class PartnerHandler extends Smartpartner\PersistableObjectHandler
             } else {
                 $ret[$myrow['id']] =& $partner;
             }
-            $partner->setVar('categoryid', $smartpartnerPartnerCatLinkHandler->getParentIds($partner->getVar('id')));
+            $partner->setVar('categoryid', $partnerCatLinkHandler->getParentIds($partner->getVar('id')));
             unset($partner);
         }
 

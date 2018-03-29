@@ -10,8 +10,10 @@
 /* THIS FILE COMES FROM SMARTSECTION AND NEEDS TO EDITED TO WORK... */
 
 use XoopsModules\Smartpartner;
+/** @var Smartpartner\Helper $helper */
+$helper = Smartpartner\Helper::getInstance();
 
-global $xoopsUser, $xoopsUser, $xoopsConfig, $xoopsDB, $xoopsModuleConfig, $xoopsModule, $smartPartnerItemHandler;
+global $xoopsUser, $xoopsUser, $xoopsConfig, $xoopsDB,  $xoopsModule, $smartPartnerItemHandler;
 $startitem = isset($_GET['startitem']) ? (int)$_GET['startitem'] : 0;
 
 $items_title = _AM_SPARTNER_CAT_ITEMS;
@@ -24,11 +26,11 @@ Smartpartner\Utility::collapsableBar('bottomtable', 'bottomtableicon', $items_ti
 $totalitems = $smartPartnerItemHandler->getItemsCount($sel_cat, [_SPARTNER_STATUS_PUBLISHED]);
 
 // creating the items objects that are published
-$itemsObj = $smartPartnerItemHandler->getAllPublished($xoopsModuleConfig['perpage'], $startitem, $sel_cat);
+$itemsObj = $smartPartnerItemHandler->getAllPublished($helper->getConfig('perpage'), $startitem, $sel_cat);
 
 $totalitemsOnPage = count($itemsObj);
 
-$allcats = $smartPartnerCategoryHandler->getObjects(null, true);
+$allcats = $categoryHandler->getObjects(null, true);
 echo "<table width='100%' cellspacing=1 cellpadding=3 border=0 class = outer>";
 echo '<tr>';
 echo "<td width='40' class='bg3' align='center'><b>" . _AM_SPARTNER_ITEMID . '</b></td>';
@@ -63,7 +65,7 @@ if ($totalitems > 0) {
 echo "</table>\n";
 echo "<br>\n";
 $pagenav_extra_args = "op=mod&categoryid=$sel_cat&parentid=$parentid";
-$pagenav            = new \XoopsPageNav($totalitems, $xoopsModuleConfig['perpage'], $startitem, 'startitem', $pagenav_extra_args);
+$pagenav            = new \XoopsPageNav($totalitems, $helper->getConfig('perpage'), $startitem, 'startitem', $pagenav_extra_args);
 echo '<div style="text-align:right;">' . $pagenav->renderNav() . '</div>';
 echo "<input type='button' name='button' onclick=\"location='item.php?op=mod&categoryid=" . $sel_cat . "'\" value='" . _AM_SPARTNER_CREATEITEM . "'>&nbsp;&nbsp;";
 echo '</div>';

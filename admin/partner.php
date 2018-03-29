@@ -12,6 +12,9 @@
 use XoopsModules\Smartpartner;
 use XoopsModules\Smartobject;
 use XoopsModules\Smartpartner\Constants;
+/** @var Smartpartner\Helper $helper */
+$helper = Smartpartner\Helper::getInstance();
+
 /**
  * @param $partnerObj
  */
@@ -19,10 +22,10 @@ function showfiles($partnerObj)
 {
     // UPLOAD FILES
     //require_once XOOPS_ROOT_PATH . '/modules/smartpartner/include/functions.php';
-    global $xoopsModule, $smartPartnerFileHandler;
+    global $xoopsModule, $fileHandler;
     $pathIcon16 = \Xmf\Module\Admin::iconUrl('', 16);
     Smartpartner\Utility::collapsableBar('filetable', 'filetableicon', _AM_SPARTNER_FILES_LINKED);
-    $filesObj = $smartPartnerFileHandler->getAllFiles($partnerObj->id());
+    $filesObj = $fileHandler->getAllFiles($partnerObj->id());
     if (count($filesObj) > 0) {
         echo "<table width='100%' cellspacing=1 cellpadding=3 border=0 class = outer>";
         echo '<tr>';
@@ -70,9 +73,11 @@ function showfiles($partnerObj)
  */
 function editpartner($showmenu = false, $id = 0)
 {
-    global $xoopsDB, $smartPartnerPartnerHandler, $xoopsUser, $xoopsConfig, $xoopsModuleConfig, $xoopsModule;
-    if (!isset($smartPartnerPartnerHandler)) {
-        $smartPartnerPartnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
+    global $xoopsDB, $partnerHandler, $xoopsUser, $xoopsConfig,  $xoopsModule;
+    /** @var Smartpartner\Helper $helper */
+    $helper = Smartpartner\Helper::getInstance();
+    if (!isset($partnerHandler)) {
+        $partnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
     }
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     // If there is a parameter, and the id exists, retrieve data: we're editing a partner
@@ -131,7 +136,7 @@ function editpartner($showmenu = false, $id = 0)
         Smartpartner\Utility::collapsableBar('editpartner', 'editpartmericon', $page_title, $page_info);
     } else {
         // there's no parameter, so we're adding a partner
-        $partnerObj         = $smartPartnerPartnerHandler->create();
+        $partnerObj         = $partnerHandler->create();
         $breadcrumb_action1 = _AM_SPARTNER_PARTNERS;
         $breadcrumb_action2 = _AM_SPARTNER_CREATE;
         $button_caption     = _AM_SPARTNER_CREATE;
@@ -173,7 +178,7 @@ function editpartner($showmenu = false, $id = 0)
     $max_size = 5000000;
     $file_box = new \XoopsFormFile(_AM_SPARTNER_LOGO_UPLOAD, 'logo_file', $max_size);
     $file_box->setExtra("size ='45'");
-    $file_box->setDescription(sprintf(_AM_SPARTNER_LOGO_UPLOAD_DSC, $xoopsModuleConfig['img_max_width'], $xoopsModuleConfig['img_max_height']));
+    $file_box->setDescription(sprintf(_AM_SPARTNER_LOGO_UPLOAD_DSC, $helper->getConfig('img_max_width'), $helper->getConfig('img_max_height')));
     $sform->addElement($file_box);
 
     // IMAGE_URL
@@ -252,12 +257,12 @@ function editpartner($showmenu = false, $id = 0)
     //perms
     global $smartPermissionsHandler;
 //    require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
-    $smartPermissionsHandler = new Smartobject\PermissionHandler($smartPartnerPartnerHandler);
+    $smartPermissionsHandler = new Smartobject\PermissionHandler($partnerHandler);
 
     if (0 != $partnerObj->id()) {
         $grantedGroups = $smartPermissionsHandler->getGrantedGroups('full_view', $partnerObj->id());
     } else {
-        $grantedGroups = $xoopsModuleConfig['default_full_view'];
+        $grantedGroups = $helper->getConfig('default_full_view');
     }
     $full_view_select = new \XoopsFormSelectGroup(_CO_SPARTNER_FULL_PERM_READ, 'full_view', true, $grantedGroups, 5, true);
     $full_view_select->setDescription(_CO_SPARTNER_FULL_PERM_READ_DSC);
@@ -266,7 +271,7 @@ function editpartner($showmenu = false, $id = 0)
     if (0 != $partnerObj->id()) {
         $partGrantedGroups = $smartPermissionsHandler->getGrantedGroups('partial_view', $partnerObj->id());
     } else {
-        $partGrantedGroups = $xoopsModuleConfig['default_part_view'];
+        $partGrantedGroups = $helper->getConfig('default_part_view');
     }
     $part_view_select = new \XoopsFormSelectGroup(_CO_SPARTNER_PART_PERM_READ, 'partial_view', true, $partGrantedGroups, 5, true);
     $part_view_select->setDescription(_CO_SPARTNER_PART_PERM_READ_DSC);
@@ -333,8 +338,8 @@ if (isset($_POST['op'])) {
 // Where shall we start ?
 $startpartner = isset($_GET['startpartner']) ? (int)$_GET['startpartner'] : 0;
 
-if (!isset($smartPartnerPartnerHandler)) {
-    $smartPartnerPartnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
+if (!isset($partnerHandler)) {
+    $partnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
 }
 /* -- Available operations -- */
 switch ($op) {
@@ -346,7 +351,7 @@ switch ($op) {
         break;
 
     case 'mod':
-        global $xoopsUser, $xoopsConfig, $xoopsModuleConfig, $xoopsModule;
+        global $xoopsUser, $xoopsConfig, $xoopsModule;
         $id = isset($_GET['id']) ? $_GET['id'] : 0;
 
         xoops_cp_header();
@@ -359,7 +364,7 @@ switch ($op) {
         global $xoopsUser;
 
         if (!$xoopsUser) {
-            if (1 == $xoopsModuleConfig['anonpost']) {
+            if (1 == $helper->getConfig('anonpost')) {
                 $uid = 0;
             } else {
                 redirect_header('index.php', 3, _NOPERM);
@@ -374,7 +379,7 @@ switch ($op) {
         if (0 != $id) {
             $partnerObj = new Smartpartner\Partner($id);
         } else {
-            $partnerObj = $smartPartnerPartnerHandler->create();
+            $partnerObj = $partnerHandler->create();
         }
 
         // Uploading the logo, if any
@@ -382,11 +387,11 @@ switch ($op) {
         if ('' != $_FILES['logo_file']['name']) {
             $filename = $_POST['xoops_upload_file'][0];
             if (!empty($filename) || '' != $filename) {
-                global $xoopsModuleConfig;
+//                global $xoopsModuleConfig;
 
                 $max_size          = 10000000;
-                $max_imgwidth      = $xoopsModuleConfig['img_max_width'];
-                $max_imgheight     = $xoopsModuleConfig['img_max_height'];
+                $max_imgwidth      = $helper->getConfig('img_max_width');
+                $max_imgheight     = $helper->getConfig('img_max_height');
                 $allowed_mimetypes = null; //smartpartner_getAllowedMimeTypes();
 
                 require_once XOOPS_ROOT_PATH . '/class/uploader.php';
@@ -461,7 +466,7 @@ switch ($op) {
         $title   = isset($_POST['title']) ? $_POST['title'] : '';
 
         if ($confirm) {
-            if (!$smartPartnerPartnerHandler->delete($partnerObj)) {
+            if (!$partnerHandler->delete($partnerObj)) {
                 redirect_header('partner.php', 2, _AM_SPARTNER_PARTNER_DELETE_ERROR);
             }
 
@@ -494,14 +499,14 @@ switch ($op) {
         require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
         require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 
-        global $xoopsUser, $xoopsUser, $xoopsConfig, $xoopsDB, $xoopsModuleConfig, $xoopsModule;
+        global $xoopsUser, $xoopsUser, $xoopsConfig, $xoopsDB, $xoopsModule;
 
         Smartpartner\Utility::collapsableBar('partners', 'partnersicon', _AM_SPARTNER_ACTIVE_PARTNERS, _AM_SPARTNER_ACTIVE_PARTNERS_DSC);
 
         // Get the total number of published PARTNER
-        $totalpartners = $smartPartnerPartnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_ACTIVE);
+        $totalpartners = $partnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_ACTIVE);
         // creating the partner objects that are published
-        $partnersObj         = $smartPartnerPartnerHandler->getPartners($xoopsModuleConfig['perpage_admin'], $startpartner);
+        $partnersObj         = $partnerHandler->getPartners($helper->getConfig('perpage_admin'), $startpartner);
         $totalPartnersOnPage = count($partnersObj);
 
         echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
@@ -534,7 +539,7 @@ switch ($op) {
         echo "</table>\n";
         echo "<br>\n";
 
-        $pagenav = new \XoopsPageNav($totalpartners, $xoopsModuleConfig['perpage_admin'], $startpartner, 'startpartner');
+        $pagenav = new \XoopsPageNav($totalpartners, $helper->getConfig('perpage_admin'), $startpartner, 'startpartner');
         echo '<div style="text-align:right;">' . $pagenav->renderNav() . '</div>';
 
         Smartpartner\Utility::closeCollapsable('partners', 'partnersicon');

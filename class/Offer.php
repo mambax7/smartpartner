@@ -28,7 +28,7 @@ use XoopsModules\Smartobject;
 /**
  * Class Offer
  */
-class Offer extends Smartobject\BaseSmartObject
+class Offer extends Smartpartner\BaseSmartObject
 {
     /**
      * Offer constructor.
@@ -90,12 +90,12 @@ class Offer extends Smartobject\BaseSmartObject
      */
     public function partnerid()
     {
-        global $smartPartnerPartnerHandler;
-        if (!$smartPartnerPartnerHandler) {
-            $smartPartnerPartnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
+        global $partnerHandler;
+        if (!$partnerHandler) {
+            $partnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
         }
         $ret        = $this->getVar('partnerid', 'e');
-        $partnerObj = $smartPartnerPartnerHandler->get($ret);
+        $partnerObj = $partnerHandler->get($ret);
 
         return $partnerObj->getVar('title');
     }
@@ -116,8 +116,8 @@ class Offer extends Smartobject\BaseSmartObject
      */
     public function sendNotifications($notifications = [])
     {
-        global $smartPartnerPartnerHandler;
-        $partnerObj  = $smartPartnerPartnerHandler->get($this->getVar('partnerid', 'e'));
+        global $partnerHandler;
+        $partnerObj  = $partnerHandler->get($this->getVar('partnerid', 'e'));
         $smartModule = Smartpartner\Utility::getModuleInfo();
         $module_id   = $smartModule->getVar('mid');
 

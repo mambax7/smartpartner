@@ -10,6 +10,8 @@
  */
 
 use XoopsModules\Smartpartner;
+/** @var Smartpartner\Helper $helper */
+$helper = Smartpartner\Helper::getInstance();
 
 /**
  * @copyright      {@link https://xoops.org/ XOOPS Project}
@@ -150,9 +152,9 @@ class MimetypeHandler extends Smartpartner\BaseObjectHandler
                   $allowed_mimetypes[] = array('type'=>$row, 'ext'=>$mime->getVar('mime_ext'));
               }
           }*/
-        global $xoopsModuleConfig;
+//        global $xoopsModuleConfig;
         $mymetypesArray = require_once SMARTPARTNER_ROOT_PATH . '/include/mimetypes.inc.php';
-        foreach (explode('|', $xoopsModuleConfig['allowed_ext']) as $ext) {
+        foreach (explode('|', $helper->getConfig('allowed_ext')) as $ext) {
             $allowed_mimetypes[] = ['type' => $mymetypesArray[$ext], 'ext' => $ext];
         }
 

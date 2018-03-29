@@ -150,9 +150,9 @@ function xoops_module_update_smartpartner(\XoopsModule $module)
             }
         }
         //loop in partners to insert cat_links in partner_cat_link table
-        $smartpartnerPartnerHandler = xoops_getModuleHandler('partner', 'smartpartner');
-        //        $smartpartnerPartnerCatLinkHandler = xoops_getModuleHandler('partner_cat_link', 'smartpartner');
-        $smartpartnerPartnerCatLinkHandler = xoops_getModuleHandler('partner_cat_link', 'smartpartner');
+        $partnerHandler = xoops_getModuleHandler('partner', 'smartpartner');
+        //        $partnerCatLinkHandler = xoops_getModuleHandler('partner_cat_link', 'smartpartner');
+        $partnerCatLinkHandler = xoops_getModuleHandler('partner_cat_link', 'smartpartner');
 
         $modulepermHandler = xoops_getHandler('groupperm');
         /** @var XoopsModuleHandler $moduleHandler */
@@ -160,14 +160,14 @@ function xoops_module_update_smartpartner(\XoopsModule $module)
         $module        = $moduleHandler->getByDirname('smartpartner');
         $groupsArray   = $modulepermHandler->getGroupIds('module_read', $module->mid(), 1);
 
-        $sql     = 'SELECT id, categoryid FROM ' . $smartpartnerPartnerHandler->table;
-        $records = $smartpartnerPartnerHandler->query($sql);
+        $sql     = 'SELECT id, categoryid FROM ' . $partnerHandler->table;
+        $records = $partnerHandler->query($sql);
         foreach ($records as $record) {
             if (0 != $record['categoryid']) {
-                $new_link = $smartpartnerPartnerCatLinkHandler->create();
+                $new_link = $partnerCatLinkHandler->create();
                 $new_link->setVar('partnerid', $record['id']);
                 $new_link->setVar('categoryid', $record['categoryid']);
-                $smartpartnerPartnerCatLinkHandler->insert($new_link);
+                $partnerCatLinkHandler->insert($new_link);
                 unset($new_link);
             }
             foreach ($groupsArray as $group) {

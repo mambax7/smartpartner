@@ -8,10 +8,12 @@
  */
 
 use XoopsModules\Smartpartner;
+/** @var Smartpartner\Helper $helper */
+$helper = Smartpartner\Helper::getInstance();
 
 require_once __DIR__ . '/admin_header.php';
 
-global $smartPartnerFileHandler;
+global $fileHandler;
 
 $op = '';
 if (isset($_GET['op'])) {
@@ -28,7 +30,7 @@ if (isset($_POST['op'])) {
  */
 function editfile($showmenu = false, $fileid = 0, $id = 0)
 {
-    global $smartPartnerFileHandler, $xoopsModule;
+    global $fileHandler, $xoopsModule;
 
     require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
     // if there is a parameter, and the id exists, retrieve data: we're editing a file
@@ -47,7 +49,7 @@ function editfile($showmenu = false, $fileid = 0, $id = 0)
         Smartpartner\Utility::collapsableBar('editfile', 'editfileicon', _AM_SPARTNER_FILE_INFORMATIONS);
     } else {
         // there's no parameter, so we're adding an item
-        $fileObj = $smartPartnerFileHandler->create();
+        $fileObj = $fileHandler->create();
         $fileObj->setVar('id', $id);
 
         echo "<span style='color: #2F5376; font-weight: bold; font-size: 16px; margin: 6px 6px 0 0; '>" . _AM_SPARTNER_FILE_ADDING . '</span>';
@@ -136,7 +138,7 @@ switch ($op) {
         break;
 
     case 'mod':
-        global $smartPartnerFileHandler;
+        global $fileHandler;
         $fileid = isset($_GET['fileid']) ? $_GET['fileid'] : 0;
         $id     = isset($_GET['id']) ? $_GET['id'] : 0;
         if ((0 == $fileid) && (0 == $id)) {
@@ -158,7 +160,7 @@ switch ($op) {
         if (0 != $fileid) {
             $fileObj = new Smartpartner\File($fileid);
         } else {
-            $fileObj = $smartPartnerFileHandler->create();
+            $fileObj = $fileHandler->create();
         }
 
         // Putting the values in the file object
@@ -189,7 +191,7 @@ switch ($op) {
         $title   = isset($_POST['title']) ? $_POST['title'] : '';
 
         if ($confirm) {
-            if (!$smartPartnerFileHandler->delete($fileObj)) {
+            if (!$fileHandler->delete($fileObj)) {
                 redirect_header('partner.php', 2, _AM_SPARTNER_FILE_DELETE_ERROR);
             }
 
@@ -219,7 +221,7 @@ switch ($op) {
         require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
         require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 
-        global $xoopsUser, $xoopsUser, $xoopsConfig, $xoopsDB, $xoopsModuleConfig, $xoopsModule;
+        global $xoopsUser, $xoopsUser, $xoopsConfig, $xoopsDB,  $xoopsModule;
 
         echo "<br>\n";
 
@@ -229,7 +231,7 @@ switch ($op) {
         $totalitems = $smartPartnerItemHandler->getItemsCount(-1, [_SPARTNER_STATUS_PUBLISHED]);
 
         // creating the item objects that are published
-        $itemsObj         = $smartPartnerItemHandler->getAllPublished($xoopsModuleConfig['perpage'], $startitem);
+        $itemsObj         = $smartPartnerItemHandler->getAllPublished($helper->getConfig('perpage'), $startitem);
         $totalItemsOnPage = count($itemsObj);
 
         echo "<table width='100%' cellspacing=1 cellpadding=3 border=0 class = outer>";
@@ -264,11 +266,11 @@ switch ($op) {
         echo "</table>\n";
         echo "<br>\n";
 
-        $pagenav = new \XoopsPageNav($totalitems, $xoopsModuleConfig['perpage'], $startitem, 'startitem');
+        $pagenav = new \XoopsPageNav($totalitems, $helper->getConfig('perpage'), $startitem, 'startitem');
         echo '<div style="text-align:right;">' . $pagenav->renderNav() . '</div>';
         echo '</div>';
 
-        $totalcategories = $smartPartnerCategoryHandler->getCategoriesCount(-1);
+        $totalcategories = $categoryHandler->getCategoriesCount(-1);
         if ($totalcategories > 0) {
             edititem();
         }

@@ -6,7 +6,7 @@ require_once __DIR__ . '/header.php';
 $GLOBALS['xoopsOption']['template_main'] = 'smartpartner_offer.tpl';
 include XOOPS_ROOT_PATH . '/header.php';
 
-$offers = $smartPartnerOfferHandler->getObjectsForUserSide();
+$offers = $offerHandler->getObjectsForUserSide();
 
 $xoopsTpl->assign('offers', $offers);
 $xoopsTpl->assign('lang_offer_click_here', _CO_SPARTNER_OFFER_CLICKHERE);

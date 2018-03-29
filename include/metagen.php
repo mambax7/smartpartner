@@ -10,6 +10,8 @@
  */
 
 use XoopsModules\Smartpartner;
+/** @var Smartpartner\Helper $helper */
+$helper = Smartpartner\Helper::getInstance();
 
 /**
  * @param $document
@@ -124,7 +126,9 @@ function smartpartner_findMetaKeywords($text, $minChar)
  */
 function smartpartner_createMetaTags($title, $categoryPath = '', $description = '', $minChar = 4)
 {
-    global $xoopsTpl, $xoopsModule, $xoopsModuleConfig;
+    global $xoopsTpl, $xoopsModule;
+    /** @var Smartpartner\Helper $helper */
+    $helper = Smartpartner\Helper::getInstance();
     $myts = \MyTextSanitizer::getInstance();
 
     $ret = '';
@@ -141,9 +145,9 @@ function smartpartner_createMetaTags($title, $categoryPath = '', $description = 
     if (isset($title) && ('' != $title)) {
         $keywords = smartpartner_findMetaKeywords($title, $minChar);
 
-        if (isset($xoopsModuleConfig) && isset($xoopsModuleConfig['moduleMetaKeywords'])
-            && '' != $xoopsModuleConfig['moduleMetaKeywords']) {
-            $moduleKeywords = explode(',', $xoopsModuleConfig['moduleMetaKeywords']);
+        if (null !== ($helper->getModule()) && null !== ($helper->getConfig('moduleMetaKeywords'))
+            && '' != $helper->getConfig('moduleMetaKeywords')) {
+            $moduleKeywords = explode(',', $helper->getConfig('moduleMetaKeywords'));
             foreach ($moduleKeywords as $moduleKeyword) {
                 if (!in_array($moduleKeyword, $keywords)) {
                     $keywords[] = trim($moduleKeyword);

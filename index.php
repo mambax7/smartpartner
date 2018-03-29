@@ -23,6 +23,8 @@
  */
 
 use XoopsModules\Smartpartner;
+/** @var Smartpartner\Helper $helper */
+$helper = Smartpartner\Helper::getInstance();
 
 /**
  *Loop inside the array of all partners to match with current category
@@ -34,13 +36,16 @@ use XoopsModules\Smartpartner;
  */
 function get_partners_array($categoryid)
 {
-    global $every_partners_array, $count, $xoopsModuleConfig, $view_category_id;
+    global $every_partners_array, $count, $view_category_id;
+    /** @var Smartpartner\Helper $helper */
+    $helper = Smartpartner\Helper::getInstance();
+
     $partners = [];
     foreach ($every_partners_array as $partnerObj) {
         if (in_array($categoryid, explode('|', $partnerObj->categoryid()))
             && ($view_category_id
                 || (!$view_category_id
-                    && count($partners) < $xoopsModuleConfig['percat_user']))) {
+                    && count($partners) < $helper->getConfig('percat_user')))) {
             $partner    = $partnerObj->toArray('index');
             $partners[] = $partner;
         }
@@ -116,23 +121,23 @@ $start = isset($_GET['start']) ? (int)$_GET['start'] : 0;
 
 $view_category_id = isset($_GET['view_category_id']) ? (int)$_GET['view_category_id'] : 0;
 
-$partners_total = $smartPartnerPartnerHandler->getPartnerCount();
+$partners_total = $partnerHandler->getPartnerCount();
 
-if ('title' === $xoopsModuleConfig['index_sortby'] || 'weight' === $xoopsModuleConfig['index_sortby']) {
+if ('title' === $helper->getConfig('index_sortby') || 'weight' === $helper->getConfig('index_sortby')) {
     $order = 'ASC';
 } else {
     $order = 'DESC';
 }
 //Retreive all records from database
-$every_categories_array = $smartPartnerCategoryHandler->getCategories(0, 0, -1, 'weight', 'ASC', true);
-$every_partners_array   = $smartPartnerPartnerHandler->getPartnersForIndex(-1, _SPARTNER_STATUS_ACTIVE, $xoopsModuleConfig['index_sortby'], $order);
+$every_categories_array = $categoryHandler->getCategories(0, 0, -1, 'weight', 'ASC', true);
+$every_partners_array   = $partnerHandler->getPartnersForIndex(-1, _SPARTNER_STATUS_ACTIVE, $helper->getConfig('index_sortby'), $order);
 
 $partnersArray = [];
 
 //display All categories and partners
 if (!$view_category_id) {
     //get orphan first if preference says so
-    if ($xoopsModuleConfig['orphan_first']) {
+    if ($helper->getConfig('orphan_first')) {
         $partnersArray['orphan']['partners'] = get_partners_array(0);
     }
 
@@ -144,7 +149,7 @@ if (!$view_category_id) {
     }
 
     //get orphan last if preference says so
-    if (!$xoopsModuleConfig['orphan_first']) {
+    if (!$helper->getConfig('orphan_first')) {
         $partnersArray['orphan']['partners'] = get_partners_array(0);
     }
 
@@ -167,16 +172,16 @@ $xoopsTpl->assign('partners', $partnersArray);
 //end new code to implement categories
 
 // Partners Navigation Bar
-//$pagenav = new \XoopsPageNav($partners_total_onpage, $xoopsModuleConfig['perpage_user'], $start, 'start', '');
+//$pagenav = new \XoopsPageNav($partners_total_onpage, $helper->getConfig('perpage_user'), $start, 'start', '');
 //$xoopsTpl->assign('pagenav', '<div style="text-align:right;">' . $pagenav->renderNav() . '</div>');
 $xoopsTpl->assign('view_deteils_cat', _MD_SPARTNER_DETAIL_CAT);
 $xoopsTpl->assign('on_index_page', 0 == $view_category_id);
 $xoopsTpl->assign('sitename', $xoopsConfig['sitename']);
-$xoopsTpl->assign('displayjoin', $xoopsModuleConfig['allowsubmit'] && (is_object($xoopsUser) || $xoopsModuleConfig['anonpost']));
-$xoopsTpl->assign('img_max_width', $xoopsModuleConfig['img_max_width']);
+$xoopsTpl->assign('displayjoin', $helper->getConfig('allowsubmit') && (is_object($xoopsUser) || $helper->getConfig('anonpost')));
+$xoopsTpl->assign('img_max_width', $helper->getConfig('img_max_width'));
 $xoopsTpl->assign('module_home', '<a href="' . SMARTPARTNER_URL . '">' . $smartPartnerModuleName . '</a>');
 $xoopsTpl->assign('categoryPath', $categoryPath);
-$xoopsTpl->assign('lang_intro_text', $myts->displayTarea($xoopsModuleConfig['welcomemsg']));
+$xoopsTpl->assign('lang_intro_text', $myts->displayTarea($helper->getConfig('welcomemsg')));
 $xoopsTpl->assign('lang_partner', _MD_SPARTNER_PARTNER);
 $xoopsTpl->assign('lang_desc', _MD_SPARTNER_DESCRIPTION);
 $xoopsTpl->assign('lang_edit', _MD_SPARTNER_EDIT);
@@ -186,8 +191,8 @@ $xoopsTpl->assign('lang_join', _MD_SPARTNER_JOIN);
 $xoopsTpl->assign('lang_no_partners', _MD_SPARTNER_NOPART);
 $xoopsTpl->assign('lang_main_partner', _MD_SPARTNER_PARTNERS);
 $xoopsTpl->assign('lang_readmore', _MD_SPARTNER_READMORE);
-$xoopsTpl->assign('partview_msg', $xoopsModuleConfig['partview_msg']);
-if (!$xoopsModuleConfig['hide_module_name']) {
+$xoopsTpl->assign('partview_msg', $helper->getConfig('partview_msg'));
+if (!$helper->getConfig('hide_module_name')) {
     $xoopsTpl->assign('lang_partnerstitle', $myts->displayTarea($xoopsModule->getVar('name')));
 }
 require_once XOOPS_ROOT_PATH . '/footer.php';

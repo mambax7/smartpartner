@@ -19,9 +19,9 @@ use XoopsModules\Smartobject;
  */
 function editoffer($showmenu = false, $offerid = 0, $fct = '')
 {
-    global $smartPartnerOfferHandler, $smartPartnerCategoryHandler, $smartPartnerPartnerHandler;
+    global $offerHandler, $categoryHandler, $partnerHandler;
 
-    $offerObj = $smartPartnerOfferHandler->get($offerid);
+    $offerObj = $offerHandler->get($offerid);
 
     if ($offerObj->isNew()) {
         $breadcrumb            = _AM_SPARTNER_OFFERS . ' > ' . _AM_SPARTNER_CREATINGNEW;
@@ -39,7 +39,7 @@ function editoffer($showmenu = false, $offerid = 0, $fct = '')
         $form_name             = _AM_SPARTNER_OFFER_EDIT;
         $submit_button_caption = null;
     }
-    $partnerObj = $smartPartnerPartnerHandler->get($offerObj->getVar('partnerid', 'e'));
+    $partnerObj = $partnerHandler->get($offerObj->getVar('partnerid', 'e'));
     $offerObj->hideFieldFromForm('date_sub');
     $menuTab = 3;
 
@@ -79,14 +79,14 @@ switch ($op) {
     case 'addoffer':
 //        require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectcontroller.php';
 
-        $controller = new Smartobject\ObjectController($smartPartnerOfferHandler);
+        $controller = new Smartobject\ObjectController($offerHandler);
         $offerObj   = $controller->storeSmartObject();
         $fct        = isset($_POST['fct']) ? $_POST['fct'] : '';
 
         if ($offerObj->hasError()) {
             redirect_header($smart_previous_page, 3, _CO_SOBJECT_SAVE_ERROR . $offerObj->getHtmlErrors());
         } else {
-            $partnerObj = $smartPartnerPartnerHandler->get($offerObj->getVar('partnerid', 'e'));
+            $partnerObj = $partnerHandler->get($offerObj->getVar('partnerid', 'e'));
             $partnerObj->setUpdated();
             if ('' == $_POST['offerid']) {
                 $offerObj->sendNotifications([_SPARTNER_NOT_OFFER_NEW]);
@@ -99,7 +99,7 @@ switch ($op) {
 
     case 'del':
 //        require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectcontroller.php';
-        $controller = new Smartobject\ObjectController($smartPartnerOfferHandler);
+        $controller = new Smartobject\ObjectController($offerHandler);
         $controller->handleObjectDeletion();
         break;
 
@@ -126,7 +126,7 @@ switch ($op) {
         Smartobject\Utility::getCollapsableBar('createdoffers', _AM_SPARTNER_OFFERS, _AM_SPARTNER_OFFERS_DSC);
 
 //        require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjecttable.php';
-        $objectTable = new Smartobject\Table($smartPartnerOfferHandler);
+        $objectTable = new Smartobject\Table($offerHandler);
         $objectTable->addFilter('partnerid', 'getPartnerList');
         $objectTable->addFilter('status', 'getStatusList');
         $objectTable->addColumn(new Smartobject\ObjectColumn('title', 'left'));

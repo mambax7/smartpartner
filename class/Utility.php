@@ -615,7 +615,9 @@ class Utility
     {
         require_once SMARTPARTNER_ROOT_PATH . 'class/uploader.php';
 
-        global $smartPartnerIsAdmin, $xoopsModuleConfig, $smartPartnerPartnerHandler, $smartPartnerFileHandler, $xoopsUser;
+        global $smartPartnerIsAdmin, $partnerHandler, $fileHandler, $xoopsUser;
+        /** @var Smartpartner\Helper $helper */
+        $helper = Smartpartner\Helper::getInstance();
 
         $id      = isset($_POST['id']) ? (int)$_POST['id'] : 0;
         $uid     = is_object($xoopsUser) ? $xoopsUser->uid() : 0;
@@ -627,12 +629,12 @@ class Utility
         $session->set('smartpartner_file_id', $id);
 
         if (!is_object($itemObj)) {
-            $itemObj = $smartPartnerPartnerHandler->get($id);
+            $itemObj = $partnerHandler->get($id);
         }
 
-        $max_size = $xoopsModuleConfig['maximum_filesize'];
+        $max_size = $helper->getConfig('maximum_filesize');
 
-        $fileObj = $smartPartnerFileHandler->create();
+        $fileObj = $fileHandler->create();
         $fileObj->setVar('name', isset($_POST['name']) ? $_POST['name'] : '');
         $fileObj->setVar('description', isset($_POST['description']) ? $_POST['description'] : '');
         $fileObj->setVar('status', isset($_POST['file_status']) ? (int)$_POST['file_status'] : 1);

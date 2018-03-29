@@ -9,6 +9,8 @@
 
 use XoopsModules\Smartpartner;
 use XoopsModules\Smartpartner\Constants;
+/** @var Smartpartner\Helper $helper */
+$helper = Smartpartner\Helper::getInstance();
 
 require_once __DIR__ . '/admin_header.php';
 $myts = \MyTextSanitizer::getInstance();
@@ -32,7 +34,7 @@ switch ($op) {
                 try {
                     Smartpartner\Utility::copyr($source, $dest);
                 }
-                catch (Exception $e) {
+                catch (\Exception $e) {
                 }
             }
             $msg = $res ? _AM_SPARTNER_DIRCREATED : _AM_SPARTNER_DIRNOTCREATED;
@@ -87,7 +89,7 @@ function pathConfiguration()
 
 function buildTable()
 {
-    global $xoopsConfig, $xoopsModuleConfig, $xoopsModule;
+    global $xoopsConfig,  $xoopsModule;
     echo "<table width='100%' cellspacing='1' cellpadding='3' border='0' class='outer'>";
     echo '<tr>';
     echo "<td class='bg3' width='200px' align='left'><b>" . _AM_SPARTNER_NAME . '</b></td>';
@@ -103,7 +105,7 @@ require_once XOOPS_ROOT_PATH . '/class/xoopslists.php';
 require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 
 // Creating the Partner handler object
-//$smartPartnerPartnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
+//$partnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
 
 $startentry = isset($_GET['startentry']) ? (int)$_GET['startentry'] : 0;
 
@@ -112,22 +114,22 @@ $adminObject = \Xmf\Module\Admin::getInstance();
 //xoops_cp_header();
 $adminObject->displayNavigation(basename(__FILE__));
 
-global $xoopsUser, $xoopsConfig, $xoopsModuleConfig, $xoopsModule;
+global $xoopsUser, $xoopsConfig, $xoopsModule;
 
 // Total Partners -- includes everything on the table
-$totalpartners = $smartPartnerPartnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_ALL);
+$totalpartners = $partnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_ALL);
 
 // Total Submitted Partners
-$totalsubmitted = $smartPartnerPartnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_SUBMITTED);
+$totalsubmitted = $partnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_SUBMITTED);
 
 // Total active Partners
-$totalactive = $smartPartnerPartnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_ACTIVE);
+$totalactive = $partnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_ACTIVE);
 
 // Total inactive Partners
-$totalinactive = $smartPartnerPartnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_INACTIVE);
+$totalinactive = $partnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_INACTIVE);
 
 // Total rejected Partners
-$totalrejected = $smartPartnerPartnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_REJECTED);
+$totalrejected = $partnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_REJECTED);
 
 // Check Path Configuration
 //if ((Smartpartner\Utility::getPathStatusAsAdmin('images', true) < 0) || (Smartpartner\Utility::getPathStatusAsAdmin('images/category', true) < 0)) {
@@ -267,9 +269,9 @@ echo "
 // Get number of entries in the selected state
 $statusSelected = (0 == $statussel) ? Constants::_SPARTNER_STATUS_ALL : $statussel;
 
-$numrows = $smartPartnerPartnerHandler->getPartnerCount($statusSelected);
+$numrows = $partnerHandler->getPartnerCount($statusSelected);
 // creating the Q&As objects
-$partnersObj = $smartPartnerPartnerHandler->getPartners($xoopsModuleConfig['perpage_admin'], $startentry, $statusSelected, $sortsel, $ordersel);
+$partnersObj = $partnerHandler->getPartners($helper->getConfig('perpage_admin'), $startentry, $statusSelected, $sortsel, $ordersel);
 
 $totalPartnersOnPage = count($partnersObj);
 
@@ -333,9 +335,9 @@ if ($numrows > 0) {
 echo "</table>\n";
 echo "<span style=\"color: #567; margin: 3px 0 18px 0; font-size: small; display: block; \">$status_explaination</span>";
 
-$pagenav = new \XoopsPageNav($numrows, $xoopsModuleConfig['perpage_admin'], $startentry, 'startentry', "statussel=$statussel&amp;sortsel=$sortsel&amp;ordersel=$ordersel");
+$pagenav = new \XoopsPageNav($numrows, $helper->getConfig('perpage_admin'), $startentry, 'startentry', "statussel=$statussel&amp;sortsel=$sortsel&amp;ordersel=$ordersel");
 
-if (1 == $xoopsModuleConfig['useimagenavpage']) {
+if (1 == $helper->getConfig('useimagenavpage')) {
     echo '<div style="text-align:right; background-color: white; margin: 10px 0;">' . $pagenav->renderImageNav() . '</div>';
 } else {
     echo '<div style="text-align:right; background-color: white; margin: 10px 0;">' . $pagenav->renderNav() . '</div>';

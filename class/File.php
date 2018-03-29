@@ -38,8 +38,8 @@ class File extends \XoopsObject
         $this->initVar('counter', XOBJ_DTYPE_INT, null, false);
 
         if (isset($id)) {
-            global $smartPartnerFileHandler;
-            $file = $smartPartnerFileHandler->get($id);
+            global $fileHandler;
+            $file = $fileHandler->get($id);
             foreach ($file->vars as $k => $v) {
                 $this->assignVar($k, $v['value']);
             }
@@ -217,9 +217,9 @@ class File extends \XoopsObject
             }
         }
 
-        global $smartPartnerFileHandler;
+        global $fileHandler;
 
-        return $smartPartnerFileHandler->insert($this, $force);
+        return $fileHandler->insert($this, $force);
     }
 
     /**

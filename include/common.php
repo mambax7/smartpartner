@@ -50,7 +50,7 @@ if (!defined($moduleDirNameUpper . '_CONSTANTS_DEFINED')) {
 
 
 /** Include SmartObject framework **/
-require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartloader.php';
+//require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartloader.php';
 //require_once SMARTOBJECT_ROOT_PATH . 'class/smartobjectcategory.php';
 
 // Creating the SmartModule object
@@ -69,19 +69,19 @@ $myts                   = \MyTextSanitizer::getInstance();
 //$smartConfig = $helper->getConfig();
 
 // Creating the partner handler object
-$smartPartnerPartnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
+$partnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
 
 // Creating the category handler object
-$smartPartnerCategoryHandler = Smartpartner\Helper::getInstance()->getHandler('Category');
+$categoryHandler = Smartpartner\Helper::getInstance()->getHandler('Category');
 
 // Creating the category link handler object
-$smartpartnerPartnerCatLinkHandler = Smartpartner\Helper::getInstance()->getHandler('PartnerCatLink');
+$partnerCatLinkHandler = Smartpartner\Helper::getInstance()->getHandler('PartnerCatLink');
 
 // Creating the offer handler object
-$smartPartnerOfferHandler = Smartpartner\Helper::getInstance()->getHandler('Offer');
+$offerHandler = Smartpartner\Helper::getInstance()->getHandler('Offer');
 
 // Creating the file handler object
-$smartPartnerFileHandler = Smartpartner\Helper::getInstance()->getHandler('File');
+$fileHandler = Smartpartner\Helper::getInstance()->getHandler('File');
 
 define('_SPARTNER_STATUS_OFFLINE', 0);
 define('_SPARTNER_STATUS_ONLINE', 1);

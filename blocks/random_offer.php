@@ -21,11 +21,11 @@ function b_random_offer_show($options)
     require_once XOOPS_ROOT_PATH . '/modules/smartpartner/include/common.php';
 
     // Creating the partner handler object
-    $smartPartnerOfferHandler   = Smartpartner\Helper::getInstance()->getHandler('Offer');
-    $smartPartnerPartnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
+    $offerHandler   = Smartpartner\Helper::getInstance()->getHandler('Offer');
+    $partnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
 
 //    require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
-    $smartPermissionsHandler = new Smartobject\PermissionHandler($smartPartnerPartnerHandler);
+    $smartPermissionsHandler = new Smartobject\PermissionHandler($partnerHandler);
     //var_dump($smartPermissionsHandler->handler);exit;
     $grantedItems = $smartPermissionsHandler->getGrantedItems('full_view');
 
@@ -37,7 +37,7 @@ function b_random_offer_show($options)
         $criteria->add(new \Criteria('status', _SPARTNER_STATUS_ONLINE));
 
         // Randomize
-        $offersObj = $smartPartnerOfferHandler->getObjects($criteria);
+        $offersObj = $offerHandler->getObjects($criteria);
         if (count($offersObj) > 0) {
             $key_arr  = array_keys($offersObj);
             $key_rand = array_rand($key_arr, 1);

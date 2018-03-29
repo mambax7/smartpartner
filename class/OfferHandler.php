@@ -29,7 +29,8 @@
 // -------------------------------------------------------------------------//
 
 use XoopsModules\Smartpartner;
-use XoopsModules\Smartobject;
+/** @var Smartpartner\Helper $helper */
+$helper = Smartpartner\Helper::getInstance();
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
 //require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobject.php';
@@ -39,7 +40,7 @@ use XoopsModules\Smartobject;
 /**
  * Class OfferHandler
  */
-class OfferHandler extends Smartobject\PersistableObjectHandler
+class OfferHandler extends Smartpartner\PersistableObjectHandler
 {
     /**
      * OfferHandler constructor.
@@ -47,7 +48,7 @@ class OfferHandler extends Smartobject\PersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, Offer::class, 'offer', 'title', false, 'smartpartner');
+        parent::__construct($db, smartpartner_offer, Offer::class, 'title', false, 'smartpartner');
     }
 
     /**
@@ -65,11 +66,13 @@ class OfferHandler extends Smartobject\PersistableObjectHandler
      */
     public function getObjectsForUserSide()
     {
-        global $xoopsModuleConfig, $smartPartnerCategoryHandler, $smartPartnerPartnerHandler, $xoopsUser;
+        global  $categoryHandler, $partnerHandler, $xoopsUser;
+        /** @var Smartpartner\Helper $helper */
+        $helper = Smartpartner\Helper::getInstance();
 
         $criteria = new \CriteriaCompo();
-        $criteria->setSort($xoopsModuleConfig['offer_sort']);
-        $criteria->setOrder($xoopsModuleConfig['offer_order']);
+        $criteria->setSort($helper->getConfig('offer_sort'));
+        $criteria->setOrder($helper->getConfig('offer_order'));
         $criteria->add(new \Criteria('date_pub', time(), '<'));
         $criteria->add(new \Criteria('date_end', time(), '>'));
         $criteria->add(new \Criteria('status', _SPARTNER_STATUS_ONLINE));
@@ -77,11 +80,11 @@ class OfferHandler extends Smartobject\PersistableObjectHandler
         $offersObj =& $this->getObjects($criteria);
         foreach ($offersObj as $offerObj) {
         }
-        $catsObj     = $smartPartnerCategoryHandler->getObjects(null, true);
-        $partnersObj = $smartPartnerPartnerHandler->getObjects(null, true);
+        $catsObj     = $categoryHandler->getObjects(null, true);
+        $partnersObj = $partnerHandler->getObjects(null, true);
 
 //        require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
-        $smartPermissionsHandler = new Smartobject\PermissionHandler($smartPartnerPartnerHandler);
+        $smartPermissionsHandler = new Smartobject\PermissionHandler($partnerHandler);
         $userGroups              = is_object($xoopsUser) ? $xoopsUser->getGroups() : XOOPS_GROUP_ANONYMOUS;
         $grantedItems            = $smartPermissionsHandler->getGrantedItems('full_view');
         $relevantCat             = [];
@@ -192,9 +195,9 @@ class OfferHandler extends Smartobject\PersistableObjectHandler
      */
     public function getPartnerList()
     {
-        global $smartPartnerPartnerHandler;
+        global $partnerHandler;
 
-        return $smartPartnerPartnerHandler->getList();
+        return $partnerHandler->getList();
     }
 
     /**

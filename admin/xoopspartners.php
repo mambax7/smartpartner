@@ -53,14 +53,14 @@ if ('go' === $op) {
     Smartpartner\Utility::collapsableBar('bottomtable', 'bottomtableicon', sprintf(_AM_SPARTNER_IMPORT_FROM, $importFromModuleName), _AM_SPARTNER_IMPORT_RESULT);
     $cnt_imported_partner = 0;
 
-    $smartPartnerPartnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
+    $partnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
 
     $resultPartners = $xoopsDB->query('SELECT * FROM ' . $xoopsDB->prefix('partners') . ' ');
     while (false !== ($arrPartners = $xoopsDB->fetchArray($resultPartners))) {
         extract($arrPartners, EXTR_PREFIX_ALL, 'xpartner');
 
         // insert partner into SmartPartner
-        $partnerObj = $smartPartnerPartnerHandler->create();
+        $partnerObj = $partnerHandler->create();
 
         if (0 == $xpartner_status) {
             $xpartner_status = _SPARTNER_STATUS_INACTIVE;

@@ -157,9 +157,9 @@ class Category extends \XoopsObject
             $ret = $this->name();
         }
         $parentid = $this->parentid();
-        global $smartPartnerCategoryHandler;
+        global $categoryHandler;
         if (0 != $parentid) {
-            $parentObj = $smartPartnerCategoryHandler->get($parentid);
+            $parentObj = $categoryHandler->get($parentid);
             if ($parentObj->notLoaded()) {
                 exit;
             }
@@ -198,8 +198,8 @@ class Category extends \XoopsObject
      */
     public function store($sendNotifications = true, $force = true)
     {
-        global $smartPartnerCategoryHandler;
-        $ret = $smartPartnerCategoryHandler->insert($this, $force);
+        global $categoryHandler;
+        $ret = $categoryHandler->insert($this, $force);
         if ($sendNotifications && $ret && $this->isNew()) {
             $this->sendNotifications();
         }

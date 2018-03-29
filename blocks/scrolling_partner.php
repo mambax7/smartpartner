@@ -15,11 +15,11 @@ function b_scrolling_partner_show($options)
     require_once XOOPS_ROOT_PATH . '/modules/smartpartner/include/common.php';
 
     // Creating the partner handler object
-    $smartPartnerPartnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
-    //$smartPartnerCategoryHandler = Smartpartner\Helper::getInstance()->getHandler('Category');
+    $partnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
+    //$categoryHandler = Smartpartner\Helper::getInstance()->getHandler('Category');
 
     // Randomize
-    $partnersObj = $smartPartnerPartnerHandler->getPartners(0, 0, _SPARTNER_STATUS_ACTIVE);
+    $partnersObj = $partnerHandler->getPartners(0, 0, _SPARTNER_STATUS_ACTIVE);
     if (count($partnersObj) > 1) {
         $key_arr  = array_keys($partnersObj);
         $key_rand = array_rand($key_arr, count($key_arr));

@@ -7,8 +7,10 @@
  * Licence: GNU
  */
 
-use XoopsModules\Smartpartner;
 use XoopsModules\Smartobject;
+use XoopsModules\Smartpartner;
+/** @var Smartpartner\Helper $helper */
+$helper = Smartpartner\Helper::getInstance();
 
 include __DIR__ . '/header.php';
 $GLOBALS['xoopsOption']['template_main'] = 'smartpartner_join.tpl';
@@ -24,18 +26,16 @@ switch ($op) {
     case 'submitPartner':
         include XOOPS_ROOT_PATH . '/class/xoopsmailer.php';
 
-        $partnerObj = $smartPartnerPartnerHandler->create();
+        $partnerObj = $partnerHandler->create();
         // Uploading the logo, if any
         // Retreive the filename to be uploaded
 
         if ('' !== $_FILES['logo_file']['name']) {
             $filename = $_POST['xoops_upload_file'][0];
             if (!empty($filename) || '' !== $filename) {
-                global $xoopsModuleConfig;
-
                 $max_size          = 10000000;
-                $max_imgwidth      = $xoopsModuleConfig['img_max_width'];
-                $max_imgheight     = $xoopsModuleConfig['img_max_height'];
+                $max_imgwidth      = $helper->getConfig('img_max_width');
+                $max_imgheight     = $helper->getConfig('img_max_height');
                 $allowed_mimetypes = Smartpartner\Utility::getAllowedImagesTypes();
 
                 require_once XOOPS_ROOT_PATH . '/class/uploader.php';
@@ -71,7 +71,7 @@ switch ($op) {
         $partnerObj->setVar('phone_priv', isset($_POST['phone_priv']) ? (int)$_POST['phone_priv'] : 0);
         $partnerObj->setVar('adress_priv', isset($_POST['adress_priv']) ? (int)$_POST['adress_priv'] : 0);
 
-        if ($xoopsModuleConfig['autoapprove_submitted']) {
+        if ($helper->getConfig('autoapprove_submitted')) {
             $partnerObj->setVar('status', _SPARTNER_STATUS_ACTIVE);
         } else {
             $partnerObj->setVar('status', _SPARTNER_STATUS_SUBMITTED);
@@ -93,7 +93,7 @@ switch ($op) {
         break;
 
     case 'form':
-        if ((1 !== $xoopsModuleConfig['allowsubmit']) || (!$xoopsUser) && 1 !== $xoopsModuleConfig['anonpost']) {
+        if ((1 !== $helper->getConfig('allowsubmit')) || (!$xoopsUser) && 1 !== $helper->getConfig('anonpost')) {
             redirect_header('index.php', 2, _NOPERM);
         }
 
@@ -111,7 +111,7 @@ switch ($op) {
         $max_size = 5000000;
         $file_box = new \XoopsFormFile(_CO_SPARTNER_LOGO_UPLOAD, 'logo_file', $max_size);
         $file_box->setExtra("size ='45'");
-        $file_box->setDescription(sprintf(_CO_SPARTNER_LOGO_UPLOAD_DSC, $xoopsModuleConfig['img_max_width'], $xoopsModuleConfig['img_max_height']));
+        $file_box->setDescription(sprintf(_CO_SPARTNER_LOGO_UPLOAD_DSC, $helper->getConfig('img_max_width'), $helper->getConfig('img_max_height')));
         $form->addElement($file_box);
 
         // IMAGE_URL
@@ -170,13 +170,13 @@ switch ($op) {
         $form->addElement($adress_priv_radio);
 
         // NOTIFY ON PUBLISH
-        if (is_object($xoopsUser) && (1 != $xoopsModuleConfig['autoapprove_submitted'])) {
+        if (is_object($xoopsUser) && (1 != $helper->getConfig('autoapprove_submitted'))) {
             $notify_checkbox = new \XoopsFormCheckBox('', 'notifypub', 1);
             $notify_checkbox->addOption(1, _MD_SPARTNER_NOTIFY);
             $form->addElement($notify_checkbox);
         }
-        $form->addElement(new Smartobject\Form\Elements\SmartFormHidden('partial_view', $xoopsModuleConfig['default_part_view']));
-        $form->addElement(new Smartobject\Form\Elements\SmartFormHidden('full_view', $xoopsModuleConfig['default_full_view']));
+        $form->addElement(new Smartobject\Form\Elements\SmartFormHidden('partial_view', $helper->getConfig('default_part_view')));
+        $form->addElement(new Smartobject\Form\Elements\SmartFormHidden('full_view', $helper->getConfig('default_full_view')));
 
         // BUTTONS
         $button_tray = new \XoopsFormElementTray('', '');

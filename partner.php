@@ -7,15 +7,17 @@
  * Licence: GNU
  */
 
-use XoopsModules\Smartpartner;
 use XoopsModules\Smartobject;
+use XoopsModules\Smartpartner;
+/** @var Smartpartner\Helper $helper */
+$helper = Smartpartner\Helper::getInstance();
 
 require_once __DIR__ . '/header.php';
 $GLOBALS['xoopsOption']['template_main'] = 'smartpartner_partner.tpl';
 require_once XOOPS_ROOT_PATH . '/header.php';
 require_once __DIR__ . '/footer.php';
 
-global $xoopsUser, $xoopsConfig, $xoopsModuleConfig, $xoopsModule;
+global $xoopsUser, $xoopsConfig,  $xoopsModule;
 
 $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
 
@@ -31,7 +33,7 @@ if ($partnerObj->notLoaded()) {
     redirect_header('javascript:history.go(-1)', 2, _MD_SPARTNER_NOPARTNERSELECTED);
 }
 //require_once XOOPS_ROOT_PATH . '/modules/smartobject/class/smartobjectpermission.php';
-$smartPermissionsHandler = new Smartobject\PermissionHandler($smartPartnerPartnerHandler);
+$smartPermissionsHandler = new Smartobject\PermissionHandler($partnerHandler);
 $grantedItems            = $smartPermissionsHandler->getGrantedItems('full_view');
 $grantedItems            = array_merge($grantedItems, $smartPermissionsHandler->getGrantedItems('partial_view'));
 
@@ -84,7 +86,7 @@ $criteria->add(new \Criteria('date_pub', time(), '<'));
 $criteria->add(new \Criteria('date_end', time(), '>'));
 $criteria->add(new \Criteria('status', _SPARTNER_STATUS_ONLINE));
 
-$offersObj = $smartPartnerOfferHandler->getObjects($criteria);
+$offersObj = $offerHandler->getObjects($criteria);
 $offers    = [];
 foreach ($offersObj as $offerObj) {
     $offers[] = $offerObj->toArray();
@@ -92,9 +94,9 @@ foreach ($offersObj as $offerObj) {
 $xoopsTpl->assign('offers', $offers);
 $categoryPath = '';
 if (isset($_GET['cid'])) {
-    $categoryObj = $smartPartnerCategoryHandler->get($_GET['cid']);
+    $categoryObj = $categoryHandler->get($_GET['cid']);
 } else {
-    $categoryObj = $smartPartnerCategoryHandler->get($partnerObj->categoryid());
+    $categoryObj = $categoryHandler->get($partnerObj->categoryid());
 }
 
 if (!$categoryObj->isNew()) {
@@ -120,17 +122,17 @@ $xoopsTpl->assign('lang_url_been_visited', _CO_SPARTNER_URL_BEEN_VISITED);
 $xoopsTpl->assign('lang_backtoindex', _MD_SPARTNER_BACKTOINDEX);
 $xoopsTpl->assign('modulepath', SMARTPARTNER_URL);
 $xoopsTpl->assign('lang_private', _CO_SPARTNER_PRIVATE);
-$xoopsTpl->assign('partview_msg', $myts->xoopsCodeDecode($myts->displayTarea($xoopsModuleConfig['partview_msg'], 1)));
+$xoopsTpl->assign('partview_msg', $myts->xoopsCodeDecode($myts->displayTarea($helper->getConfig('partview_msg'), 1)));
 
 $show_stats_block = false;
 if ($xoopsUser) {
-    foreach ($xoopsModuleConfig['stats_group'] as $group) {
+    foreach ($helper->getConfig('stats_group') as $group) {
         if (in_array($group, $xoopsUser->getGroups())) {
             $show_stats_block = true;
         }
     }
 } else {
-    $show_stats_block = in_array(XOOPS_GROUP_ANONYMOUS, $xoopsModuleConfig['stats_group']);
+    $show_stats_block = in_array(XOOPS_GROUP_ANONYMOUS, $helper->getConfig('stats_group'));
 }
 
 $xoopsTpl->assign('show_stats_block', $show_stats_block);

@@ -32,12 +32,12 @@ function smartpartner_search($queryarray, $andor, $limit, $offset, $userid)
 
     $ret = [];
 
-    if (!isset($smartPartnerPartnerHandler)) {
-        $smartPartnerPartnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
+    if (!isset($partnerHandler)) {
+        $partnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
     }
 
     // Searching the partners
-    $partners_result = $smartPartnerPartnerHandler->getObjectsForSearch($queryarray, $andor, $limit, $offset, $userid);
+    $partners_result = $partnerHandler->getObjectsForSearch($queryarray, $andor, $limit, $offset, $userid);
 
     if ('' == $queryarray) {
         $keywords       = '';

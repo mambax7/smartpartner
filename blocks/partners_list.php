@@ -15,11 +15,11 @@ function b_partners_list_show($options)
     require_once XOOPS_ROOT_PATH . '/modules/smartpartner/include/common.php';
 
     // Creating the partner handler object
-    $smartPartnerPartnerHandler  = Smartpartner\Helper::getInstance()->getHandler('Partner');
-    $smartPartnerCategoryHandler = Smartpartner\Helper::getInstance()->getHandler('Category');
+    $partnerHandler  = Smartpartner\Helper::getInstance()->getHandler('Partner');
+    $categoryHandler = Smartpartner\Helper::getInstance()->getHandler('Category');
 
     // Randomize
-    $partnersObj = $smartPartnerPartnerHandler->getPartners(0, 0, _SPARTNER_STATUS_ACTIVE);
+    $partnersObj = $partnerHandler->getPartners(0, 0, _SPARTNER_STATUS_ACTIVE);
     if (count($partnersObj) > 1) {
         $key_arr  = array_keys($partnersObj);
         $key_rand = array_rand($key_arr, count($key_arr));
@@ -45,7 +45,7 @@ function b_partners_list_show($options)
     $block = [];
     if ($partnersObj) {
         foreach ($cat_id as $j => $jValue) {
-            $categoryObj                              = $smartPartnerCategoryHandler->get($cat_id[$j]);
+            $categoryObj                              = $categoryHandler->get($cat_id[$j]);
             $block['categories'][$cat_id[$j]]['link'] = (0 != $jValue) ? $categoryObj->getCategoryLink() : false;
 
             for ($i = 0, $iMax = count($partnersObj); $i < $iMax; ++$i) {
