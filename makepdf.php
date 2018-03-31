@@ -29,7 +29,7 @@ $myts = \MyTextSanitizer::getInstance();
 //require_once SMARTPARTNER_ROOT_PATH . 'fpdf/fpdf.inc.php';
 require_once XOOPS_ROOT_PATH . '/class/libraries/vendor/tecnickcom/tcpdf/tcpdf.php';
 
-$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+$id = \Xmf\Request::getInt('id', 0, 'GET');
 
 if (0 == $id) {
     redirect_header('javascript:history.go(-1)', 2, _MD_SPARTNER_NOPARTNERSELECTED);

@@ -13,7 +13,7 @@ $helper = Smartpartner\Helper::getInstance();
 
 include __DIR__ . '/header.php';
 
-$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+$id = \Xmf\Request::getInt('id', 0, 'GET');
 
 $partnerObj = new Smartpartner\Partner($id);
 

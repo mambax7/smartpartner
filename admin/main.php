@@ -15,7 +15,7 @@ $helper = Smartpartner\Helper::getInstance();
 require_once __DIR__ . '/admin_header.php';
 $myts = \MyTextSanitizer::getInstance();
 
-$op = isset($_GET['op']) ? $_GET['op'] : '';
+$op = \Xmf\Request::getString('op', '', 'GET');
 
 switch ($op) {
     case 'createdir':
@@ -46,11 +46,11 @@ switch ($op) {
 
         break;
 }
-$pick = isset($_GET['pick']) ? (int)$_GET['pick'] : 0;
-$pick = isset($_POST['pick']) ? (int)$_POST['pick'] : $pick;
+$pick = \Xmf\Request::getInt('pick', 0, 'GET');
+$pick = \Xmf\Request::getInt('pick', $pick, 'POST');
 
-$statussel = isset($_GET['statussel']) ? (int)$_GET['statussel'] : 0;
-$statussel = isset($_POST['statussel']) ? (int)$_POST['statussel'] : $statussel;
+$statussel = \Xmf\Request::getInt('statussel', 0, 'GET');
+$statussel = \Xmf\Request::getInt('statussel', $statussel, 'POST');
 
 $sortsel = isset($_GET['sortsel']) ? $_GET['sortsel'] : 'id';
 $sortsel = isset($_POST['sortsel']) ? $_POST['sortsel'] : $sortsel;
@@ -107,7 +107,7 @@ require_once XOOPS_ROOT_PATH . '/class/pagenav.php';
 // Creating the Partner handler object
 //$partnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
 
-$startentry = isset($_GET['startentry']) ? (int)$_GET['startentry'] : 0;
+$startentry = \Xmf\Request::getInt('startentry', 0, 'GET');
 
 Smartpartner\Utility::getXoopsCpHeader();
 $adminObject = \Xmf\Module\Admin::getInstance();

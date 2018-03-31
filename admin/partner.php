@@ -336,7 +336,7 @@ if (isset($_POST['op'])) {
 }
 
 // Where shall we start ?
-$startpartner = isset($_GET['startpartner']) ? (int)$_GET['startpartner'] : 0;
+$startpartner = \Xmf\Request::getInt('startpartner', 0, 'GET');
 
 if (!isset($partnerHandler)) {
     $partnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
@@ -352,7 +352,7 @@ switch ($op) {
 
     case 'mod':
         global $xoopsUser, $xoopsConfig, $xoopsModule;
-        $id = isset($_GET['id']) ? $_GET['id'] : 0;
+        $id = \Xmf\Request::getInt('id', 0, GET);
 
         xoops_cp_header();
         require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
@@ -373,7 +373,7 @@ switch ($op) {
             $uid = $xoopsUser->uid();
         }
 
-        $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+        $id = \Xmf\Request::getInt('id', 0, 'POST');
 
         // Creating the partner object
         if (0 != $id) {
@@ -457,13 +457,13 @@ switch ($op) {
         $module_id    = $xoopsModule->getVar('mid');
         $gpermHandler = xoops_getHandler('groupperm');
 
-        $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : $id;
+        $id = \Xmf\Request::getInt('id', 0, 'POST');
+        $id = \Xmf\Request::getInt('id', $id, 'GET');
 
         $partnerObj = new Smartpartner\Partner($id);
 
-        $confirm = isset($_POST['confirm']) ? $_POST['confirm'] : 0;
-        $title   = isset($_POST['title']) ? $_POST['title'] : '';
+        $confirm = \Xmf\Request::getInt('confirm', 0, POST);
+        $title   = \Xmf\Request::getString('title', '', 'POST');
 
         if ($confirm) {
             if (!$partnerHandler->delete($partnerObj)) {
@@ -473,7 +473,7 @@ switch ($op) {
             redirect_header('partner.php', 2, sprintf(_AM_SPARTNER_PARTNER_DELETE_SUCCESS, $partnerObj->title()));
         } else {
             // no confirm: show deletion condition
-            $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+            $id = \Xmf\Request::getInt('id', 0, 'GET');
             xoops_cp_header();
             xoops_confirm(['op' => 'del', 'id' => $partnerObj->id(), 'confirm' => 1, 'name' => $partnerObj->title()], 'partner.php', _AM_SPARTNER_DELETETHISP . " <br>'" . $partnerObj->title() . "' <br> <br>", _AM_SPARTNER_DELETE);
             xoops_cp_footer();

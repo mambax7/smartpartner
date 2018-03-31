@@ -14,7 +14,7 @@ use XoopsModules\Smartpartner;
 $helper = Smartpartner\Helper::getInstance();
 
 global $xoopsUser, $xoopsUser, $xoopsConfig, $xoopsDB,  $xoopsModule, $smartPartnerItemHandler;
-$startitem = isset($_GET['startitem']) ? (int)$_GET['startitem'] : 0;
+$startitem = \Xmf\Request::getInt('startitem', 0, 'GET');
 
 $items_title = _AM_SPARTNER_CAT_ITEMS;
 $items_info  = _AM_SPARTNER_CAT_ITEMS_DSC;

@@ -10,7 +10,7 @@ use XoopsModules\Smartpartner;
 
 require_once __DIR__ . '/header.php';
 
-$fileid = isset($_GET['fileid']) ? (int)$_GET['fileid'] : 0;
+$fileid = \Xmf\Request::getInt('fileid', 0, 'GET');
 
 // Creating the item object for the selected item
 $fileObj = $fileHandler->get($fileid);

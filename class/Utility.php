@@ -619,7 +619,7 @@ class Utility
         /** @var Smartpartner\Helper $helper */
         $helper = Smartpartner\Helper::getInstance();
 
-        $id      = isset($_POST['id']) ? (int)$_POST['id'] : 0;
+        $id      = \Xmf\Request::getInt('id', 0, 'POST');
         $uid     = is_object($xoopsUser) ? $xoopsUser->uid() : 0;
         $session = \Session::getInstance();
         $session->set('smartpartner_file_filename', isset($_POST['name']) ? $_POST['name'] : '');

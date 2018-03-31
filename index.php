@@ -117,9 +117,9 @@ include XOOPS_ROOT_PATH . '/header.php';
 include __DIR__ . '/footer.php';
 
 // At which record shall we start
-$start = isset($_GET['start']) ? (int)$_GET['start'] : 0;
+$start = \Xmf\Request::getInt('start', 0, 'GET');
 
-$view_category_id = isset($_GET['view_category_id']) ? (int)$_GET['view_category_id'] : 0;
+$view_category_id = \Xmf\Request::getInt('view_category_id', 0, 'GET');
 
 $partners_total = $partnerHandler->getPartnerCount();
 

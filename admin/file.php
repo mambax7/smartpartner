@@ -139,8 +139,8 @@ switch ($op) {
 
     case 'mod':
         global $fileHandler;
-        $fileid = isset($_GET['fileid']) ? $_GET['fileid'] : 0;
-        $id     = isset($_GET['id']) ? $_GET['id'] : 0;
+        $fileid = \Xmf\Request::getInt('fileid', 0, GET);
+        $id     = \Xmf\Request::getInt('id', 0, GET);
         if ((0 == $fileid) && (0 == $id)) {
             redirect_header('javascript:history.go(-1)', 3, _AM_SPARTNER_NOITEMSELECTED);
         }
@@ -154,7 +154,7 @@ switch ($op) {
     case 'modify':
         global $xoopsUser;
 
-        $fileid = isset($_POST['fileid']) ? (int)$_POST['fileid'] : 0;
+        $fileid = \Xmf\Request::getInt('fileid', 0, 'POST');
 
         // Creating the file object
         if (0 != $fileid) {
@@ -182,13 +182,13 @@ switch ($op) {
         $module_id    = $xoopsModule->getVar('mid');
         $gpermHandler = xoops_getHandler('groupperm');
 
-        $fileid = isset($_POST['fileid']) ? (int)$_POST['fileid'] : 0;
-        $fileid = isset($_GET['fileid']) ? (int)$_GET['fileid'] : $fileid;
+        $fileid = \Xmf\Request::getInt('fileid', 0, 'POST');
+        $fileid = \Xmf\Request::getInt('fileid', $fileid, 'GET');
 
         $fileObj = new Smartpartner\File($fileid);
 
-        $confirm = isset($_POST['confirm']) ? $_POST['confirm'] : 0;
-        $title   = isset($_POST['title']) ? $_POST['title'] : '';
+        $confirm = \Xmf\Request::getInt('confirm', 0, POST);
+        $title   = \Xmf\Request::getString('title', '', 'POST');
 
         if ($confirm) {
             if (!$fileHandler->delete($fileObj)) {
@@ -198,7 +198,7 @@ switch ($op) {
             redirect_header('partner.php', 2, sprintf(_AM_SPARTNER_FILEISDELETED, $fileObj->name()));
         } else {
             // no confirm: show deletion condition
-            $fileid = isset($_GET['fileid']) ? (int)$_GET['fileid'] : 0;
+            $fileid = \Xmf\Request::getInt('fileid', 0, 'GET');
 
             Smartpartner\Utility::getXoopsCpHeader();
             xoops_confirm([

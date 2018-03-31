@@ -256,18 +256,18 @@ if (isset($_POST['op'])) {
 }
 
 // Where do we start ?
-$startcategory = isset($_GET['startcategory']) ? (int)$_GET['startcategory'] : 0;
+$startcategory = \Xmf\Request::getInt('startcategory', 0, 'GET');
 
 switch ($op) {
     case 'mod':
-        $categoryid = isset($_GET['categoryid']) ? (int)$_GET['categoryid'] : 0;
+        $categoryid = \Xmf\Request::getInt('categoryid', 0, 'GET');
 
         //Added by fx2024
 
-        $nb_subcats = isset($_POST['nb_subcats']) ? (int)$_POST['nb_subcats'] : 0;
+        $nb_subcats = \Xmf\Request::getInt('nb_subcats', 0, 'POST');
         $nb_subcats += (isset($_POST['nb_sub_yet']) ? (int)$_POST['nb_sub_yet'] : 4);
         if (0 == $categoryid) {
-            $categoryid = isset($_POST['categoryid']) ? (int)$_POST['categoryid'] : 0;
+            $categoryid = \Xmf\Request::getInt('categoryid', 0, 'POST');
         }
         //end of fx2024 code
 
@@ -279,8 +279,8 @@ switch ($op) {
     case 'addcategory':
         global $_POST, $xoopsUser, $xoopsUser, $xoopsConfig, $xoopsDB, $xoopsModule,  $modify, $myts, $categoryid;
 
-        $categoryid = isset($_POST['categoryid']) ? (int)$_POST['categoryid'] : 0;
-        $parentid   = isset($_POST['parentid']) ? (int)$_POST['parentid'] : 0;
+        $categoryid = \Xmf\Request::getInt('categoryid', 0, 'POST');
+        $parentid   = \Xmf\Request::getInt('parentid', 0, 'POST');
 
         if (0 != $categoryid) {
             $categoryObj = $categoryHandler->get($categoryid);
@@ -322,7 +322,7 @@ switch ($op) {
         }
         $categoryObj->setVar('parentid', isset($_POST['parentid']) ? (int)$_POST['parentid'] : 0);
 
-        $applyall = isset($_POST['applyall']) ? (int)$_POST['applyall'] : 0;
+        $applyall = \Xmf\Request::getInt('applyall', 0, 'POST');
         $categoryObj->setVar('weight', isset($_POST['weight']) ? (int)$_POST['weight'] : 1);
 
         $categoryObj->setVar('name', $_POST['name']);
@@ -388,14 +388,14 @@ switch ($op) {
         $module_id    = $xoopsModule->getVar('mid');
         $gpermHandler = xoops_getHandler('groupperm');
 
-        $categoryid = isset($_POST['categoryid']) ? (int)$_POST['categoryid'] : 0;
-        $categoryid = isset($_GET['categoryid']) ? (int)$_GET['categoryid'] : $categoryid;
+        $categoryid = \Xmf\Request::getInt('categoryid', 0, 'POST');
+        $categoryid = \Xmf\Request::getInt('categoryid', $categoryid, 'GET');
 
         //$categoryObj = new Category($categoryid);
         $categoryObj = $categoryHandler->get($categoryid);
 
-        $confirm = isset($_POST['confirm']) ? $_POST['confirm'] : 0;
-        $name    = isset($_POST['name']) ? $_POST['name'] : '';
+        $confirm = \Xmf\Request::getInt('confirm', 0, POST);
+        $name    = \Xmf\Request::getString('name', '', 'POST');
 
         if ($confirm) {
             if (!$categoryHandler->delete($categoryObj)) {
@@ -405,7 +405,7 @@ switch ($op) {
             redirect_header('category.php', 1, sprintf(_AM_SPARTNER_CATEGORY_DELETED, $name));
         } else {
             // no confirm: show deletion condition
-            $categoryid = isset($_GET['categoryid']) ? (int)$_GET['categoryid'] : 0;
+            $categoryid = \Xmf\Request::getInt('categoryid', 0, 'GET');
             xoops_cp_header();
             xoops_confirm([
                               'op'         => 'del',

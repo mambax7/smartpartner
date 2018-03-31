@@ -69,8 +69,8 @@ if (isset($_POST['op'])) {
 
 switch ($op) {
     case 'mod':
-        $offerid = isset($_GET['offerid']) ? (int)$_GET['offerid'] : 0;
-        $fct     = isset($_GET['fct']) ? $_GET['fct'] : '';
+        $offerid = \Xmf\Request::getInt('offerid', 0, 'GET');
+        $fct     = \Xmf\Request::getString('fct', '', 'GET');
         Smartobject\Utility::getXoopsCpHeader();
 
         editoffer(true, $offerid, $fct);
@@ -81,7 +81,7 @@ switch ($op) {
 
         $controller = new Smartobject\ObjectController($offerHandler);
         $offerObj   = $controller->storeSmartObject();
-        $fct        = isset($_POST['fct']) ? $_POST['fct'] : '';
+        $fct        = \Xmf\Request::getString('fct', '', 'POST');
 
         if ($offerObj->hasError()) {
             redirect_header($smart_previous_page, 3, _CO_SOBJECT_SAVE_ERROR . $offerObj->getHtmlErrors());

@@ -19,7 +19,7 @@ require_once __DIR__ . '/footer.php';
 
 global $xoopsUser, $xoopsConfig,  $xoopsModule;
 
-$id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+$id = \Xmf\Request::getInt('id', 0, 'GET');
 
 if (0 == $id) {
     redirect_header('javascript:history.go(-1)', 2, _MD_SPARTNER_NOPARTNERSELECTED);
