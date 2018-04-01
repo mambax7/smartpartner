@@ -48,7 +48,7 @@ class OfferHandler extends Smartpartner\PersistableObjectHandler
      */
     public function __construct(\XoopsDatabase $db)
     {
-        parent::__construct($db, smartpartner_offer, Offer::class, 'title', false, 'smartpartner');
+        parent::__construct($db, 'smartpartner_offer', Offer::class, 'title', false, 'smartpartner');
     }
 
     /**

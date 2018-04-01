@@ -117,19 +117,19 @@ $adminObject->displayNavigation(basename(__FILE__));
 global $xoopsUser, $xoopsConfig, $xoopsModule;
 
 // Total Partners -- includes everything on the table
-$totalpartners = $partnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_ALL);
+$totalpartners = $partnerHandler->getPartnerCount(Constants::SPARTNER_STATUS_ALL);
 
 // Total Submitted Partners
-$totalsubmitted = $partnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_SUBMITTED);
+$totalsubmitted = $partnerHandler->getPartnerCount(Constants::SPARTNER_STATUS_SUBMITTED);
 
 // Total active Partners
-$totalactive = $partnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_ACTIVE);
+$totalactive = $partnerHandler->getPartnerCount(Constants::SPARTNER_STATUS_ACTIVE);
 
 // Total inactive Partners
-$totalinactive = $partnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_INACTIVE);
+$totalinactive = $partnerHandler->getPartnerCount(Constants::SPARTNER_STATUS_INACTIVE);
 
 // Total rejected Partners
-$totalrejected = $partnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_REJECTED);
+$totalrejected = $partnerHandler->getPartnerCount(Constants::SPARTNER_STATUS_REJECTED);
 
 // Check Path Configuration
 //if ((Smartpartner\Utility::getPathStatusAsAdmin('images', true) < 0) || (Smartpartner\Utility::getPathStatusAsAdmin('images/category', true) < 0)) {
@@ -201,35 +201,35 @@ switch ($ordersel) {
 }
 
 switch ($statussel) {
-    case Constants::_SPARTNER_STATUS_ALL:
+    case Constants::SPARTNER_STATUS_ALL:
         $selectedtxt0        = 'selected';
         $caption             = _AM_SPARTNER_ALL;
         $cond                = '';
         $status_explaination = _AM_SPARTNER_ALL_EXP;
         break;
 
-    case Constants::_SPARTNER_STATUS_SUBMITTED:
+    case Constants::SPARTNER_STATUS_SUBMITTED:
         $selectedtxt1        = 'selected';
         $caption             = _AM_SPARTNER_SUBMITTED;
         $cond                = ' WHERE status = ' . _SPARTNER_STATUS_SUBMITTED . ' ';
         $status_explaination = _AM_SPARTNER_SUBMITTED_EXP;
         break;
 
-    case Constants::_SPARTNER_STATUS_ACTIVE:
+    case Constants::SPARTNER_STATUS_ACTIVE:
         $selectedtxt2        = 'selected';
         $caption             = _AM_SPARTNER_ACTIVE;
         $cond                = ' WHERE status = ' . _SPARTNER_STATUS_ACTIVE . ' ';
         $status_explaination = _AM_SPARTNER_ACTIVE_EXP;
         break;
 
-    case Constants::_SPARTNER_STATUS_REJECTED:
+    case Constants::SPARTNER_STATUS_REJECTED:
         $selectedtxt3        = 'selected';
         $caption             = _AM_SPARTNER_REJECTED;
         $cond                = ' WHERE status = ' . _SPARTNER_STATUS_REJECTED . ' ';
         $status_explaination = _AM_SPARTNER_REJECTED_EXP;
         break;
 
-    case Constants::_SPARTNER_STATUS_INACTIVE:
+    case Constants::SPARTNER_STATUS_INACTIVE:
         $selectedtxt4        = 'selected';
         $caption             = _AM_SPARTNER_INACTIVE;
         $cond                = ' WHERE status = ' . _SPARTNER_STATUS_INACTIVE . ' ';
@@ -267,7 +267,7 @@ echo "
     </form>";
 
 // Get number of entries in the selected state
-$statusSelected = (0 == $statussel) ? Constants::_SPARTNER_STATUS_ALL : $statussel;
+$statusSelected = (0 == $statussel) ? Constants::SPARTNER_STATUS_ALL : $statussel;
 
 $numrows = $partnerHandler->getPartnerCount($statusSelected);
 // creating the Q&As objects

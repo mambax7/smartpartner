@@ -91,40 +91,40 @@ function editpartner($showmenu = false, $id = 0)
 
         switch ($partnerObj->status()) {
 
-            case Constants::_SPARTNER_STATUS_SUBMITTED:
+            case Constants::SPARTNER_STATUS_SUBMITTED:
                 $breadcrumb_action1 = _AM_SPARTNER_SUBMITTED_PARTNERS;
                 $breadcrumb_action2 = _AM_SPARTNER_APPROVING;
                 $page_title         = _AM_SPARTNER_SUBMITTED_TITLE;
                 $page_info          = _AM_SPARTNER_SUBMITTED_INFO;
                 $button_caption     = _AM_SPARTNER_APPROVE;
-                $new_status         = Constants::_SPARTNER_STATUS_ACTIVE;
+                $new_status         = Constants::SPARTNER_STATUS_ACTIVE;
                 break;
 
-            case Constants::_SPARTNER_STATUS_ACTIVE:
+            case Constants::SPARTNER_STATUS_ACTIVE:
                 $breadcrumb_action1 = _AM_SPARTNER_ACTIVE_PARTNERS;
                 $breadcrumb_action2 = _AM_SPARTNER_EDITING;
                 $page_title         = _AM_SPARTNER_ACTIVE_EDITING;
                 $page_info          = _AM_SPARTNER_ACTIVE_EDITING_INFO;
                 $button_caption     = _AM_SPARTNER_MODIFY;
-                $new_status         = Constants::_SPARTNER_STATUS_ACTIVE;
+                $new_status         = Constants::SPARTNER_STATUS_ACTIVE;
                 break;
 
-            case Constants::_SPARTNER_STATUS_INACTIVE:
+            case Constants::SPARTNER_STATUS_INACTIVE:
                 $breadcrumb_action1 = _AM_SPARTNER_INACTIVE_PARTNERS;
                 $breadcrumb_action2 = _AM_SPARTNER_EDITING;
                 $page_title         = _AM_SPARTNER_INACTIVE_EDITING;
                 $page_info          = _AM_SPARTNER_INACTIVE_EDITING_INFO;
                 $button_caption     = _AM_SPARTNER_MODIFY;
-                $new_status         = Constants::_SPARTNER_STATUS_INACTIVE;
+                $new_status         = Constants::SPARTNER_STATUS_INACTIVE;
                 break;
 
-            case Constants::_SPARTNER_STATUS_REJECTED:
+            case Constants::SPARTNER_STATUS_REJECTED:
                 $breadcrumb_action1 = _AM_SPARTNER_REJECTED_PARTNERS;
                 $breadcrumb_action2 = _AM_SPARTNER_EDITING;
                 $page_title         = _AM_SPARTNER_REJECTED_EDITING;
                 $page_info          = _AM_SPARTNER_REJECTED_EDITING_INFO;
                 $button_caption     = _AM_SPARTNER_MODIFY;
-                $new_status         = Constants::_SPARTNER_STATUS_REJECTED;
+                $new_status         = Constants::SPARTNER_STATUS_REJECTED;
                 break;
 
             case 'default':
@@ -140,7 +140,7 @@ function editpartner($showmenu = false, $id = 0)
         $breadcrumb_action1 = _AM_SPARTNER_PARTNERS;
         $breadcrumb_action2 = _AM_SPARTNER_CREATE;
         $button_caption     = _AM_SPARTNER_CREATE;
-        $new_status         = Constants::_SPARTNER_STATUS_ACTIVE;
+        $new_status         = Constants::SPARTNER_STATUS_ACTIVE;
         Smartpartner\Utility::collapsableBar('addpartner', 'addpartnericon', _AM_SPARTNER_PARTNER_CREATING, _AM_SPARTNER_PARTNER_CREATING_DSC);
     }
 
@@ -352,7 +352,7 @@ switch ($op) {
 
     case 'mod':
         global $xoopsUser, $xoopsConfig, $xoopsModule;
-        $id = \Xmf\Request::getInt('id', 0, GET);
+        $id = \Xmf\Request::getInt('id', 0, 'GET');
 
         xoops_cp_header();
         require_once XOOPS_ROOT_PATH . '/class/xoopsformloader.php';
@@ -462,7 +462,7 @@ switch ($op) {
 
         $partnerObj = new Smartpartner\Partner($id);
 
-        $confirm = \Xmf\Request::getInt('confirm', 0, POST);
+        $confirm = \Xmf\Request::getInt('confirm', 0, 'POST');
         $title   = \Xmf\Request::getString('title', '', 'POST');
 
         if ($confirm) {
@@ -504,7 +504,7 @@ switch ($op) {
         Smartpartner\Utility::collapsableBar('partners', 'partnersicon', _AM_SPARTNER_ACTIVE_PARTNERS, _AM_SPARTNER_ACTIVE_PARTNERS_DSC);
 
         // Get the total number of published PARTNER
-        $totalpartners = $partnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_ACTIVE);
+        $totalpartners = $partnerHandler->getPartnerCount(Constants::SPARTNER_STATUS_ACTIVE);
         // creating the partner objects that are published
         $partnersObj         = $partnerHandler->getPartners($helper->getConfig('perpage_admin'), $startpartner);
         $totalPartnersOnPage = count($partnersObj);

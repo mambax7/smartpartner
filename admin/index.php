@@ -45,19 +45,19 @@ foreach (array_keys($configurator->uploadFolders) as $i) {
 //$partnerHandler = Smartpartner\Helper::getInstance()->getHandler('Partner');
 
 // Total Partners -- includes everything on the table
-$totalpartners = $partnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_ALL);
+$totalpartners = $partnerHandler->getPartnerCount(Constants::SPARTNER_STATUS_ALL);
 
 // Total Submitted Partners
-$totalsubmitted = $partnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_SUBMITTED);
+$totalsubmitted = $partnerHandler->getPartnerCount(Constants::SPARTNER_STATUS_SUBMITTED);
 
 // Total active Partners
-$totalactive = $partnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_ACTIVE);
+$totalactive = $partnerHandler->getPartnerCount(Constants::SPARTNER_STATUS_ACTIVE);
 
 // Total inactive Partners
-$totalinactive = $partnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_INACTIVE);
+$totalinactive = $partnerHandler->getPartnerCount(Constants::SPARTNER_STATUS_INACTIVE);
 
 // Total rejected Partners
-$totalrejected = $partnerHandler->getPartnerCount(Constants::_SPARTNER_STATUS_REJECTED);
+$totalrejected = $partnerHandler->getPartnerCount(Constants::SPARTNER_STATUS_REJECTED);
 
 //create info block
 $adminObject->addInfoBox(_AM_SPARTNER_INVENTORY);

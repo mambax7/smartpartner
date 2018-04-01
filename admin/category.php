@@ -394,7 +394,7 @@ switch ($op) {
         //$categoryObj = new Category($categoryid);
         $categoryObj = $categoryHandler->get($categoryid);
 
-        $confirm = \Xmf\Request::getInt('confirm', 0, POST);
+        $confirm = \Xmf\Request::getInt('confirm', 0, 'POST');
         $name    = \Xmf\Request::getString('name', '', 'POST');
 
         if ($confirm) {

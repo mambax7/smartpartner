@@ -10,6 +10,7 @@
 use XoopsModules\Smartfaq;
 use XoopsModules\Smartobject;
 use XoopsModules\Smartpartner;
+use XoopsModules\Smartpartner\Constants;
 
 
 // defined('XOOPS_ROOT_PATH') || die('Restricted access');
@@ -603,29 +604,29 @@ class Partner extends Smartobject\BaseSmartObject
                 $ret = [
                     Constants::SPARTNER_STATUS_ACTIVE   => _AM_SPARTNER_ACTIVE,
                     Constants::SPARTNER_STATUS_REJECTED => _AM_SPARTNER_REJECTED,
-                    Constants::_SPARTNER_STATUS_INACTIVE => _AM_SPARTNER_INACTIVE
+                    Constants::SPARTNER_STATUS_INACTIVE => _AM_SPARTNER_INACTIVE
                 ];
                 break;
 
-            case Constants::_SPARTNER_STATUS_ACTIVE:
+            case Constants::SPARTNER_STATUS_ACTIVE:
                 $ret = [
-                    Constants::_SPARTNER_STATUS_ACTIVE   => _AM_SPARTNER_ACTIVE,
-                    Constants::_SPARTNER_STATUS_INACTIVE => _AM_SPARTNER_INACTIVE
+                    Constants::SPARTNER_STATUS_ACTIVE   => _AM_SPARTNER_ACTIVE,
+                    Constants::SPARTNER_STATUS_INACTIVE => _AM_SPARTNER_INACTIVE
                 ];
                 break;
 
-            case Constants::_SPARTNER_STATUS_INACTIVE:
+            case Constants::SPARTNER_STATUS_INACTIVE:
                 $ret = [
-                    Constants::_SPARTNER_STATUS_ACTIVE   => _AM_SPARTNER_ACTIVE,
-                    Constants::_SPARTNER_STATUS_INACTIVE => _AM_SPARTNER_INACTIVE
+                    Constants::SPARTNER_STATUS_ACTIVE   => _AM_SPARTNER_ACTIVE,
+                    Constants::SPARTNER_STATUS_INACTIVE => _AM_SPARTNER_INACTIVE
                 ];
                 break;
 
-            case Constants::_SPARTNER_STATUS_REJECTED:
+            case Constants::SPARTNER_STATUS_REJECTED:
                 $ret = [
-                    Constants::_SPARTNER_STATUS_ACTIVE   => _AM_SPARTNER_ACTIVE,
-                    Constants::_SPARTNER_STATUS_REJECTED => _AM_SPARTNER_REJECTED,
-                    Constants::_SPARTNER_STATUS_INACTIVE => _AM_SPARTNER_INACTIVE
+                    Constants::SPARTNER_STATUS_ACTIVE   => _AM_SPARTNER_ACTIVE,
+                    Constants::SPARTNER_STATUS_REJECTED => _AM_SPARTNER_REJECTED,
+                    Constants::SPARTNER_STATUS_INACTIVE => _AM_SPARTNER_INACTIVE
                 ];
                 break;
         }
@@ -646,7 +647,7 @@ class Partner extends Smartobject\BaseSmartObject
     {
         global $fileHandler;
 
-        return $fileHandler->getAllFiles($this->id(), Constants::_SPARTNER_STATUS_FILE_ACTIVE);
+        return $fileHandler->getAllFiles($this->id(), Constants::SPARTNER_STATUS_FILE_ACTIVE);
     }
 
     /**

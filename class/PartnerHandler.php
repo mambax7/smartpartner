@@ -369,9 +369,9 @@ class PartnerHandler extends Smartpartner\PersistableObjectHandler
      * @param  int $status
      * @return int
      */
-    public function getPartnerCount($status = Constants::_SPARTNER_STATUS_ACTIVE)
+    public function getPartnerCount($status = Constants::SPARTNER_STATUS_ACTIVE)
     {
-        if (Constants::_SPARTNER_STATUS_ALL != $status) {
+        if (Constants::SPARTNER_STATUS_ALL != $status) {
             $criteriaStatus = new \CriteriaCompo();
             $criteriaStatus->add(new \Criteria('status', $status));
         }
@@ -422,7 +422,7 @@ class PartnerHandler extends Smartpartner\PersistableObjectHandler
             $criteria->add($criteriaKeywords, 'AND');
         }
 
-        $criteria->add(new \Criteria('status', Constants::_SPARTNER_STATUS_ACTIVE, '='), 'AND');
+        $criteria->add(new \Criteria('status', Constants::SPARTNER_STATUS_ACTIVE, '='), 'AND');
 
         if (0 != $userid) {
             $criteria->add(new \Criteria('id', $userid), 'AND');
@@ -470,13 +470,13 @@ class PartnerHandler extends Smartpartner\PersistableObjectHandler
     public function getPartners(
         $limit = 0,
         $start = 0,
-        $status = Constants::_SPARTNER_STATUS_ACTIVE,
+        $status = Constants::SPARTNER_STATUS_ACTIVE,
         $sort = 'title',
         $order = 'ASC',
         $asobject = true
     ) {
         global $xoopsUser;
-        if (Constants::_SPARTNER_STATUS_ALL != $status) {
+        if (Constants::SPARTNER_STATUS_ALL != $status) {
             $criteriaStatus = new \CriteriaCompo();
             $criteriaStatus->add(new \Criteria('status', $status));
         }
@@ -504,13 +504,13 @@ class PartnerHandler extends Smartpartner\PersistableObjectHandler
      */
     public function getPartnersForIndex(
         $categoryid = 0,
-        $status = Constants::_SPARTNER_STATUS_ACTIVE,
+        $status = Constants::SPARTNER_STATUS_ACTIVE,
         $sort = 'title',
         $order = 'ASC',
         $asobject = true
     ) {
         global $xoopsUser;
-        if (Constants::_SPARTNER_STATUS_ALL != $status) {
+        if (Constants::SPARTNER_STATUS_ALL != $status) {
             $criteriaStatus = new \CriteriaCompo();
             $criteriaStatus->add(new \Criteria('status', $status));
         }
@@ -601,7 +601,7 @@ class PartnerHandler extends Smartpartner\PersistableObjectHandler
      * @param  int $status
      * @return bool
      */
-    public function getRandomPartners($limit = 0, $status = Constants::_SPARTNER_STATUS_ACTIVE)
+    public function getRandomPartners($limit = 0, $status = Constants::SPARTNER_STATUS_ACTIVE)
     {
         $ret = false;
         $sql = 'SELECT id FROM ' . $this->db->prefix('smartpartner_partner') . ' ';

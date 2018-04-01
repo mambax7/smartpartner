@@ -139,8 +139,8 @@ switch ($op) {
 
     case 'mod':
         global $fileHandler;
-        $fileid = \Xmf\Request::getInt('fileid', 0, GET);
-        $id     = \Xmf\Request::getInt('id', 0, GET);
+        $fileid = \Xmf\Request::getInt('fileid', 0, 'GET');
+        $id     = \Xmf\Request::getInt('id', 0, 'GET');
         if ((0 == $fileid) && (0 == $id)) {
             redirect_header('javascript:history.go(-1)', 3, _AM_SPARTNER_NOITEMSELECTED);
         }
@@ -187,7 +187,7 @@ switch ($op) {
 
         $fileObj = new Smartpartner\File($fileid);
 
-        $confirm = \Xmf\Request::getInt('confirm', 0, POST);
+        $confirm = \Xmf\Request::getInt('confirm', 0, 'POST');
         $title   = \Xmf\Request::getString('title', '', 'POST');
 
         if ($confirm) {
